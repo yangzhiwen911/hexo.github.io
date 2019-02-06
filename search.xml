@@ -14,9 +14,9 @@
       </categories>
   </entry>
   <entry>
-    <title><![CDATA[new Day]]></title>
+    <title><![CDATA[Hexo部署到Github服务器]]></title>
     <url>%2F2018%2F12%2F24%2Fnew-Day%2F</url>
-    <content type="text"><![CDATA[适当放松的方式]]></content>
+    <content type="text"><![CDATA[为了更加方便的实现本地到git服务器的部署同步问题，因此可以通过如下操作配置实现本地编写文章后，直接部署到Github服务器，通过Github域名来访问,达到快捷、高效、一劳永逸的效果。 配置文件修改_config.yml文件中对应的repo值如下 1234deploy:type: gitrepository: git@github.com:yangzhiwen911/yangzhiwen911.github.io.gitbranch: master 注：repository的值 即为github项目中的ssh地址，直接复制过来即可。 生成SSH git bash中配置name(git的用户名)和email（git的邮箱） 12git config --global user.name "yourname"git config --global user.email "youremail" 进入~目录，执行ssh-keygen，生成.ssh文件夹会有一对公钥和私钥,复制公钥内容到Github 1ssh-keygen -t rsa -C "youremail" #生成ssh对应key，直接输入回车并设置密码即可。 Github对应的ssh and key地址入口： 在gitbash中，查看是否成功 1ssh -T git@github.com 当出现你的Github用户名的时候，即为成功，可以进行下一步操作。 安装插件 在生成以及部署文章之前，需要安装一个插件，这样才能用命令部署到GitHub。 1npm install hexo-deployer-git --save 最后执行部署： 12hexo dhexo s 至此，部署过程结束，可以直接通过http://yourname.github.io 网址查看你的个人博客了！ 部署问题 如果出现缺少模块等报错问题，直接使用hexo install 下载命令即可。 命令大全 Hexo常用命令： 123456hexo new "postName" #新建文章hexo new page "pageName" #新建页面hexo generate #生成静态页面至public目录hexo server #开启预览访问端口（默认端口4000，'ctrl + c'关闭server）hexo deploy #将.deploy目录部署到GitHubhexo version #查看hexo版本号 Hexo缩略语： 12345hexo n == hexo new #创建一个新的blog页面hexo g == hexo generate #生成静态文件hexo s == hexo server #启动本地服务器hexo d == hexo deploy #部署网站项目hexo v == hexo version #hexo版本 Hexo复合命令： 1234hexo deploy -ghexo server -ghexo server -d (hexo s ) #启动本地服务器hexo generate -w #watch参数的缩写，source/_post中的md文件有改动，就会自动publish Hexo清除命令： 1hexo clean 注：Hexo原理就是hexo在执行hexo generate时会在本地先把博客生成的一套静态站点放到public文件夹中，在执行hexo deploy时将其复制到.deploy文件夹中。Github的版本库通常建议同时附上README.md说明文件，但是hexo默认情况下会把所有md文件解析成html文件，所以即使你在线生成了README.md，它也会在你下一次部署时被删去。怎么解决呢？在执行hexo deploy前把在本地写好的README.md文件复制到.deploy文件夹中，再去执行hexo deploy。]]></content>
       <categories>
         <category>日常</category>
       </categories>

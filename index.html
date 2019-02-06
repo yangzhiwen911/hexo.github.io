@@ -476,7 +476,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-               2019-02-05
+               2019-02-06
             
           </span>
 		  
@@ -793,7 +793,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2018/12/24/new-Day/" class="post-title-link" itemprop="url">new Day</a>
+                <a href="/2018/12/24/new-Day/" class="post-title-link" itemprop="url">Hexo部署到Github服务器</a>
               
             
           </h1>
@@ -824,6 +824,17 @@
               
 
               
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+               2019-02-06
             
           </span>
 		  
@@ -891,10 +902,56 @@
 
       
         
+          <blockquote><p>为了更加方便的实现本地到git服务器的部署同步问题，因此可以通过如下操作配置实现本地编写文章后，直接部署到Github服务器，通过Github域名来访问,达到快捷、高效、一劳永逸的效果。</p>
+</blockquote>
+<h6 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h6><pre><code>修改_config.yml文件中对应的repo值如下
+</code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line"><span class="built_in">type</span>: git</span><br><span class="line">repository: git@github.com:yangzhiwen911/yangzhiwen911.github.io.git</span><br><span class="line">branch: master</span><br></pre></td></tr></table></figure>
+<blockquote><p>注：repository的值 即为github项目中的ssh地址，直接复制过来即可。</p>
+</blockquote>
+<p><img src="/images/pasted-2.png" alt="upload successful"></p>
+<h6 id="生成SSH"><a href="#生成SSH" class="headerlink" title="生成SSH"></a>生成SSH</h6><ul>
+<li><p>git bash中配置name(git的用户名)和email（git的邮箱）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">"yourname"</span></span><br><span class="line">git config --global user.email <span class="string">"youremail"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进入~目录，执行ssh-keygen，生成.ssh文件夹会有一对公钥和私钥,复制公钥内容到Github</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C <span class="string">"youremail"</span>  <span class="comment">#生成ssh对应key，直接输入回车并设置密码即可。</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="/images/pasted-4.png" alt="upload successful"></p>
+<ul>
+<li>Github对应的ssh and key地址入口：</li>
+</ul>
+<p><img src="/images/pasted-5.png" alt="upload successful"></p>
+<p><img src="/images/pasted-6.png" alt="upload successful"></p>
+<ul>
+<li><p>在gitbash中，查看是否成功</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>当出现你的Github用户名的时候，即为成功，可以进行下一步操作。</p>
+</li>
+</ul>
+<p><img src="/images/pasted-8.png" alt="upload successful"></p>
+<h6 id="安装插件"><a href="#安装插件" class="headerlink" title="安装插件"></a>安装插件</h6><ul>
+<li><p>在生成以及部署文章之前，需要安装一个插件，这样才能用命令部署到GitHub。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>最后执行部署：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br><span class="line">hexo s</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="/images/pasted-9.png" alt="upload successful"></p>
+<ul>
+<li>至此，部署过程结束，可以直接通过<a href="http://yourname.github.io" target="_blank" rel="noopener">http://yourname.github.io</a> 网址查看你的个人博客了！</li>
+</ul>
+          <!--noindex-->
           
-            <p>适当放松的方式</p>
-
-          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/12/24/new-Day/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
