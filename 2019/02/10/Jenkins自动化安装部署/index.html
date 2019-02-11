@@ -122,7 +122,7 @@
 <meta property="og:description" content="Jenkins概述Jenkins是一个独立的开源软件项目，是基于Java开发的一种持续集成工具，用于监控持续重复的工作，旨在提供一个开放易用的软件平台，使软件的持续集成变成可能。前身是Hudson是一个可扩展的持续集成引擎。可用于自动化各种任务，如构建，测试和部署软件。Jenkins可以通过本机系统包Docker安装，甚至可以通过安装Java Runtime Environment的任何机器独立运">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-22.png">
-<meta property="og:updated_time" content="2019-02-10T09:51:52.340Z">
+<meta property="og:updated_time" content="2019-02-11T04:16:00.695Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jenkins自动化安装部署-安装配置（一）">
 <meta name="twitter:description" content="Jenkins概述Jenkins是一个独立的开源软件项目，是基于Java开发的一种持续集成工具，用于监控持续重复的工作，旨在提供一个开放易用的软件平台，使软件的持续集成变成可能。前身是Hudson是一个可扩展的持续集成引擎。可用于自动化各种任务，如构建，测试和部署软件。Jenkins可以通过本机系统包Docker安装，甚至可以通过安装Java Runtime Environment的任何机器独立运">
@@ -462,6 +462,17 @@
               
 
               
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+               2019-02-11
             
           </span>
 		  
@@ -587,7 +598,7 @@
 </tr>
 </tbody>
 </table>
-<h3 id="需求概述"><a href="#需求概述" class="headerlink" title="需求概述"></a>需求概述</h3><p>由于项目架构是SpringMVC，并没有使用Maven来构建，所以本文安装的Jenkins基于ant环境构建发布（也可以使用Maven），配置比较方便。</p>
+<h3 id="需求概述"><a href="#需求概述" class="headerlink" title="需求概述"></a>需求概述</h3><p>由于项目架构是SpringMVC，并没有使用Maven来构建，所以本文安装的<code>Jenkins</code>基于<code>Ant</code>环境构建发布（也可以使用Maven），配置比较方便。</p>
 <h3 id="Ant安装"><a href="#Ant安装" class="headerlink" title="Ant安装"></a>Ant安装</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost jenkins]<span class="comment"># vi /etc/profile</span></span><br></pre></td></tr></table></figure>
 <ul>
 <li>在最后添加</li>
@@ -601,20 +612,20 @@
 </blockquote>
 <h3 id="Jenkins安装"><a href="#Jenkins安装" class="headerlink" title="Jenkins安装"></a>Jenkins安装</h3><p><strong>支持war和本地安装两种方式（本文主要说明第二种方式）</strong></p>
 <ul>
-<li>Jenkins下载地址<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://jenkins.io/index.html</span><br></pre></td></tr></table></figure>
+<li><code>Jenkins</code>下载地址<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">https://jenkins.io/index.html</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <blockquote><p>默认情况下，最新版本和长期支持版本可供下载。过去的版本也可以下载。单击下载部分的长期支持版本选项。</p>
 </blockquote>
 <ul>
-<li>Jenkins两种安装方式<ul>
-<li>Jenkins的war包下载后发布到Tomcat服务器的Webapps下即可配（比较简单）</li>
-<li>用于Jenkins的RedHat Linux RPM软件包(第二种方式)</li>
+<li><code>Jenkins</code>两种安装方式<ul>
+<li><code>Jenkins</code>的war包下载后发布到Tomcat服务器的Webapps下即可配（比较简单）</li>
+<li>用于<code>Jenkins</code>的RedHat Linux RPM软件包(第二种方式)</li>
 </ul>
 </li>
 </ul>
 <ul>
-<li>使用Jenkins官网提供的源下载Jenkins，服务器上面执行下面命令：</li>
+<li>使用<code>Jenkins</code>官网提供的源下载Jenkins，服务器上面执行下面命令：</li>
 </ul>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost jenkins]<span class="comment"># sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo</span></span><br><span class="line">[root@localhost jenkins]<span class="comment"># sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key</span></span><br><span class="line">[root@localhost jenkins]<span class="comment"># sudo yum install jenkins</span></span><br></pre></td></tr></table></figure>
 <ul>
@@ -624,8 +635,8 @@
 <p><img src="/images/pasted-22.png" alt="upload successful"></p>
 <blockquote><p><strong>jenkins的默认设置：</strong></p>
 <ul>
-<li>Jenkins会随系统启动而启动。详情参照/etc/init.d/jenkins</li>
-<li>Jenkins会创建一个用户叫做jenkins, 如果你修改了user，则要修修改所属者：/var/log/jenkins,/var/lib/jenkins,/var/cache/jenkins</li>
+<li><code>Jenkins</code>会随系统启动而启动。详情参照/etc/init.d/jenkins</li>
+<li><code>Jenkins</code>会创建一个用户叫做jenkins, 如果你修改了user，则要修修改所属者：/var/log/jenkins,/var/lib/jenkins,/var/cache/jenkins</li>
 <li>如果遇到问题，查看日志/var/log/jenkins/jenkins.log</li>
 <li>配置文件/etc/sysconfig/jenkins</li>
 <li>默认启用8080 （本文使用的是8888）</li>
