@@ -35,13 +35,6 @@
 
 
 
-  
-  
-    
-    
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link href="/lib/pace/pace-theme-barber-shop.min.css?v=1.0.2" rel="stylesheet">
-
 
 
 
@@ -120,26 +113,27 @@
 
 
 
-  <meta name="description" content="为了更加方便的实现本地到git服务器的部署同步问题，因此可以通过如下操作配置实现本地编写文章后，直接部署到Github服务器，通过Github域名来访问,达到快捷、高效、一劳永逸的效果。">
-<meta name="keywords" content="IT互联网、Web、Java开发">
+  <meta name="description" content="Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。正常来说，不需要部署到我们的服务器上，我们的服务器上保存的，其实是基于在hexo通过markdown编写的文章，然后hexo帮我们生成静态的html页面，然后，将生成的html上传到我们的服务器。为了更加方便的实现本地到git服务器的部署同步问题，因此可">
+<meta name="keywords" content="MyCat,Github,ssh,rsa">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Hexo部署到Github服务器">
-<meta property="og:url" content="http://yoursite.com/2018/12/24/new-Day/index.html">
+<meta property="og:url" content="http://yangzhiwen911.github.io/2018/12/24/new-Day/index.html">
 <meta property="og:site_name" content="人生若只如初见">
-<meta property="og:description" content="为了更加方便的实现本地到git服务器的部署同步问题，因此可以通过如下操作配置实现本地编写文章后，直接部署到Github服务器，通过Github域名来访问,达到快捷、高效、一劳永逸的效果。">
+<meta property="og:description" content="Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。正常来说，不需要部署到我们的服务器上，我们的服务器上保存的，其实是基于在hexo通过markdown编写的文章，然后hexo帮我们生成静态的html页面，然后，将生成的html上传到我们的服务器。为了更加方便的实现本地到git服务器的部署同步问题，因此可">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images/pasted-2.png">
-<meta property="og:image" content="http://yoursite.com/images/pasted-4.png">
-<meta property="og:image" content="http://yoursite.com/images/pasted-5.png">
-<meta property="og:image" content="http://yoursite.com/images/pasted-6.png">
-<meta property="og:image" content="http://yoursite.com/images/pasted-8.png">
-<meta property="og:image" content="http://yoursite.com/images/pasted-9.png">
-<meta property="og:image" content="http://yoursite.com/images/pasted-3.png">
-<meta property="og:updated_time" content="2019-02-06T11:19:58.641Z">
+<meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-2.png">
+<meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-4.png">
+<meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-5.png">
+<meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-6.png">
+<meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-8.png">
+<meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-9.png">
+<meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-3.png">
+<meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-10.png">
+<meta property="og:updated_time" content="2019-02-10T04:06:59.179Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Hexo部署到Github服务器">
-<meta name="twitter:description" content="为了更加方便的实现本地到git服务器的部署同步问题，因此可以通过如下操作配置实现本地编写文章后，直接部署到Github服务器，通过Github域名来访问,达到快捷、高效、一劳永逸的效果。">
-<meta name="twitter:image" content="http://yoursite.com/images/pasted-2.png">
+<meta name="twitter:description" content="Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。正常来说，不需要部署到我们的服务器上，我们的服务器上保存的，其实是基于在hexo通过markdown编写的文章，然后hexo帮我们生成静态的html页面，然后，将生成的html上传到我们的服务器。为了更加方便的实现本地到git服务器的部署同步问题，因此可">
+<meta name="twitter:image" content="http://yangzhiwen911.github.io/images/pasted-2.png">
 
 
 
@@ -148,7 +142,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/12/24/new-Day/">
+  <link rel="canonical" href="http://yangzhiwen911.github.io/2018/12/24/new-Day/">
 
 
 
@@ -426,12 +420,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/24/new-Day/">
+    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2018/12/24/new-Day/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="志文">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
+      <meta itemprop="image" content="/images/jackie.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
@@ -485,7 +479,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-               2019-02-06
+               2019-02-10
             
           </span>
 		  
@@ -518,7 +512,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/日常/" itemprop="url" rel="index"><span itemprop="name">日常</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a></span>
 
                 
                 
@@ -559,8 +553,7 @@
       
 
       
-        <blockquote><p>为了更加方便的实现本地到git服务器的部署同步问题，因此可以通过如下操作配置实现本地编写文章后，直接部署到Github服务器，通过Github域名来访问,达到快捷、高效、一劳永逸的效果。</p>
-</blockquote>
+        <p>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。正常来说，不需要部署到我们的服务器上，我们的服务器上保存的，其实是基于在hexo通过markdown编写的文章，然后hexo帮我们生成静态的html页面，然后，将生成的html上传到我们的服务器。为了更加方便的实现本地到git服务器的部署同步问题，因此可以通过如下操作配置实现本地编写文章后，直接部署到Github服务器，通过Github域名来访问,达到快捷、高效、一劳永逸的效果。</p>
 <a id="more"></a>
 <h6 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h6><pre><code>修改_config.yml文件中对应的repo值如下
 </code></pre><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">deploy:</span><br><span class="line"><span class="built_in">type</span>: git</span><br><span class="line">repository: git@github.com:yangzhiwen911/yangzhiwen911.github.io.git</span><br><span class="line">branch: master</span><br></pre></td></tr></table></figure>
@@ -601,14 +594,17 @@
 <ul>
 <li>至此，部署过程结束，可以直接通过<a href="http://yourname.github.io" target="_blank" rel="noopener">http://yourname.github.io</a> 网址查看你的个人博客了！</li>
 </ul>
-<!--more-->
 <h6 id="部署问题"><a href="#部署问题" class="headerlink" title="部署问题"></a>部署问题</h6><ul>
 <li>如果出现缺少模块等报错问题，直接使用hexo install 下载命令即可。</li>
 </ul>
 <p><img src="/images/pasted-3.png" alt="upload successful"></p>
+<ul>
+<li>如果出现模板渲染等报错问题，需检查md文件是否有标签未闭合等语法问题。</li>
+</ul>
+<p><img src="/images/pasted-10.png" alt="upload successful"></p>
 <h6 id="命令大全"><a href="#命令大全" class="headerlink" title="命令大全"></a>命令大全</h6><ul>
 <li><p>Hexo常用命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hexo new <span class="string">"postName"</span>       <span class="comment">#新建文章</span></span><br><span class="line">hexo new page <span class="string">"pageName"</span>  <span class="comment">#新建页面</span></span><br><span class="line">hexo generate             <span class="comment">#生成静态页面至public目录</span></span><br><span class="line">hexo server               <span class="comment">#开启预览访问端口（默认端口4000，'ctrl + c'关闭server）</span></span><br><span class="line">hexo deploy               <span class="comment">#将.deploy目录部署到GitHub</span></span><br><span class="line">hexo version              <span class="comment">#查看hexo版本号</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">hexo new <span class="string">"postName"</span>       <span class="comment">#新建文章</span></span><br><span class="line">hexo new page <span class="string">"pageName"</span>  <span class="comment">#新建页面</span></span><br><span class="line">hexo generate             <span class="comment">#生成静态页面至public目录</span></span><br><span class="line">hexo server               <span class="comment">#开启预览访问端口（默认端口4000，'ctrl + c'关闭server）</span></span><br><span class="line">hexo deploy               <span class="comment">#将.deploy目录部署到GitHub</span></span><br><span class="line">hexo version              <span class="comment">#查看hexo版本号</span></span><br><span class="line">hexo --debug 		  <span class="comment">#调试模式，输出所有日志信息</span></span><br><span class="line">hexo --safe		  <span class="comment">#安全模式，禁用所有的插件和脚本</span></span><br><span class="line">hexo --silent 		  <span class="comment">#无日志输出模式</span></span><br><span class="line">hexo --config config-path <span class="comment">#指定配置文件，代替默认的_config.yml</span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>Hexo缩略语：</p>
 </li>
@@ -624,7 +620,6 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
  <blockquote><p>注：Hexo原理就是hexo在执行hexo generate时会在本地先把博客生成的一套静态站点放到public文件夹中，在执行hexo deploy时将其复制到.deploy文件夹中。Github的版本库通常建议同时附上README.md说明文件，但是hexo默认情况下会把所有md文件解析成html文件，所以即使你在线生成了README.md，它也会在你下一次部署时被删去。怎么解决呢？在执行hexo deploy前把在本地写好的README.md文件复制到.deploy文件夹中，再去执行hexo deploy。</p>
 </blockquote>
-
       
     </div>
 
@@ -645,6 +640,18 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/MyCat/" rel="tag"># MyCat</a>
+          
+            <a href="/tags/Github/" rel="tag"># Github</a>
+          
+            <a href="/tags/ssh/" rel="tag"># ssh</a>
+          
+            <a href="/tags/rsa/" rel="tag"># rsa</a>
+          
+        </div>
+      
 
       
       
@@ -654,8 +661,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/12/24/Jackie-Yang/" rel="next" title="Jackie.Yang">
-                <i class="fa fa-chevron-left"></i> Jackie.Yang
+              <a href="/2018/12/24/Jackie-Yang/" rel="next" title="Java技术栈梳理分享">
+                <i class="fa fa-chevron-left"></i> Java技术栈梳理分享
               </a>
             
           </div>
@@ -730,7 +737,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="/images/header.png" alt="志文">
+              <img class="site-author-image" itemprop="image" src="/images/jackie.png" alt="志文">
             
               <p class="site-author-name" itemprop="name">志文</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -743,7 +750,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -753,19 +760,60 @@
                 
                 
                 <div class="site-state-item site-state-categories">
-                  
+                  <a href="/categories/index.html">
                     
                     
                       
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">分类</span>
-                  
+                  </a>
                 </div>
               
 
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
               
             </nav>
           
@@ -936,6 +984,12 @@
 
 
 
+
+  
+    
+      
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
 
 
 

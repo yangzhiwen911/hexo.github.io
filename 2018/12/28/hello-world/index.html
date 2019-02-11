@@ -35,13 +35,6 @@
 
 
 
-  
-  
-    
-    
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link href="/lib/pace/pace-theme-barber-shop.min.css?v=1.0.2" rel="stylesheet">
-
 
 
 
@@ -120,20 +113,20 @@
 
 
 
-  <meta name="description" content="MyCat简介Mycat是一款基于阿里开源产品Cobar而研发的开源数据库分库分表中间件（基于Java语言开发）。官网所言：Mycat国内最活跃的、性能最好的开源数据库中间件！">
+  <meta name="description" content="MyCat是一款基于阿里开源产品Cobar而研发的开源数据库分库分表中间件（基于Java语言开发）。MyCat是一个开源的分布式数据库系统，是一个实现了MySQL协议的服务器，前端用户可以把它看作是一个数据库代理，用MySQL客户端工具和命令行访问，而其后端可以用MySQL原生协议与多个MySQL服务器通信，也可以用JDBC协议与大多数主流数据库服务器通信，其核心功能是分表分库，即将一个大表水平分">
 <meta name="keywords" content="IT互联网、Web、Java开发">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mycat 配置详解">
-<meta property="og:url" content="http://yoursite.com/2018/12/28/hello-world/index.html">
+<meta property="og:title" content="MyCat 配置详解">
+<meta property="og:url" content="http://yangzhiwen911.github.io/2018/12/28/hello-world/index.html">
 <meta property="og:site_name" content="人生若只如初见">
-<meta property="og:description" content="MyCat简介Mycat是一款基于阿里开源产品Cobar而研发的开源数据库分库分表中间件（基于Java语言开发）。官网所言：Mycat国内最活跃的、性能最好的开源数据库中间件！">
+<meta property="og:description" content="MyCat是一款基于阿里开源产品Cobar而研发的开源数据库分库分表中间件（基于Java语言开发）。MyCat是一个开源的分布式数据库系统，是一个实现了MySQL协议的服务器，前端用户可以把它看作是一个数据库代理，用MySQL客户端工具和命令行访问，而其后端可以用MySQL原生协议与多个MySQL服务器通信，也可以用JDBC协议与大多数主流数据库服务器通信，其核心功能是分表分库，即将一个大表水平分">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://yoursite.com/images/pasted-1.png">
-<meta property="og:updated_time" content="2019-02-06T06:18:31.790Z">
+<meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-1.png">
+<meta property="og:updated_time" content="2019-02-10T06:48:57.849Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Mycat 配置详解">
-<meta name="twitter:description" content="MyCat简介Mycat是一款基于阿里开源产品Cobar而研发的开源数据库分库分表中间件（基于Java语言开发）。官网所言：Mycat国内最活跃的、性能最好的开源数据库中间件！">
-<meta name="twitter:image" content="http://yoursite.com/images/pasted-1.png">
+<meta name="twitter:title" content="MyCat 配置详解">
+<meta name="twitter:description" content="MyCat是一款基于阿里开源产品Cobar而研发的开源数据库分库分表中间件（基于Java语言开发）。MyCat是一个开源的分布式数据库系统，是一个实现了MySQL协议的服务器，前端用户可以把它看作是一个数据库代理，用MySQL客户端工具和命令行访问，而其后端可以用MySQL原生协议与多个MySQL服务器通信，也可以用JDBC协议与大多数主流数据库服务器通信，其核心功能是分表分库，即将一个大表水平分">
+<meta name="twitter:image" content="http://yangzhiwen911.github.io/images/pasted-1.png">
 
 
 
@@ -142,7 +135,7 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/12/28/hello-world/">
+  <link rel="canonical" href="http://yangzhiwen911.github.io/2018/12/28/hello-world/">
 
 
 
@@ -152,7 +145,7 @@
   };
 </script>
 
-  <title>Mycat 配置详解 | 人生若只如初见</title>
+  <title>MyCat 配置详解 | 人生若只如初见</title>
   
 
 
@@ -420,12 +413,12 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/28/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2018/12/28/hello-world/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="志文">
       <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/header.png">
+      <meta itemprop="image" content="/images/jackie.png">
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
@@ -437,7 +430,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Mycat 配置详解
+          <h1 class="post-title" itemprop="name headline">MyCat 配置详解
 
               
             
@@ -479,7 +472,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-               2019-02-06
+               2019-02-10
             
           </span>
 		  
@@ -535,8 +528,7 @@
       
 
       
-        <h2 id="MyCat简介"><a href="#MyCat简介" class="headerlink" title="MyCat简介"></a>MyCat简介</h2><blockquote><p>Mycat是一款基于阿里开源产品Cobar而研发的开源数据库分库分表中间件（基于Java语言开发）。官网所言：Mycat国内最活跃的、性能最好的开源数据库中间件！ </p>
-</blockquote>
+        <p>MyCat是一款基于阿里开源产品Cobar而研发的开源数据库分库分表中间件（基于Java语言开发）。MyCat是一个开源的分布式数据库系统，是一个实现了MySQL协议的服务器，前端用户可以把它看作是一个数据库代理，用MySQL客户端工具和命令行访问，而其后端可以用MySQL原生协议与多个MySQL服务器通信，也可以用JDBC协议与大多数主流数据库服务器通信，其核心功能是分表分库，即将一个大表水平分割为N个小表，存储在后端MySQL服务器里或者其他数据库里。也可以这样理解：数据库是对底层存储文件的抽象，而Mycat是对数据库的抽象。</p>
 <a id="more"></a>
 <h2 id="MyCat关键特性"><a href="#MyCat关键特性" class="headerlink" title="MyCat关键特性"></a>MyCat关键特性</h2><ul>
 <li>支持SQL92标准</li>
@@ -604,15 +596,15 @@
 </ul>
 <pre><code class="bash">&lt;?xml version=<span class="string">"1.0"</span>?&gt; &lt;!DOCTYPE mycat:schema SYSTEM <span class="string">"schema.dtd"</span>&gt; 
 &lt;mycat:schema xmlns:mycat=<span class="string">"http://io.mycat/"</span>&gt;
- &lt;!-- 定义一个MyCat的模式，逻辑数据库名称TestDB --&gt; 
+ &lt;!-- 定义一个MyCat的模式，逻辑数据库名称hsg_oa --&gt; 
 &lt;!-- “checkSQLschema”：描述的是当前的连接是否需要检测数据库的模式 --&gt; 
 &lt;!-- “sqlMaxLimit”：表示返回的最大的数据量的行数 --&gt; 
 &lt;!-- “dataNode=<span class="string">"dn1"</span>”：该操作使用的数据节点是dn1的逻辑名称 --&gt; 
-&lt;schema name=<span class="string">"TESTDB"</span> checkSQLschema=<span class="string">"false"</span> sqlMaxLimit=<span class="string">"100"</span> dataNode=<span class="string">"dn1"</span>/&gt; 
+&lt;schema name=<span class="string">"hsg_oa"</span> checkSQLschema=<span class="string">"false"</span> sqlMaxLimit=<span class="string">"100"</span> dataNode=<span class="string">"dn1"</span>/&gt; 
 &lt;!-- 定义数据的操作节点 --&gt; 
 &lt;!-- “dataHost=<span class="string">"localhost1"</span>”：定义数据节点的逻辑名称 --&gt;
 &lt;!-- “database=<span class="string">"mldn"</span>”：定义数据节点要使用的数据库名称 --&gt;
- &lt;dataNode name=<span class="string">"dn1"</span> dataHost=<span class="string">"localhost1"</span> database=<span class="string">"mldn"</span> /&gt; 
+ &lt;dataNode name=<span class="string">"dn1"</span> dataHost=<span class="string">"localhost1"</span> database=<span class="string">"hsg_oa"</span> /&gt; 
 &lt;!-- 定义数据节点，包括了各种逻辑项的配置 --&gt; 
 &lt;dataHost name=<span class="string">"localhost1"</span> maxCon=<span class="string">"1000"</span> minCon=<span class="string">"10"</span> balance=<span class="string">"0"</span> writeType=<span class="string">"0"</span> dbType=<span class="string">"mysql"</span> dbDriver=<span class="string">"native"</span> switchType=<span class="string">"1"</span> slaveThreshold=<span class="string">"100"</span>&gt; 
 &lt;!-- 配置真实MySQL与MyCat的心跳 --&gt; &lt;heartbeat&gt;select user()&lt;/heartbeat&gt; 
@@ -726,6 +718,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/02/09/Tengine/" rel="prev" title="Tengine安装和使用">
+                Tengine安装和使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -788,7 +784,7 @@
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
-              <img class="site-author-image" itemprop="image" src="/images/header.png" alt="志文">
+              <img class="site-author-image" itemprop="image" src="/images/jackie.png" alt="志文">
             
               <p class="site-author-name" itemprop="name">志文</p>
               <p class="site-description motion-element" itemprop="description"></p>
@@ -801,7 +797,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">4</span>
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -811,19 +807,60 @@
                 
                 
                 <div class="site-state-item site-state-categories">
-                  
+                  <a href="/categories/index.html">
                     
                     
                       
                     
                       
                     
-                    <span class="site-state-item-count">2</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">分类</span>
-                  
+                  </a>
                 </div>
               
 
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
               
             </nav>
           
@@ -888,7 +925,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MyCat简介"><span class="nav-number">1.</span> <span class="nav-text">MyCat简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyCat关键特性"><span class="nav-number">2.</span> <span class="nav-text">MyCat关键特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyCat的目标"><span class="nav-number">3.</span> <span class="nav-text">MyCat的目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyCat的优势"><span class="nav-number">4.</span> <span class="nav-text">MyCat的优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyCat的架构"><span class="nav-number">5.</span> <span class="nav-text">MyCat的架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyCat的初始化"><span class="nav-number">6.</span> <span class="nav-text">MyCat的初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyCat的逻辑库"><span class="nav-number">7.</span> <span class="nav-text">MyCat的逻辑库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyCat的核心配置解析"><span class="nav-number">8.</span> <span class="nav-text">MyCat的核心配置解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyCat常用命令"><span class="nav-number">9.</span> <span class="nav-text">MyCat常用命令</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#MyCat关键特性"><span class="nav-number">1.</span> <span class="nav-text">MyCat关键特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyCat的目标"><span class="nav-number">2.</span> <span class="nav-text">MyCat的目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyCat的优势"><span class="nav-number">3.</span> <span class="nav-text">MyCat的优势</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyCat的架构"><span class="nav-number">4.</span> <span class="nav-text">MyCat的架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyCat的初始化"><span class="nav-number">5.</span> <span class="nav-text">MyCat的初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyCat的逻辑库"><span class="nav-number">6.</span> <span class="nav-text">MyCat的逻辑库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyCat的核心配置解析"><span class="nav-number">7.</span> <span class="nav-text">MyCat的核心配置解析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MyCat常用命令"><span class="nav-number">8.</span> <span class="nav-text">MyCat常用命令</span></a></li></ol></div>
             
 
           </div>
@@ -994,6 +1031,12 @@
 
 
 
+
+  
+    
+      
+  
+  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
 
 
 
