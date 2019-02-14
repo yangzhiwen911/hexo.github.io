@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "46263291"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Mysql执行线程1、查看Mysql当前连接数 1show full processlist;  statistics 状态的线程，表示正在计算统计数据，以制定一个查询执行计划。 如果一个线程很长一段时间处于这种状态，可能是磁盘绑定的，即磁盘IO性能很差，说到底就是数据库服务器IO遇到问题了，可以通过增加 buffer_pool 来缓存更多的数据，或者提高服务器IO能力，可能磁盘在执行其他工作。">
+<meta name="keywords" content="mysql,优化,sql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mysql优化记录">
+<meta property="og:url" content="http://yangzhiwen911.github.io/2019/02/14/Mysql优化记录/index.html">
+<meta property="og:site_name" content="You Jump I See You Jump">
+<meta property="og:description" content="Mysql执行线程1、查看Mysql当前连接数 1show full processlist;  statistics 状态的线程，表示正在计算统计数据，以制定一个查询执行计划。 如果一个线程很长一段时间处于这种状态，可能是磁盘绑定的，即磁盘IO性能很差，说到底就是数据库服务器IO遇到问题了，可以通过增加 buffer_pool 来缓存更多的数据，或者提高服务器IO能力，可能磁盘在执行其他工作。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-44.png">
+<meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-50.png">
+<meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-45.png">
+<meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-49.png">
+<meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-46.png">
+<meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-47.png">
+<meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-48.png">
+<meta property="og:updated_time" content="2019-02-14T13:04:34.439Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Mysql优化记录">
+<meta name="twitter:description" content="Mysql执行线程1、查看Mysql当前连接数 1show full processlist;  statistics 状态的线程，表示正在计算统计数据，以制定一个查询执行计划。 如果一个线程很长一段时间处于这种状态，可能是磁盘绑定的，即磁盘IO性能很差，说到底就是数据库服务器IO遇到问题了，可以通过增加 buffer_pool 来缓存更多的数据，或者提高服务器IO能力，可能磁盘在执行其他工作。">
+<meta name="twitter:image" content="http://yangzhiwen911.github.io/images/pasted-44.png">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="You Jump I See You Jump" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://yangzhiwen911.github.io/2019/02/14/Mysql优化记录/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Mysql优化记录 | You Jump I See You Jump</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<!--
+	<a href="https://github.com/yangzhiwen911"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub"></a>
+    -->
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">You Jump I See You Jump</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">做一个有梦想的咸鱼</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2019/02/14/Mysql优化记录/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="志文">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jackie.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="You Jump I See You Jump">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Mysql优化记录
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+             2019-02-14
+
+            
+              
+
+              
+            
+          </span>
+		  
+		  
+		  
+		  
+		  
+		 
+		  
+		  
+			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-user"></i>
+                </span><span class="post-meta-item-text"> 作者
+				 Jakcie.Yang
+				</span>
+		
+
+		  
+		  
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="Mysql执行线程"><a href="#Mysql执行线程" class="headerlink" title="Mysql执行线程"></a>Mysql执行线程</h3><p><strong>1、查看<code>Mysql</code>当前连接数</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show full processlist;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pasted-44.png" alt="upload successful"></p>
+<p>statistics 状态的线程，表示正在计算统计数据，以制定一个查询执行计划。 如果一个线程很长一段时间处于这种状态，可能是磁盘绑定的，即磁盘IO性能很差，说到底就是数据库服务器IO遇到问题了，可以通过增加 buffer_pool 来缓存更多的数据，或者提高服务器IO能力，可能磁盘在执行其他工作。<br><a id="more"></a></p>
+<p>服务器IO状态会一直占用cpu，导致性能严重下降。</p>
+<p><img src="/images/pasted-50.png" alt="upload successful"></p>
+<p><strong>2、显示<code>Mysql</code>状态</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show status;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>Aborted_clients 由于客户没有正确关闭连接已经死掉，已经放弃的连接数量。</li>
+<li>Aborted_connects 尝试已经失败的MySQL服务器的连接的次数。</li>
+<li>Connections 试图连接MySQL服务器的次数。</li>
+<li>Created_tmp_tables 当执行语句时，已经被创造了的隐含临时表的数量。</li>
+<li>Delayed_insert_threads 正在使用的延迟插入处理器线程的数量。</li>
+<li>Open_tables 打开表的数量。</li>
+<li>Open_files 打开文件的数量。</li>
+<li>Open_streams 打开流的数量(主要用于日志记载）</li>
+<li>Opened_tables 已经打开的表的数量。</li>
+<li>Questions 发往服务器的查询的数量。</li>
+<li>Slow_queries 要花超过long_query_time时间的查询数量。</li>
+<li>Threads_connected 当前打开的连接的数量。</li>
+<li>Threads_running 不在睡眠的线程数量。</li>
+<li>Uptime 服务器工作了多少秒。</li>
+</ul>
+<p><strong>3、终止正在执行的<code>Mysql</code>线程</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">kill</span> id;</span><br></pre></td></tr></table></figure>
+<p>杀死耗时或者长时间处于<code>Sending to Client</code>状态的慢sql。</p>
+<p><strong>减少磁盘绑定：</strong></p>
+<ul>
+<li><p>1) 扩大innodb_buffer_pool_size的缓冲池大小。如果你用Innodb然后，当表数据缓存在InnoDB缓冲池中时，可以通过查询一次又一次地处理表数据，而不需要任何磁盘I/O。这个内存区域非常重要，以至于繁忙的数据库通常指定的大小约为物理内存量的80%。</p>
+</li>
+<li><p>2) 在GNU/Linux和Unix的某些版本中，使用Unixfsync()调用(InnoDB默认使用)将文件刷新到磁盘，类似的方法非常慢。如果数据库写入性能是一个问题，则使用INNODB_FLUSH_Method参数设置为O_DSYNC进行基准测试。</p>
+</li>
+<li><p>3) 扩大innodb_buffer_pool_size的数据库日志缓冲区大小-设置分配给存储InnoDB预写日志条目的缓冲区的内存量。对于大型事务，可以将日志加载到日志缓冲区中，而不是将日志写入磁盘上的日志文件，直到日志缓冲区在每次事务提交时被刷新为止。如果您在运行时在显示nodb状态输出中看到大型日志I/O，则可能需要为innodb_log_buffer_size参数设置更大的值，以保存磁盘I/O。</p>
+</li>
+<li><p>4) 增加用于缓存表和查询的内存-检查表和查询的缓存命中率，检查并增加这些MySQL变量：query_cache_size, query_cache_limit, query_cache_min_res_unit, tmp_table_size, join_buffer_size , sort_buffer_size等等。</p>
+</li>
+<li><p>5) 确保对服务器上的所有表都应用了适当的索引，并使用正确的数据类型。</p>
+</li>
+</ul>
+<pre><code>建议：查看当前io性能状态，例如iostat
+</code></pre><p><img src="/images/pasted-45.png" alt="upload successful"></p>
+<h3 id="Mysql语句"><a href="#Mysql语句" class="headerlink" title="Mysql语句"></a>Mysql语句</h3><h3 id="Mysql索引"><a href="#Mysql索引" class="headerlink" title="Mysql索引"></a>Mysql索引</h3><p><strong>索引失效</strong></p>
+<p>关联字段类型不同<br>索引字段使用函数表达式<br>like %AAA<br>is null</p>
+<ul>
+<li>GROUP BY 的索引应用</li>
+</ul>
+<p>1、查询字段必须和后面GROUP BY 一致<br>select TeamID from competeinfo where TeamID &gt;10 group by TeamID。<br>这里就是通过TeamID 来查找。完成group by 。<br>2、联合索引的应用，切记注意GROUP BY 顺序，Where 条件和GROUP BY 字段得是一个索引里面的<br>这个表CompeteID,TeamID建立联合索引<br>1）select TeamID from competeinfo where TeamID &gt;10 and CompeteID &gt; 100020 group by CompeteID<br>这个查询用到了CompeteID,TeamID联合索引<br>2）select TeamID from competeinfo where TeamID &gt;10 and CompeteID &gt; 100020 group by TeamID<br>这样的话查询group by中就没有用到索引了</p>
+<p> <em>下面是总结的是联合索引的使用</em></p>
+<ul>
+<li>Index（Name，Age）表示在Name，Age两列上建立联合索引</li>
+<li>如果where name=’pp’ 能使用索引</li>
+<li>where age=25时不能使用索引</li>
+<li>where name=’pp’ and age&gt;25 能使用索引 </li>
+<li>where name =’pp’ order by age 能使用索引</li>
+<li>where name&gt;’pp’ order by age 不能使用索引</li>
+<li>where name&gt;’pp’ order by name,age 能使用索引</li>
+<li>order by name asc age desc 将不能使用索引！</li>
+</ul>
+<h3 id="Mysql引擎"><a href="#Mysql引擎" class="headerlink" title="Mysql引擎"></a>Mysql引擎</h3><h3 id="Mysql配置文件"><a href="#Mysql配置文件" class="headerlink" title="Mysql配置文件"></a>Mysql配置文件</h3><h3 id="Mysql日志"><a href="#Mysql日志" class="headerlink" title="Mysql日志"></a>Mysql日志</h3><p>mysql中有多种日志，其中有一个对调试很有用的general log。<br>mysql将对DB的所有操作都可以记录在general log中，我们可以在线开启也可以通过修改初始化参数开启。<br>在线打开和关闭<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> global general_log=on;</span><br><span class="line"><span class="built_in">set</span> global general_log=off;</span><br></pre></td></tr></table></figure></p>
+<p>通过下面sql方法可以查看mysql.general_log表的存储引擎是什么<br>show table status from mysql where name=’general_log’;</p>
+<p>这个表的缺省存储引擎是CSV，我们可以将该存储引擎修改成myisam来达到更好的性能。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">mysql&gt; alter table mysql.general_log engine=myisam;</span><br><span class="line">1580 - You cannot <span class="string">'ALTER'</span> a <span class="built_in">log</span> table <span class="keyword">if</span> logging is enabled</span><br><span class="line">mysql&gt; <span class="built_in">set</span> global general_log=off;</span><br><span class="line">Query OK, 0 rows affected</span><br><span class="line"></span><br><span class="line">mysql&gt; alter table mysql.general_log engine=myisam;</span><br><span class="line">Query OK, 11 rows affected</span><br><span class="line">Records: 11  Duplicates: 0  Warnings: 0</span><br><span class="line"></span><br><span class="line">mysql&gt; <span class="built_in">set</span> global general_log=on;</span><br><span class="line">Query OK, 0 rows affected</span><br></pre></td></tr></table></figure></p>
+<p><img src="/images/pasted-49.png" alt="upload successful"></p>
+<p><strong>记录general log可以很好的监控当前数据库中的所有操作，可以选择在忙时打开，这样就可以对性能进行优化。<br>但general log比较消耗系统性能，生产系统不建议打开</strong></p>
+<h3 id="Mysql视图"><a href="#Mysql视图" class="headerlink" title="Mysql视图"></a>Mysql视图</h3><p><strong>为什么使用视图</strong><br>首先视图可以简化应用上层的操作，让应用更专注于其所关心的数据。其次，视图能够对敏感数据提供安全保护，比如：对不同的用户定义不同的视图，可以使敏感数据不出现在不应该看到这些数据的用户视图上；也可以使用视图实现基于列的权限控制，而不需要真正的在数据库中创建列权限。再者，视图可以方便系统运维，比如：在重构schema的时候使用视图，使得在修改视图底层表结构的时候，应用代码还可以继续运行不报错。</p>
+<p><strong>什么是视图</strong></p>
+<p>视图本身是一个虚拟表，不存放任何数据，查询视图的数据集由其他表生成。MySQL底层通过两种算法来实现视图：临时表算法（TEMPTABLE）和合并算法（MERGE）。</p>
+<p>临时表算法就是将SELECT语句的结果存放到临时表中，当需要访问视图的时候，直接访问这个临时表即可。</p>
+<p>相比于其它关系型数据库的视图，MySQL的视图在功能上会弱很多，比如ORACLE和MS SQL SERVER都支持物化视图。物化视图是指将视图结果数据存放在一个可以查询的表中，并定期从原始表中刷新数据到这张表中，这张表和普通物理表一样，可以创建索引、主键约束等等，性能相比于临时表会有质的提升。但遗憾的是MySQL目前并不支持物化视图，当然MySQL也不支持在视图中创建索引。</p>
+<p>视图的实现算法是视图本身的属性决定的，跟作用在视图上的SQL没有任何关系。一般来说，只要原表记录和视图中的记录无法建立一一映射的关系时，MySQL都将使用临时表算法来实现视图。比如创建视图的SQL中包含GROUP BY、DISTINCT、UNION、聚合函数、子查询的时候，视图都将采用临时表算法（这些规则在以后的版本中，可能会发生改变，具体请参考官方手册）</p>
+<h3 id="Explain-amp-Profiling"><a href="#Explain-amp-Profiling" class="headerlink" title="Explain&amp;Profiling"></a>Explain&amp;Profiling</h3><p><strong><code>Explain用法</code></strong><br>直接在执行的sql前加<code>explain</code>即可<br>详细参数说明参见<a href="https://segmentfault.com/a/1190000008131735" target="_blank" rel="noopener">MySQL 性能优化神器 Explain 使用分析</a>，里面写的很有特点。</p>
+<p><strong>Profiling用法</strong></p>
+<ol>
+<li><p>show variables like ‘%profiling%’;(查看profiling信息状态 on为开启，off关闭)    </p>
+</li>
+<li><p>set profiling=1;（开启profiling）</p>
+</li>
+<li><p>执行SQL查询 </p>
+</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SELECT * FROM oa_sign_in ; </span><br><span class="line">show  profiles;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pasted-46.png" alt="upload successful"></p>
+<p><img src="/images/pasted-47.png" alt="upload successful"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show profile cpu,block io <span class="keyword">for</span> query 168;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/pasted-48.png" alt="upload successful"></p>
+<h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><p>1、<a href="https://dba.stackexchange.com/questions/55969/statistics-state-in-mysql-processlist" target="_blank" rel="noopener">statistics State in MySQL Processlist</a></p>
+<p>2、<a href="http://mysqlinternals.blogspot.com/2015/05/list-of-background-operations-performed.html" target="_blank" rel="noopener">List of background operations performed by MySQL InnoDB Main thread</a></p>
+<p>3、<a href="http://imysql.com/2015/06/10/mysql-faq-processlist-thread-states.shtml" target="_blank" rel="noopener">processlist中哪些状态要引起关注</a></p>
+<p>4、<a href="http://imysql.com/2016/11/20/mysql-faq-what-cause-diskio-so-high.shtml" target="_blank" rel="noopener">是什么导致MySQL数据库服务器磁盘I/O高？</a></p>
+<p>5、<a href="http://seanlook.com/2017/10/13/mysql-table_open_cache_file_limits" target="_blank" rel="noopener">table_open_cache 与 table_definition_cache 对MySQL(内存)的影响</a></p>
+<p>6、<a href="https://dev.mysql.com/doc/refman/5.6/en/optimizing-innodb-diskio.html" target="_blank" rel="noopener">8.5.8 Optimizing InnoDB Disk I/O</a></p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+	
+	 
+	
+          
+          <div class="social_share">
+            
+               <div>
+                 
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "24",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "24"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+               </div>
+            
+            
+          </div>
+        
+	 	
+
+    
+
+
+
+    
+
+    <footer class="post-footer">
+     <!-- 
+  
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag"></i> mysql</a>
+          
+            <a href="/tags/优化/" rel="tag"><i class="fa fa-tag"></i> 优化</a>
+          
+            <a href="/tags/sql/" rel="tag"><i class="fa fa-tag"></i> sql</a>
+          
+        </div>
+      
+	  -->
+	  
+	  
+		  
+			
+			
+		  <div>
+			<div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果文章对你有帮助，欢迎点击上方按钮打赏作者!</div>
+  <br>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="志文 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="志文 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+		  </div>
+     
+	 
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+        </div>
+      
+      
+	  
+	  
+	  
+	   <!--
+	   <div>
+		
+			<div style="text-align:center;color: #f5871f;font-size:14px;"><br/><br/>-------------&nbsp;&nbsp;本文结束&nbsp;&nbsp;<i class="fa fa-paw"></i>&nbsp;&nbsp;感谢您的阅读&nbsp;&nbsp;-------------<br/><br/></div>
+		
+		</div>
+		-->
+		
+     
+
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/02/10/Jenkins自动化安装部署-权限配置（三）/" rel="next" title="Jenkins自动化安装部署-权限配置（三）">
+                <i class="fa fa-chevron-left"></i> Jenkins自动化安装部署-权限配置（三）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+ 
+
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div id="gitalk-container">
+    </div>
+    
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/jackie.png" alt="志文">
+            
+              <p class="site-author-name" itemprop="name">志文</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">10</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/yangzhiwen911" title="GitHub &rarr; https://github.com/yangzhiwen911" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:yangzhiwen911@gmail.com" title="E-Mail &rarr; mailto:yangzhiwen911@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mysql执行线程"><span class="nav-number">1.</span> <span class="nav-text">Mysql执行线程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mysql语句"><span class="nav-number">2.</span> <span class="nav-text">Mysql语句</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mysql索引"><span class="nav-number">3.</span> <span class="nav-text">Mysql索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mysql引擎"><span class="nav-number">4.</span> <span class="nav-text">Mysql引擎</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mysql配置文件"><span class="nav-number">5.</span> <span class="nav-text">Mysql配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mysql日志"><span class="nav-number">6.</span> <span class="nav-text">Mysql日志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mysql视图"><span class="nav-number">7.</span> <span class="nav-text">Mysql视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Explain-amp-Profiling"><span class="nav-number">8.</span> <span class="nav-text">Explain&amp;Profiling</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文献"><span class="nav-number">9.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019 - 2025 </span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">志文</span>
+
+  
+
+  
+</div>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+
+  
+  
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+
+  
+  
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.css">
+
+  
+  
+  <script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+   <script>
+        var gitalk = new Gitalk({
+          clientID: 'fadd19a803bff54d89dc',
+          clientSecret: 'd89851454b0e70116a6d0e3bb0ee25729f347afd',
+          repo: 'yangzhiwen911.github.io',
+          owner: 'yangzhiwen911',
+          admin: ['yangzhiwen911'],
+          id: md5(location.pathname),
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

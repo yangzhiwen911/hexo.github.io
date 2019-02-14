@@ -117,7 +117,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="测试">
 <meta property="og:url" content="http://yangzhiwen911.github.io/测试/index-1.html">
-<meta property="og:site_name" content="人生若只如初见">
+<meta property="og:site_name" content="You Jump I See You Jump">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2018-12-24T08:16:54.791Z">
 <meta name="twitter:card" content="summary">
@@ -125,7 +125,7 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="人生若只如初见" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="You Jump I See You Jump" type="application/atom+xml">
 
 
 
@@ -140,7 +140,7 @@
   };
 </script>
 
-  <title>测试 | 人生若只如初见</title>
+  <title>测试 | You Jump I See You Jump</title>
   
 
 
@@ -201,7 +201,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">人生若只如初见</span>
+        <span class="site-title">You Jump I See You Jump</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -465,10 +465,9 @@
           
 
   
-    <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC80MTgyOC8xODM3NA=="></div>
+    <div id="gitalk-container">
     </div>
-
+    
   
 
 
@@ -510,7 +509,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -570,7 +569,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">12</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -698,14 +701,6 @@
     
 
     
-      <div>
-        <!-- Go to www.addthis.com/dashboard to customize your tools -->
-<div class="addthis_inline_share_toolbox">
-  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5c21d4e63891e5a0" async="async"></script>
-</div>
-
-      </div>
-    
   </div>
 
   
@@ -728,12 +723,6 @@
 
 
 
-
-  
-    
-      
-  
-  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
 
 
 
@@ -795,29 +784,41 @@
 
 
   
-    <script>
-      window.livereOptions = {
-        refer: '测试/index-1.html'
-      };
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
+
+
+
+
+
+
+
+
+
+
+
   
+  
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
 
+  
+  
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.css">
 
+  
+  
+  <script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
 
-
-
-
-
-
-
+   <script>
+        var gitalk = new Gitalk({
+          clientID: 'fadd19a803bff54d89dc',
+          clientSecret: 'd89851454b0e70116a6d0e3bb0ee25729f347afd',
+          repo: 'yangzhiwen911.github.io',
+          owner: 'yangzhiwen911',
+          admin: ['yangzhiwen911'],
+          id: md5(location.pathname),
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')
+       </script>
 
 
   

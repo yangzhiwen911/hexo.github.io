@@ -118,7 +118,7 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Jenkins自动化安装部署-权限配置（三）">
 <meta property="og:url" content="http://yangzhiwen911.github.io/2019/02/10/Jenkins自动化安装部署-权限配置（三）/index.html">
-<meta property="og:site_name" content="人生若只如初见">
+<meta property="og:site_name" content="You Jump I See You Jump">
 <meta property="og:description" content="权限配置Jenkins的权限配置很重要，尤其是项目团队比较多的时候，可以防止一些奇葩的程序员进行误操作，一般情况下，只有A项目组的人才可以构建和操作A项目的权限，其他项目组是看不到的。因此合理的配置Jenkins权限可以使其发挥更大的功效，避免操作额外的麻烦。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-37.png">
@@ -131,7 +131,7 @@
 <meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-36.png">
 <meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-43.png">
 <meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-33.png">
-<meta property="og:updated_time" content="2019-02-11T04:25:02.728Z">
+<meta property="og:updated_time" content="2019-02-11T12:20:33.313Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jenkins自动化安装部署-权限配置（三）">
 <meta name="twitter:description" content="权限配置Jenkins的权限配置很重要，尤其是项目团队比较多的时候，可以防止一些奇葩的程序员进行误操作，一般情况下，只有A项目组的人才可以构建和操作A项目的权限，其他项目组是看不到的。因此合理的配置Jenkins权限可以使其发挥更大的功效，避免操作额外的麻烦。">
@@ -139,7 +139,7 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="人生若只如初见" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="You Jump I See You Jump" type="application/atom+xml">
 
 
 
@@ -154,7 +154,7 @@
   };
 </script>
 
-  <title>Jenkins自动化安装部署-权限配置（三） | 人生若只如初见</title>
+  <title>Jenkins自动化安装部署-权限配置（三） | You Jump I See You Jump</title>
   
 
 
@@ -215,7 +215,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">人生若只如初见</span>
+        <span class="site-title">You Jump I See You Jump</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -431,7 +431,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="人生若只如初见">
+      <meta itemprop="name" content="You Jump I See You Jump">
     </span>
 
     
@@ -594,9 +594,14 @@
 <p><img src="/images/pasted-36.png" alt="upload successful"></p>
 <h3 id="部署问题"><a href="#部署问题" class="headerlink" title="部署问题"></a>部署问题</h3><p><strong>Tomcat应用更新时，把新的WAR包放到webapps目录下，Tomcat就会自动把原来的同名webapp删除，并把WAR包解压，运行新的 webapp。</strong></p>
 <ul>
-<li>有时候Tomcat并不能把旧的webapp完全删除，通常会留下WEB-INF/lib下的某个jar包，必须关闭Tomcat才能删除，这就导致自动部署失败。解决方法是在<context>元素中增加一个属性antiResourceLocking=”true” antiJARLocking=”true”，默认是”false”。这样就可以热部署了。这两个参数就是配置Tomcat的资源锁定和Jar包锁定策略。<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Context antiResourceLocking=<span class="string">"true"</span>&gt;</span><br></pre></td></tr></table></figure>
-</context></li>
+<li><p>有时候Tomcat并不能把旧的webapp完全删除，通常会留下WEB-INF/lib下的某个jar包，必须关闭Tomcat才能删除，这就导致自动部署失败。解决方法：查看tomcate/conf/context.xml中的 context节点，<context>元素中增加一个属性antiResourceLocking=”true” antiJARLocking=”true”，默认是”false”。这样就可以热部署了。这两个参数就是配置Tomcat的资源锁定和Jar包锁定策略。</context></p>
+</li>
+<li><p>延伸问题，解压后的原context.xml文件中的context节点默认有两个属性：antiResourceLocking=”true” antiJARLocking=”true”，即Tomcat的资源锁定和Jar包锁定策略。 当antiResourceLocking=”true”时，tomcat每次启动时都会在temp目录下生成相应工程的临时文件，并把这些文件锁定，所以即使修改文件后，webapps文件夹下的修改时间会更新，但是temp文件夹下的修改时间是启动tomcate之前的修改时间。而用户在浏览器访问的资源却是temp下的，不是webapps下的。所以最终导致用户修改的效果无法在浏览器中看到。当antiResourceLocking=“false”后，temp目录下就不会生成临时文件了，这是用户访问的就是webapps下的资源了。</p>
+</li>
+<li><p>解决方法：查看tomcate/conf/context.xml中的 context节点。如果有antiResourceLocking这个属性，应该把他的值设为false。通过设置reloadable=”true” 属性，该属性主要用于自动部署java文件的修改。</p>
+</li>
 </ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Context antiResourceLocking=<span class="string">"true"</span>&gt;</span><br></pre></td></tr></table></figure>
 <blockquote><p>注：以上问题是直接通过tomcat内部账号连接部署的时候会发生的问题，如果直接通过scp文件上传打包到服务器不会出现上述问题。</p>
 </blockquote>
 <p><img src="/images/pasted-43.png" alt="upload successful"></p>
@@ -606,6 +611,17 @@
 <p><img src="/images/pasted-33.png" alt="upload successful"></p>
 <blockquote><p>注：如果配置文件进行修改后，而已经部署到Jenkins的workspace中的war没有清理，继续构建的话，Jenkins会默认保留已构建的war，而不会将最新的文件关联到nexus中。</p>
 </blockquote>
+<ul>
+<li><p>在jenkins中配置自动更新部署项目时，如果采取用execute shell启动/关闭tomcat，会发现可以进行关闭tomcat，但是无法启动tomcat，虽然构建会显示执行成功，但是查看进程，tomcat是没有启动的。这是因为Jenkins默认会在Build结束后Kill掉所有的衍生进程。需要进行以下配置，才能避免此类情况发生。</p>
+</li>
+<li><p>在启动jenkins 的时候禁止jenkins杀死衍生进程</p>
+<ul>
+<li>修改/etc/sysconfig/jenkins配置，在JENKINS_JAVA_OPTIONS中加入-Dhudson.util.ProcessTree.disable=true。需要重启jenkins生效</li>
+<li>此方法配置一次后，所有的job都无需设置BUILD_ID，就能够防止jenkins杀死启动的tomcat进</li>
+</ul>
+</li>
+</ul>
+
       
     </div>
 
@@ -614,30 +630,138 @@
     
     
     
+	
+	 
+	
+          
+          <div class="social_share">
+            
+               <div>
+                 
+  <div class="bdsharebuttonbox">
+    <a href="#" class="bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+    <a href="#" class="bds_douban" data-cmd="douban" title="分享到豆瓣网"></a>
+    <a href="#" class="bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>
+    <a href="#" class="bds_qzone" data-cmd="qzone" title="分享到QQ空间"></a>
+    <a href="#" class="bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+    <a href="#" class="bds_tieba" data-cmd="tieba" title="分享到百度贴吧"></a>
+    <a href="#" class="bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    
+    <a class="bds_count" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "24",
+        "bdStyle": "0"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "24"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+               </div>
+            
+            
+          </div>
+        
+	 	
 
     
 
-    
-      
-    
-    
+
 
     
 
     <footer class="post-footer">
+     <!-- 
+  
       
         <div class="post-tags">
           
-            <a href="/tags/权限/" rel="tag"># 权限</a>
+            <a href="/tags/权限/" rel="tag"><i class="fa fa-tag"></i> 权限</a>
           
-            <a href="/tags/部署/" rel="tag"># 部署</a>
+            <a href="/tags/部署/" rel="tag"><i class="fa fa-tag"></i> 部署</a>
           
         </div>
       
+	  -->
+	  
+	  
+		  
+			
+			
+		  <div>
+			<div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果文章对你有帮助，欢迎点击上方按钮打赏作者!</div>
+  <br>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="志文 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="志文 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+		  </div>
+     
+	 
 
       
       
+        <div class="post-widgets">
+        
+
+        
+
+        
+        </div>
       
+      
+	  
+	  
+	  
+	   <!--
+	   <div>
+		
+			<div style="text-align:center;color: #f5871f;font-size:14px;"><br/><br/>-------------&nbsp;&nbsp;本文结束&nbsp;&nbsp;<i class="fa fa-paw"></i>&nbsp;&nbsp;感谢您的阅读&nbsp;&nbsp;-------------<br/><br/></div>
+		
+		</div>
+		-->
+		
+     
+
 
       
         <div class="post-nav">
@@ -653,6 +777,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/02/14/Mysql优化记录/" rel="prev" title="Mysql优化记录">
+                Mysql优化记录 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -664,6 +792,8 @@
   
   
   
+ 
+
   </article>
 
 
@@ -674,10 +804,9 @@
           
 
   
-    <div class="comments" id="comments">
-      <div id="lv-container" data-id="city" data-uid="MTAyMC80MTgyOC8xODM3NA=="></div>
+    <div id="gitalk-container">
     </div>
-
+    
   
 
 
@@ -728,7 +857,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">9</span>
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -788,7 +917,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">12</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -932,14 +1065,6 @@
     
 
     
-      <div>
-        <!-- Go to www.addthis.com/dashboard to customize your tools -->
-<div class="addthis_inline_share_toolbox">
-  <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5c21d4e63891e5a0" async="async"></script>
-</div>
-
-      </div>
-    
   </div>
 
   
@@ -962,12 +1087,6 @@
 
 
 
-
-  
-    
-      
-  
-  <script color="0,0,255" opacity="0.5" zindex="-1" count="99" src="/lib/canvas-nest/canvas-nest.min.js"></script>
 
 
 
@@ -1029,29 +1148,41 @@
 
 
   
-    <script>
-      window.livereOptions = {
-        refer: '2019/02/10/Jenkins自动化安装部署-权限配置（三）/'
-      };
-      (function(d, s) {
-        var j, e = d.getElementsByTagName(s)[0];
-        if (typeof LivereTower === 'function') { return; }
-        j = d.createElement(s);
-        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
-        j.async = true;
-        e.parentNode.insertBefore(j, e);
-      })(document, 'script');
-    </script>
+
+
+
+
+
+
+
+
+
+
+
   
+  
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
 
+  
+  
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.css">
 
+  
+  
+  <script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
 
-
-
-
-
-
-
+   <script>
+        var gitalk = new Gitalk({
+          clientID: 'fadd19a803bff54d89dc',
+          clientSecret: 'd89851454b0e70116a6d0e3bb0ee25729f347afd',
+          repo: 'yangzhiwen911.github.io',
+          owner: 'yangzhiwen911',
+          admin: ['yangzhiwen911'],
+          id: md5(location.pathname),
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')
+       </script>
 
 
   
