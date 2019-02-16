@@ -428,7 +428,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2019/02/14/Mysql优化记录/" class="post-title-link" itemprop="url">Mysql优化记录</a>
+                <a href="/2019/02/14/Mysql优化记录/" class="post-title-link" itemprop="url">MySQL详解&优化记录</a>
               
             
           </h1>
@@ -459,9 +459,43 @@
               
 
               
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+               2019-02-15
             
           </span>
 		  
+		  
+		  
+		  
+		  
+		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+				<span class="post-meta-item-text"> 
+				9.3k	字			 
+				</span>
+		  
+		  
+		
+			
+		  
+		  
+		  
+		  
+
+          
+		  
+		  
+		    
 		  
 		  
 		  
@@ -475,11 +509,8 @@
 				 Jakcie.Yang
 				</span>
 		
-
 		  
-		  
-
-          
+		   
 
           
             
@@ -493,6 +524,23 @@
           
 
           
+		    
+		  
+		  
+		  
+		
+		 
+        <div class="post-tags">
+		 
+          
+            <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag"></i> mysql</a>
+          
+            <a href="/tags/优化/" rel="tag"><i class="fa fa-tag"></i> 优化</a>
+          
+            <a href="/tags/sql/" rel="tag"><i class="fa fa-tag"></i> sql</a>
+          
+        </div>
+      
 
         </div>
       </header>
@@ -508,10 +556,7 @@
 
       
         
-          <h3 id="Mysql执行线程"><a href="#Mysql执行线程" class="headerlink" title="Mysql执行线程"></a>Mysql执行线程</h3><p><strong>1、查看<code>Mysql</code>当前连接数</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show full processlist;</span><br></pre></td></tr></table></figure>
-<p><img src="/images/pasted-44.png" alt="upload successful"></p>
-<p>statistics 状态的线程，表示正在计算统计数据，以制定一个查询执行计划。 如果一个线程很长一段时间处于这种状态，可能是磁盘绑定的，即磁盘IO性能很差，说到底就是数据库服务器IO遇到问题了，可以通过增加 buffer_pool 来缓存更多的数据，或者提高服务器IO能力，可能磁盘在执行其他工作。<br>
+          <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p><code>MySQL</code>是一个关系型<code>数据库管理系统</code>，由瑞典MySQL AB 公司开发，目前属于 Oracle 旗下产品。<code>MySQL</code> 是最流行的关系型数据库管理系统之一，在 WEB 应用方面，<code>MySQL</code>是最好的 <code>RDBMS</code> (Relational Database Management System，关系数据库管理系统) 应用软件。<br>MySQL是一种关系数据库管理系统，关系数据库将数据保存在不同的表中，而不是将所有数据放在一个大仓库内，这样就增加了速度并提高了灵活性。<br>MySQL所使用的 SQL 语言是用于访问数据库的最常用标准化语言。MySQL 软件采用了双授权政策，分为社区版和商业版，由于其体积小、速度快、总体拥有成本低，尤其是开放源码这一特点，一般中小型网站的开发都选择 MySQL 作为网站数据库。</p>
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -523,7 +568,7 @@
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     
 
@@ -665,16 +710,18 @@
 		  
 		  
 		  
-		 
-		  
-		  
-			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-user"></i>
-                </span><span class="post-meta-item-text"> 作者
-				 Jakcie.Yang
+		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+				<span class="post-meta-item-text"> 
+				1k	字			 
 				</span>
+		  
+		  
 		
-
+			
+		  
+		  
 		  
 		  
 
@@ -697,6 +744,24 @@
               
             </span>
           
+		  
+		  
+		    
+		  
+		  
+		  
+		  
+		 
+		  
+		  
+			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-user"></i>
+                </span><span class="post-meta-item-text"> 作者
+				 Jakcie.Yang
+				</span>
+		
+		  
+		   
 
           
             
@@ -710,6 +775,21 @@
           
 
           
+		    
+		  
+		  
+		  
+		
+		 
+        <div class="post-tags">
+		 
+          
+            <a href="/tags/权限/" rel="tag"><i class="fa fa-tag"></i> 权限</a>
+          
+            <a href="/tags/部署/" rel="tag"><i class="fa fa-tag"></i> 部署</a>
+          
+        </div>
+      
 
         </div>
       </header>
@@ -879,16 +959,18 @@
 		  
 		  
 		  
-		 
-		  
-		  
-			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-user"></i>
-                </span><span class="post-meta-item-text"> 作者
-				 Jakcie.Yang
+		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+				<span class="post-meta-item-text"> 
+				427	字			 
 				</span>
+		  
+		  
 		
-
+			
+		  
+		  
 		  
 		  
 
@@ -911,6 +993,24 @@
               
             </span>
           
+		  
+		  
+		    
+		  
+		  
+		  
+		  
+		 
+		  
+		  
+			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-user"></i>
+                </span><span class="post-meta-item-text"> 作者
+				 Jakcie.Yang
+				</span>
+		
+		  
+		   
 
           
             
@@ -924,6 +1024,12 @@
           
 
           
+		    
+		  
+		  
+		  
+		
+		 
 
         </div>
       </header>
@@ -1096,16 +1202,18 @@
 		  
 		  
 		  
-		 
-		  
-		  
-			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-user"></i>
-                </span><span class="post-meta-item-text"> 作者
-				 Jakcie.Yang
+		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+				<span class="post-meta-item-text"> 
+				989	字			 
 				</span>
+		  
+		  
 		
-
+			
+		  
+		  
 		  
 		  
 
@@ -1128,6 +1236,24 @@
               
             </span>
           
+		  
+		  
+		    
+		  
+		  
+		  
+		  
+		 
+		  
+		  
+			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-user"></i>
+                </span><span class="post-meta-item-text"> 作者
+				 Jakcie.Yang
+				</span>
+		
+		  
+		   
 
           
             
@@ -1141,6 +1267,21 @@
           
 
           
+		    
+		  
+		  
+		  
+		
+		 
+        <div class="post-tags">
+		 
+          
+            <a href="/tags/jenkins/" rel="tag"><i class="fa fa-tag"></i> jenkins</a>
+          
+            <a href="/tags/服务器/" rel="tag"><i class="fa fa-tag"></i> 服务器</a>
+          
+        </div>
+      
 
         </div>
       </header>
@@ -1292,6 +1433,17 @@
               
 
               
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+               2019-02-16
             
           </span>
 		  
@@ -1299,16 +1451,18 @@
 		  
 		  
 		  
-		 
-		  
-		  
-			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-user"></i>
-                </span><span class="post-meta-item-text"> 作者
-				 Jakcie.Yang
+		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+				<span class="post-meta-item-text"> 
+				603	字			 
 				</span>
+		  
+		  
 		
-
+			
+		  
+		  
 		  
 		  
 
@@ -1331,6 +1485,24 @@
               
             </span>
           
+		  
+		  
+		    
+		  
+		  
+		  
+		  
+		 
+		  
+		  
+			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-user"></i>
+                </span><span class="post-meta-item-text"> 作者
+				 Jakcie.Yang
+				</span>
+		
+		  
+		   
 
           
             
@@ -1344,6 +1516,21 @@
           
 
           
+		    
+		  
+		  
+		  
+		
+		 
+        <div class="post-tags">
+		 
+          
+            <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag"></i> mysql</a>
+          
+            <a href="/tags/脚本/" rel="tag"><i class="fa fa-tag"></i> 脚本</a>
+          
+        </div>
+      
 
         </div>
       </header>
@@ -1359,7 +1546,7 @@
 
       
         
-          <h3 id="Mysql概述"><a href="#Mysql概述" class="headerlink" title="Mysql概述"></a>Mysql概述</h3><p>MySQL是一个关系型数据库管理系统，由瑞典MySQL AB 公司开发，目前属于 Oracle 旗下产品。MySQL 是最流行的关系型数据库管理系统之一，在 WEB 应用方面，MySQL是最好的 RDBMS (Relational Database Management System，关系数据库管理系统) 应用软件。<br>MySQL是一种关系数据库管理系统，关系数据库将数据保存在不同的表中，而不是将所有数据放在一个大仓库内，这样就增加了速度并提高了灵活性。<br>MySQL所使用的 SQL 语言是用于访问数据库的最常用标准化语言。MySQL 软件采用了双授权政策，分为社区版和商业版，由于其体积小、速度快、总体拥有成本低，尤其是开放源码这一特点，一般中小型网站的开发都选择 MySQL 作为网站数据库。</p>
+          <h3 id="执行过程"><a href="#执行过程" class="headerlink" title="执行过程"></a>执行过程</h3><p><strong>由于频繁安装mysql添加用户配置权限以及编译初始化过程基本一致，所以可以直接编写shell文件来自动执行重复的工作。</strong></p>
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -1513,16 +1700,18 @@
 		  
 		  
 		  
-		 
-		  
-		  
-			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-user"></i>
-                </span><span class="post-meta-item-text"> 作者
-				 Jakcie.Yang
+		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+				<span class="post-meta-item-text"> 
+				1.6k	字			 
 				</span>
+		  
+		  
 		
-
+			
+		  
+		  
 		  
 		  
 
@@ -1545,6 +1734,24 @@
               
             </span>
           
+		  
+		  
+		    
+		  
+		  
+		  
+		  
+		 
+		  
+		  
+			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-user"></i>
+                </span><span class="post-meta-item-text"> 作者
+				 Jakcie.Yang
+				</span>
+		
+		  
+		   
 
           
             
@@ -1558,6 +1765,19 @@
           
 
           
+		    
+		  
+		  
+		  
+		
+		 
+        <div class="post-tags">
+		 
+          
+            <a href="/tags/Tengine/" rel="tag"><i class="fa fa-tag"></i> Tengine</a>
+          
+        </div>
+      
 
         </div>
       </header>
@@ -1727,6 +1947,29 @@
 		  
 		  
 		  
+		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+				<span class="post-meta-item-text"> 
+				2.8k	字			 
+				</span>
+		  
+		  
+		
+			
+		  
+		  
+		  
+		  
+
+          
+		  
+		  
+		    
+		  
+		  
+		  
+		  
 		 
 		  
 		  
@@ -1736,11 +1979,8 @@
 				 Jakcie.Yang
 				</span>
 		
-
 		  
-		  
-
-          
+		   
 
           
             
@@ -1754,6 +1994,12 @@
           
 
           
+		    
+		  
+		  
+		  
+		
+		 
 
         </div>
       </header>
@@ -1912,16 +2158,18 @@
 		  
 		  
 		  
-		 
-		  
-		  
-			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-user"></i>
-                </span><span class="post-meta-item-text"> 作者
-				 Jakcie.Yang
+		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+				<span class="post-meta-item-text"> 
+				567	字			 
 				</span>
+		  
+		  
 		
-
+			
+		  
+		  
 		  
 		  
 
@@ -1944,6 +2192,24 @@
               
             </span>
           
+		  
+		  
+		    
+		  
+		  
+		  
+		  
+		 
+		  
+		  
+			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-user"></i>
+                </span><span class="post-meta-item-text"> 作者
+				 Jakcie.Yang
+				</span>
+		
+		  
+		   
 
           
             
@@ -1957,6 +2223,12 @@
           
 
           
+		    
+		  
+		  
+		  
+		
+		 
 
         </div>
       </header>
@@ -2126,16 +2398,18 @@
 		  
 		  
 		  
-		 
-		  
-		  
-			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-user"></i>
-                </span><span class="post-meta-item-text"> 作者
-				 Jakcie.Yang
+		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+				<span class="post-meta-item-text"> 
+				897	字			 
 				</span>
+		  
+		  
 		
-
+			
+		  
+		  
 		  
 		  
 
@@ -2158,6 +2432,24 @@
               
             </span>
           
+		  
+		  
+		    
+		  
+		  
+		  
+		  
+		 
+		  
+		  
+			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-user"></i>
+                </span><span class="post-meta-item-text"> 作者
+				 Jakcie.Yang
+				</span>
+		
+		  
+		   
 
           
             
@@ -2171,6 +2463,25 @@
           
 
           
+		    
+		  
+		  
+		  
+		
+		 
+        <div class="post-tags">
+		 
+          
+            <a href="/tags/MyCat/" rel="tag"><i class="fa fa-tag"></i> MyCat</a>
+          
+            <a href="/tags/Github/" rel="tag"><i class="fa fa-tag"></i> Github</a>
+          
+            <a href="/tags/ssh/" rel="tag"><i class="fa fa-tag"></i> ssh</a>
+          
+            <a href="/tags/rsa/" rel="tag"><i class="fa fa-tag"></i> rsa</a>
+          
+        </div>
+      
 
         </div>
       </header>
@@ -2340,6 +2651,29 @@
 		  
 		  
 		  
+		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+				<span class="post-meta-item-text"> 
+				21	字			 
+				</span>
+		  
+		  
+		
+			
+		  
+		  
+		  
+		  
+
+          
+		  
+		  
+		    
+		  
+		  
+		  
+		  
 		 
 		  
 		  
@@ -2349,11 +2683,8 @@
 				 Jakcie.Yang
 				</span>
 		
-
 		  
-		  
-
-          
+		   
 
           
             
@@ -2367,6 +2698,19 @@
           
 
           
+		    
+		  
+		  
+		  
+		
+		 
+        <div class="post-tags">
+		 
+          
+            <a href="/tags/java/" rel="tag"><i class="fa fa-tag"></i> java</a>
+          
+        </div>
+      
 
         </div>
       </header>
@@ -2609,6 +2953,60 @@
           
 
           
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.softwhy.com/" title="http://www.softwhy.com/" rel="noopener" target="_blank">蚂蚁部落</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://ziyuan.baidu.com/" title="https://ziyuan.baidu.com/" rel="noopener" target="_blank">百度SEO</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://fontawesome.dashgame.com/" title="http://fontawesome.dashgame.com/" rel="noopener" target="_blank">图标大全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/plei_yue/article/details/78930287" title="https://blog.csdn.net/plei_yue/article/details/78930287" rel="noopener" target="_blank">SpringBoot</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://jm.taobao.org/" title="http://jm.taobao.org/" rel="noopener" target="_blank">阿里中间件</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://yq.aliyun.com/articles/" title="https://yq.aliyun.com/articles/" rel="noopener" target="_blank">云栖社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://cmsblogs.com/" title="http://cmsblogs.com/" rel="noopener" target="_blank">JAVA技术栈</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.fangzhipeng.com/page4/" title="https://www.fangzhipeng.com/page4/" rel="noopener" target="_blank">源码解析大全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://yq.aliyun.com/articles/679638?spm=a2c4e.11157919.spm-cont-list.190.160427ae85fT58" title="https://yq.aliyun.com/articles/679638?spm=a2c4e.11157919.spm-cont-list.190.160427ae85fT58" rel="noopener" target="_blank">JAVA知识</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://cmsblogs.com/?p=2611" title="http://cmsblogs.com/?p=2611" rel="noopener" target="_blank">JAVA并发</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://cmsblogs.com/?p=3819" title="http://cmsblogs.com/?p=3819" rel="noopener" target="_blank">GC优化</a>
+                  </li>
+                
+              </ul>
+            </div>
           
 
           
@@ -3127,8 +3525,86 @@
   
 
   
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap');
+      $(e).after($wrap);
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text();
+        }).toArray().join('\n');
+        var ta = document.createElement('textarea');
+        var range = document.createRange(); //For Chrome
+        var sel = window.getSelection(); //For Chrome
+        var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+        ta.style.top = yPosition + 'px'; //Prevent page scroll
+        ta.style.position = 'absolute';
+        ta.style.opacity = '0';
+        ta.value = code;
+        ta.textContent = code; //For FireFox
+        ta.contentEditable = true;
+        ta.readOnly = false;
+        document.body.appendChild(ta);
+        range.selectNode(ta);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        ta.setSelectionRange(0, code.length);
+        var result = document.execCommand('copy');
+        
+          if (result) $(this).text('复制成功');
+          else $(this).text('复制失败');
+        
+        ta.blur(); //For iOS
+        $(this).blur();
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn');
+        setTimeout(function () {
+          $b.text('复制');
+        }, 300);
+      }).append(e);
+    })
+  </script>
+
 
   
+
 
 </body>
 </html>
