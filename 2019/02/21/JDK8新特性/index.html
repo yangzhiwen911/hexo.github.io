@@ -113,19 +113,19 @@
 
 
 
-  <meta name="description" content="Java 8 (又称为 jdk 1.8) 是 Java 语言开发的一个主要版本。 Oracle 公司于 2014 年 3 月 18 日发布 Java 8 ，它支持函数式编程，新的 JavaScript 引擎，新的日期 API，新的Stream API 等。 新特性 Lambda 表达式 − Lambda允许把函数作为一个方法的参数（函数作为参数传递进方法中。 方法引用 − 方法引用提供了非常有用的">
-<meta name="keywords" content="Java">
+  <meta name="description" content="Java 8(又称为 jdk 1.8) 是 Java 语言开发的一个主要版本。 Oracle 公司于 2014 年 3 月 18 日发布 Java 8 ，它支持函数式编程，新的 JavaScript 引擎，新的日期 API，新的Stream API 等。 新特性 Lambda 表达式 − Lambda允许把函数作为一个方法的参数（函数作为参数传递进方法中。 方法引用 − 方法引用提供了非常有用的语">
+<meta name="keywords" content="Java,Lambda,Stream,Optional">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JAVA 8新特性">
 <meta property="og:url" content="http://yangzhiwen911.github.io/2019/02/21/JDK8新特性/index.html">
 <meta property="og:site_name" content="You Jump I See You Jump">
-<meta property="og:description" content="Java 8 (又称为 jdk 1.8) 是 Java 语言开发的一个主要版本。 Oracle 公司于 2014 年 3 月 18 日发布 Java 8 ，它支持函数式编程，新的 JavaScript 引擎，新的日期 API，新的Stream API 等。 新特性 Lambda 表达式 − Lambda允许把函数作为一个方法的参数（函数作为参数传递进方法中。 方法引用 − 方法引用提供了非常有用的">
+<meta property="og:description" content="Java 8(又称为 jdk 1.8) 是 Java 语言开发的一个主要版本。 Oracle 公司于 2014 年 3 月 18 日发布 Java 8 ，它支持函数式编程，新的 JavaScript 引擎，新的日期 API，新的Stream API 等。 新特性 Lambda 表达式 − Lambda允许把函数作为一个方法的参数（函数作为参数传递进方法中。 方法引用 − 方法引用提供了非常有用的语">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-53.png">
-<meta property="og:updated_time" content="2019-02-21T15:09:53.865Z">
+<meta property="og:updated_time" content="2019-02-23T15:50:50.522Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JAVA 8新特性">
-<meta name="twitter:description" content="Java 8 (又称为 jdk 1.8) 是 Java 语言开发的一个主要版本。 Oracle 公司于 2014 年 3 月 18 日发布 Java 8 ，它支持函数式编程，新的 JavaScript 引擎，新的日期 API，新的Stream API 等。 新特性 Lambda 表达式 − Lambda允许把函数作为一个方法的参数（函数作为参数传递进方法中。 方法引用 − 方法引用提供了非常有用的">
+<meta name="twitter:description" content="Java 8(又称为 jdk 1.8) 是 Java 语言开发的一个主要版本。 Oracle 公司于 2014 年 3 月 18 日发布 Java 8 ，它支持函数式编程，新的 JavaScript 引擎，新的日期 API，新的Stream API 等。 新特性 Lambda 表达式 − Lambda允许把函数作为一个方法的参数（函数作为参数传递进方法中。 方法引用 − 方法引用提供了非常有用的语">
 <meta name="twitter:image" content="http://yangzhiwen911.github.io/images/pasted-53.png">
 
 
@@ -462,6 +462,17 @@
               
 
               
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+               2019-02-23
             
           </span>
 		  
@@ -552,6 +563,12 @@
           
             <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
           
+            <a href="/tags/Lambda/" rel="tag"><i class="fa fa-tag"></i> Lambda</a>
+          
+            <a href="/tags/Stream/" rel="tag"><i class="fa fa-tag"></i> Stream</a>
+          
+            <a href="/tags/Optional/" rel="tag"><i class="fa fa-tag"></i> Optional</a>
+          
         </div>
       
 
@@ -568,16 +585,16 @@
       
 
       
-        <p>Java 8 (又称为 jdk 1.8) 是 Java 语言开发的一个主要版本。 Oracle 公司于 2014 年 3 月 18 日发布 Java 8 ，它支持函数式编程，新的 JavaScript 引擎，新的日期 API，新的Stream API 等。</p>
+        <p><code>Java 8</code>(又称为 jdk 1.8) 是 Java 语言开发的一个主要版本。 Oracle 公司于 2014 年 3 月 18 日发布 Java 8 ，它支持函数式编程，新的 <code>JavaScript</code> 引擎，新的日期 <code>API</code>，新的<code>Stream API</code> 等。</p>
 <h2 id="新特性"><a href="#新特性" class="headerlink" title="新特性"></a>新特性</h2><ul>
-<li>Lambda 表达式 − Lambda允许把函数作为一个方法的参数（函数作为参数传递进方法中。</li>
+<li><code>Lambda</code> 表达式 − <code>Lambda</code>允许把函数作为一个方法的参数（函数作为参数传递进方法中。</li>
 <li>方法引用 − 方法引用提供了非常有用的语法，可以直接引用已有Java类或对象（实例）的方法或构造器。与lambda联合使用，方法引用可以使语言的构造更紧凑简洁，减少冗余代码。</li>
 <li>默认方法 − 默认方法就是一个在接口里面有了一个实现的方法。</li>
-<li>新工具 − 新的编译工具，如：Nashorn引擎 jjs、 类依赖分析器jdeps。</li>
-<li>Stream API −新添加的Stream API（java.util.stream） 把真正的函数式编程风格引入到Java中。</li>
-<li>Date Time API − 加强对日期与时间的处理。</li>
-<li>Optional 类 − Optional 类已经成为 Java 8 类库的一部分，用来解决空指针异常。</li>
-<li>Nashorn, JavaScript 引擎 − Java 8提供了一个新的Nashorn javascript引擎，它允许我们在JVM上运行特定的javascript应用。</li>
+<li>新工具 − 新的编译工具，如：<code>Nashorn</code>引擎 jjs、 类依赖分析器jdeps。</li>
+<li><code>Stream API</code> −新添加的Stream API（java.util.stream） 把真正的函数式编程风格引入到Java中。</li>
+<li><code>Date Time API</code> − 加强对日期与时间的处理。</li>
+<li><code>Optional</code> 类 − Optional 类已经成为 Java 8 类库的一部分，用来解决空指针异常。</li>
+<li><code>Nashorn</code>, <code>JavaScript</code> 引擎 − Java 8提供了一个新的<code>Nashorn javascript</code>引擎，它允许我们在<code>JVM</code>上运行特定的javascript应用。</li>
 </ul>
 <a id="more"></a>
 <h3 id="Lambda-表达式"><a href="#Lambda-表达式" class="headerlink" title="Lambda 表达式"></a>Lambda 表达式</h3><h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p>Lambda 表达式，也可称为闭包，它是推动 Java 8 发布的最重要新特性。Lambda 允许把函数作为一个方法的参数（函数作为参数传递进方法中）。使用 Lambda 表达式可以使代码变的更加简洁紧凑。</p>
@@ -765,7 +782,6 @@ date1: <span class="number">2016</span>-<span class="number">04</span>-<span cla
 </code></pre>
 <blockquote><h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a href="http://www.runoob.com/java/java8-new-features.html" target="_blank" rel="noopener">Java 8 新特性</a></p>
 </blockquote>
-
       
     </div>
 
@@ -837,6 +853,12 @@ date1: <span class="number">2016</span>-<span class="number">04</span>-<span cla
         <div class="post-tags">
           
             <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+          
+            <a href="/tags/Lambda/" rel="tag"><i class="fa fa-tag"></i> Lambda</a>
+          
+            <a href="/tags/Stream/" rel="tag"><i class="fa fa-tag"></i> Stream</a>
+          
+            <a href="/tags/Optional/" rel="tag"><i class="fa fa-tag"></i> Optional</a>
           
         </div>
       
@@ -918,6 +940,10 @@ date1: <span class="number">2016</span>-<span class="number">04</span>-<span cla
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/02/23/JVM垃圾回收/" rel="prev" title="JVM垃圾回收">
+                JVM垃圾回收 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -994,7 +1020,7 @@ date1: <span class="number">2016</span>-<span class="number">04</span>-<span cla
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1072,7 +1098,17 @@ date1: <span class="number">2016</span>-<span class="number">04</span>-<span cla
                     
                       
                     
-                    <span class="site-state-item-count">19</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

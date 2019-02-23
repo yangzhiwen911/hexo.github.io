@@ -408,6 +408,248 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2019/02/23/JVM垃圾回收/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="志文">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jackie.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="You Jump I See You Jump">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/02/23/JVM垃圾回收/" class="post-title-link" itemprop="url">JVM垃圾回收</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+             2019-02-23
+
+            
+              
+
+              
+            
+          </span>
+		  
+		  
+		  
+		  
+		  
+		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+				<span class="post-meta-item-text"> 
+				4.1k	字			 
+				</span>
+		  
+		  
+		
+			
+		  
+		  
+		  
+		  
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/JAVA/" itemprop="url" rel="index"><span itemprop="name">JAVA</span></a></span>
+
+                
+                
+              
+            </span>
+          
+		  
+		  
+		    
+		  
+		  
+		  
+		  
+		 
+		  
+		  
+			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-user"></i>
+                </span><span class="post-meta-item-text"> 作者
+				 Jakcie.Yang
+				</span>
+		
+		  
+		   
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+		    
+		  
+		  
+		  
+		
+		 
+        <div class="post-tags">
+		 
+          
+            <a href="/tags/JVM/" rel="tag"><i class="fa fa-tag"></i> JVM</a>
+          
+            <a href="/tags/GC/" rel="tag"><i class="fa fa-tag"></i> GC</a>
+          
+            <a href="/tags/引用/" rel="tag"><i class="fa fa-tag"></i> 引用</a>
+          
+        </div>
+      
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h3><p><code>GC</code> (Garbage Collection)的基本原理：将内存中不再被使用的对象进行回收，<code>GC</code>中用于回收的方法称为收集器，由于<code>GC</code>需要消耗一些资源和时间，<code>Java</code>在对对象的生命周期特征进行分析后，按照新生代、旧生代的方式来对对象进行收集，以尽可能的缩短GC对应用造成的暂停。</p>
+<p><code>JAVA</code>中，<code>GC</code>通过确定对象是否被活动对象引用来确定是否收集该对象。目前主流的垃圾收集器都会采用分代回收算法，因此需要将堆内存分为新生代和老年代，这样我们就可以根据各个年代的特点选择合适的垃圾收集算法。既然虚拟机采用了分代收集的思想来管理内存，那么内存回收时就必须能识别那些对象应放在新生代，那些对象应放在老年代中。为了做到这一点，虚拟机给每个对象一个对象年龄（Age）计数器。</p>
+<p>如果对象在 <code>Eden</code> 出生并经过第一次 <code>Minor GC</code> 后仍然能够存活，并且能被 <code>Survivor</code> 容纳的话，将被移动到 Survivor 空间中，并将对象年龄设为1.对象在 Survivor 中每熬过一次 <code>MinorGC</code>,年龄就增加1岁，当它的年龄增加到一定程度（默认为15岁），就会被晋升到老年代中。对象晋升到老年代的年龄阈值，可以通过参数 -XX:MaxTenuringThreshold 来设置。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/02/23/JVM垃圾回收/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+	
+	 	
+
+    
+
+
+
+    
+
+    <footer class="post-footer">
+     <!-- 
+  
+      
+	  -->
+	  
+	  
+		  
+			
+			
+	 
+
+      
+	  
+	  
+	  
+	   <!--
+	   <div>
+		
+		</div>
+		-->
+		
+     
+
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+ 
+
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2019/02/21/JDK8新特性/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -459,6 +701,17 @@
               
 
               
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+               2019-02-23
             
           </span>
 		  
@@ -542,6 +795,12 @@
           
             <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
           
+            <a href="/tags/Lambda/" rel="tag"><i class="fa fa-tag"></i> Lambda</a>
+          
+            <a href="/tags/Stream/" rel="tag"><i class="fa fa-tag"></i> Stream</a>
+          
+            <a href="/tags/Optional/" rel="tag"><i class="fa fa-tag"></i> Optional</a>
+          
         </div>
       
 
@@ -559,16 +818,16 @@
 
       
         
-          <p>Java 8 (又称为 jdk 1.8) 是 Java 语言开发的一个主要版本。 Oracle 公司于 2014 年 3 月 18 日发布 Java 8 ，它支持函数式编程，新的 JavaScript 引擎，新的日期 API，新的Stream API 等。</p>
+          <p><code>Java 8</code>(又称为 jdk 1.8) 是 Java 语言开发的一个主要版本。 Oracle 公司于 2014 年 3 月 18 日发布 Java 8 ，它支持函数式编程，新的 <code>JavaScript</code> 引擎，新的日期 <code>API</code>，新的<code>Stream API</code> 等。</p>
 <h2 id="新特性"><a href="#新特性" class="headerlink" title="新特性"></a>新特性</h2><ul>
-<li>Lambda 表达式 − Lambda允许把函数作为一个方法的参数（函数作为参数传递进方法中。</li>
+<li><code>Lambda</code> 表达式 − <code>Lambda</code>允许把函数作为一个方法的参数（函数作为参数传递进方法中。</li>
 <li>方法引用 − 方法引用提供了非常有用的语法，可以直接引用已有Java类或对象（实例）的方法或构造器。与lambda联合使用，方法引用可以使语言的构造更紧凑简洁，减少冗余代码。</li>
 <li>默认方法 − 默认方法就是一个在接口里面有了一个实现的方法。</li>
-<li>新工具 − 新的编译工具，如：Nashorn引擎 jjs、 类依赖分析器jdeps。</li>
-<li>Stream API −新添加的Stream API（java.util.stream） 把真正的函数式编程风格引入到Java中。</li>
-<li>Date Time API − 加强对日期与时间的处理。</li>
-<li>Optional 类 − Optional 类已经成为 Java 8 类库的一部分，用来解决空指针异常。</li>
-<li>Nashorn, JavaScript 引擎 − Java 8提供了一个新的Nashorn javascript引擎，它允许我们在JVM上运行特定的javascript应用。</li>
+<li>新工具 − 新的编译工具，如：<code>Nashorn</code>引擎 jjs、 类依赖分析器jdeps。</li>
+<li><code>Stream API</code> −新添加的Stream API（java.util.stream） 把真正的函数式编程风格引入到Java中。</li>
+<li><code>Date Time API</code> − 加强对日期与时间的处理。</li>
+<li><code>Optional</code> 类 − Optional 类已经成为 Java 8 类库的一部分，用来解决空指针异常。</li>
+<li><code>Nashorn</code>, <code>JavaScript</code> 引擎 − Java 8提供了一个新的<code>Nashorn javascript</code>引擎，它允许我们在<code>JVM</code>上运行特定的javascript应用。</li>
 </ul>
           <!--noindex-->
           
@@ -2354,7 +2613,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2018/12/24/如何更高效的管理原生微服务应用/">
+    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2018/12/24/JVM内存结构解析/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="志文">
@@ -2374,7 +2633,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2018/12/24/如何更高效的管理原生微服务应用/" class="post-title-link" itemprop="url">如何更高效的管理原生微服务应用</a>
+                <a href="/2018/12/24/JVM内存结构解析/" class="post-title-link" itemprop="url">JVM内存结构解析</a>
               
             
           </h1>
@@ -2405,6 +2664,17 @@
               
 
               
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+               2019-02-23
             
           </span>
 		  
@@ -2416,7 +2686,7 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
 				<span class="post-meta-item-text"> 
-				567	字			 
+				1.9k	字			 
 				</span>
 		  
 		  
@@ -2498,264 +2768,11 @@
 
       
         
-          <p>自从阿里重启Dubbo维护以来，其热度迅速蹿升，Github上的星标数已经达到了2.2万个之多，可谓中国开源软件界的明星产品。但是作为自家商业化输出的EDAS产品，却一直以来只能支持闭源的HSF微服务框架，对用户而言不能不说是一种遗憾。虽然以前也是可以支持Dubbo应用的，但却是以一种所谓的Dubbo over HSF来变相实现的，并不是真正无侵入的原生应用。现在这个担忧终于没有了，EDAS官方正式开始了商业化支持Dubbo的进程<br>
+          <h3 id="内存结构图"><a href="#内存结构图" class="headerlink" title="内存结构图"></a>内存结构图</h3><p><img src="/images/pasted-54.png" alt="upload successful"></p>
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2018/12/24/如何更高效的管理原生微服务应用/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-	
-	 	
-
-    
-
-
-
-    
-
-    <footer class="post-footer">
-     <!-- 
-  
-      
-	  -->
-	  
-	  
-		  
-			
-			
-	 
-
-      
-	  
-	  
-	  
-	   <!--
-	   <div>
-		
-		</div>
-		-->
-		
-     
-
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
- 
-
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2018/12/24/new-Day/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="志文">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/jackie.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="You Jump I See You Jump">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/24/new-Day/" class="post-title-link" itemprop="url">Hexo部署到Github服务器</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-             2018-12-24
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-               2019-02-10
-            
-          </span>
-		  
-		  
-		  
-		  
-		  
-		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-				<span class="post-meta-item-text"> 
-				897	字			 
-				</span>
-		  
-		  
-		
-			
-		  
-		  
-		  
-		  
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Hexo/" itemprop="url" rel="index"><span itemprop="name">Hexo</span></a></span>
-
-                
-                
-              
-            </span>
-          
-		  
-		  
-		    
-		  
-		  
-		  
-		  
-		 
-		  
-		  
-			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-user"></i>
-                </span><span class="post-meta-item-text"> 作者
-				 Jakcie.Yang
-				</span>
-		
-		  
-		   
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-		    
-		  
-		  
-		  
-		
-		 
-        <div class="post-tags">
-		 
-          
-            <a href="/tags/MyCat/" rel="tag"><i class="fa fa-tag"></i> MyCat</a>
-          
-            <a href="/tags/Github/" rel="tag"><i class="fa fa-tag"></i> Github</a>
-          
-            <a href="/tags/ssh/" rel="tag"><i class="fa fa-tag"></i> ssh</a>
-          
-            <a href="/tags/rsa/" rel="tag"><i class="fa fa-tag"></i> rsa</a>
-          
-        </div>
-      
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>Hexo 是一个快速、简洁且高效的博客框架。Hexo 使用 Markdown（或其他渲染引擎）解析文章，在几秒内，即可利用靓丽的主题生成静态网页。正常来说，不需要部署到我们的服务器上，我们的服务器上保存的，其实是基于在hexo通过markdown编写的文章，然后hexo帮我们生成静态的html页面，然后，将生成的html上传到我们的服务器。为了更加方便的实现本地到git服务器的部署同步问题，因此可以通过如下操作配置实现本地编写文章后，直接部署到Github服务器，通过Github域名来访问,达到快捷、高效、一劳永逸的效果。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/12/24/new-Day/#more" rel="contents">
+              <a class="btn" href="/2018/12/24/JVM内存结构解析/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -2870,7 +2887,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2948,7 +2965,17 @@
                     
                       
                     
-                    <span class="site-state-item-count">19</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
