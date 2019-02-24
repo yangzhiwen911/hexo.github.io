@@ -35,6 +35,12 @@
 
 
 
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-loading-bar.min.css?v=1.0.2" rel="stylesheet">
 
 
 
@@ -54,6 +60,11 @@
 
 
 
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
 
 
 
@@ -92,11 +103,11 @@
     scheme: 'Muse',
     version: '6.6.0',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
-    fancybox: false,
+    fancybox: true,
     fastclick: false,
     lazyload: false,
     tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    motion: {"enable":true,"async":false,"transition":{"post_block":"perspectiveLeftIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     algolia: {
       applicationID: '',
       apiKey: '',
@@ -330,6 +341,23 @@
     <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
 
   </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-document">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/doc/" rel="section"><i class="menu-item-icon fa fa-fw fa-book"></i> <br>开发手册</a>
+
+  </li>
 
       
       
@@ -348,6 +376,9 @@
     
 
     
+    
+      
+      
     
       
       
@@ -548,10 +579,18 @@
                     
                   
                 
-                目前共计 25 个标签
+                  
+                    
+                  
+                
+                  
+                    
+                  
+                
+                目前共计 27 个标签
             </div>
             <div class="tag-cloud-tags">
-              <a href="/tags/GC/" style="font-size: 12px; color: #ccc">GC</a> <a href="/tags/Github/" style="font-size: 12px; color: #ccc">Github</a> <a href="/tags/JVM/" style="font-size: 12px; color: #ccc">JVM</a> <a href="/tags/Java/" style="font-size: 12px; color: #ccc">Java</a> <a href="/tags/Lambda/" style="font-size: 12px; color: #ccc">Lambda</a> <a href="/tags/MyCat/" style="font-size: 12px; color: #ccc">MyCat</a> <a href="/tags/Optional/" style="font-size: 12px; color: #ccc">Optional</a> <a href="/tags/Stream/" style="font-size: 12px; color: #ccc">Stream</a> <a href="/tags/Tengine/" style="font-size: 12px; color: #ccc">Tengine</a> <a href="/tags/java/" style="font-size: 12px; color: #ccc">java</a> <a href="/tags/jenkins/" style="font-size: 12px; color: #ccc">jenkins</a> <a href="/tags/mysql/" style="font-size: 30px; color: #111">mysql</a> <a href="/tags/rsa/" style="font-size: 12px; color: #ccc">rsa</a> <a href="/tags/sql/" style="font-size: 12px; color: #ccc">sql</a> <a href="/tags/ssh/" style="font-size: 12px; color: #ccc">ssh</a> <a href="/tags/主从配置/" style="font-size: 12px; color: #ccc">主从配置</a> <a href="/tags/事务/" style="font-size: 12px; color: #ccc">事务</a> <a href="/tags/优化/" style="font-size: 12px; color: #ccc">优化</a> <a href="/tags/存储引擎/" style="font-size: 12px; color: #ccc">存储引擎</a> <a href="/tags/引用/" style="font-size: 12px; color: #ccc">引用</a> <a href="/tags/服务器/" style="font-size: 12px; color: #ccc">服务器</a> <a href="/tags/权限/" style="font-size: 12px; color: #ccc">权限</a> <a href="/tags/索引/" style="font-size: 12px; color: #ccc">索引</a> <a href="/tags/脚本/" style="font-size: 12px; color: #ccc">脚本</a> <a href="/tags/部署/" style="font-size: 12px; color: #ccc">部署</a>
+              <a href="/tags/GC/" style="font-size: 12px; color: #ccc">GC</a> <a href="/tags/Github/" style="font-size: 12px; color: #ccc">Github</a> <a href="/tags/JVM/" style="font-size: 30px; color: #111">JVM</a> <a href="/tags/Java/" style="font-size: 12px; color: #ccc">Java</a> <a href="/tags/Lambda/" style="font-size: 12px; color: #ccc">Lambda</a> <a href="/tags/MyCat/" style="font-size: 30px; color: #111">MyCat</a> <a href="/tags/MySQL/" style="font-size: 12px; color: #ccc">MySQL</a> <a href="/tags/Optional/" style="font-size: 12px; color: #ccc">Optional</a> <a href="/tags/Stream/" style="font-size: 12px; color: #ccc">Stream</a> <a href="/tags/Tengine/" style="font-size: 12px; color: #ccc">Tengine</a> <a href="/tags/java/" style="font-size: 12px; color: #ccc">java</a> <a href="/tags/jenkins/" style="font-size: 12px; color: #ccc">jenkins</a> <a href="/tags/mysql/" style="font-size: 30px; color: #111">mysql</a> <a href="/tags/rsa/" style="font-size: 12px; color: #ccc">rsa</a> <a href="/tags/sql/" style="font-size: 12px; color: #ccc">sql</a> <a href="/tags/ssh/" style="font-size: 12px; color: #ccc">ssh</a> <a href="/tags/主从配置/" style="font-size: 12px; color: #ccc">主从配置</a> <a href="/tags/事务/" style="font-size: 12px; color: #ccc">事务</a> <a href="/tags/优化/" style="font-size: 12px; color: #ccc">优化</a> <a href="/tags/存储引擎/" style="font-size: 12px; color: #ccc">存储引擎</a> <a href="/tags/引用/" style="font-size: 12px; color: #ccc">引用</a> <a href="/tags/服务器/" style="font-size: 12px; color: #ccc">服务器</a> <a href="/tags/权限/" style="font-size: 12px; color: #ccc">权限</a> <a href="/tags/索引/" style="font-size: 12px; color: #ccc">索引</a> <a href="/tags/脚本/" style="font-size: 12px; color: #ccc">脚本</a> <a href="/tags/虚拟机/" style="font-size: 12px; color: #ccc">虚拟机</a> <a href="/tags/部署/" style="font-size: 12px; color: #ccc">部署</a>
             </div>
           </div>
         
@@ -643,7 +682,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">6</span>
+                      
+                    
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -706,7 +747,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">25</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -832,16 +877,51 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019 - 2025 </span>
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2019 </span>
   <span class="with-love" id="animate">
-    <i class="fa fa-user"></i>
+    <i class="fa fa-heart"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">志文</span>
 
   
+  
+
 
   
+  
+
+
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">博客全站共计：</span>
+    
+    <span title="post.totalcount">29.6k字</span>
+  
+  
+ 
+
 </div>
+ <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("12/24/2018 12:49:00");
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "本站已安全运行 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
 
 
 
@@ -868,6 +948,15 @@
 
 
 
+
+  <script>
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//tajs.qq.com/stats?sId=66181429";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -909,6 +998,8 @@
 
 
 
+  
+
 
 
 
@@ -936,6 +1027,11 @@
   
   
     <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
   
 
 
@@ -1435,6 +1531,13 @@
 
 
   
+  
+
+  
+  
+
+  
+
 
 
 </body>
