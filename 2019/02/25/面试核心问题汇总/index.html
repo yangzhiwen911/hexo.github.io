@@ -126,7 +126,7 @@
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-57.png">
 <meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-56.png">
-<meta property="og:updated_time" content="2019-02-25T14:15:52.954Z">
+<meta property="og:updated_time" content="2019-02-25T14:26:50.367Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面试核心问题汇总（持续更新）">
 <meta name="twitter:description" content="基础扩展如何理解快速失败fail-fast fail-fast机制是java容器（Collection and Map都存在fail-fast机制）中的一种错误机制。在遍历一个容器对象时，当容器结构被修改，很有可能会抛出ConcurrentModificationException的，产生快速失败的。在以下两种情况下会导致快速失败，抛出ConcurrentModificationException">
@@ -598,8 +598,8 @@
       
 
       
-        <h3 id="基础扩展"><a href="#基础扩展" class="headerlink" title="基础扩展"></a>基础扩展</h3><h4 id="如何理解快速失败fail-fast"><a href="#如何理解快速失败fail-fast" class="headerlink" title="如何理解快速失败fail-fast"></a>如何理解快速失败fail-fast</h4><ul>
-<li>fail-fast机制是java容器（Collection and Map都存在fail-fast机制）中的一种错误机制。在遍历一个容器对象时，当容器结构被修改，很有可能会抛出ConcurrentModificationException的，产生快速失败的。<br><strong>在以下两种情况下会导致快速失败，抛出ConcurrentModificationException的</strong></li>
+        <h3 id="基础扩展"><a href="#基础扩展" class="headerlink" title="基础扩展"></a>基础扩展</h3><h4 id="如何理解快速失败fail-fast"><a href="#如何理解快速失败fail-fast" class="headerlink" title="如何理解快速失败fail-fast"></a>如何理解快速失败<code>fail-fast</code></h4><ul>
+<li><code>fail-fast</code>机制是java容器（Collection and Map都存在fail-fast机制）中的一种错误机制。在遍历一个容器对象时，当容器结构被修改，很有可能会抛出<code>ConcurrentModificationException</code>的，产生快速失败的。<br><strong><code>在以下两种情况下会导致快速失败，抛出ConcurrentModificationException</code></strong></li>
 <li>环境单线程<ul>
 <li>遍历一个集合过程中，集合结构被修改。注意，listIterator.remove（）方法修改集合结构不会抛出这个异常。</li>
 </ul>
@@ -609,10 +609,12 @@
 </ul>
 </li>
 </ul>
+<a id="more"></a> 
 <h4 id="如何理解CAP理论（AP架构、CP架构）"><a href="#如何理解CAP理论（AP架构、CP架构）" class="headerlink" title="如何理解CAP理论（AP架构、CP架构）"></a>如何理解<code>CAP</code>理论（AP架构、CP架构）</h4><table>
 <thead>
 <tr>
 <th style="text-align:center">Feature</th>
+<th style="text-align:center">Nacos</th>
 <th style="text-align:center">Eureka</th>
 <th style="text-align:center">Zookeeper</th>
 </tr>
@@ -620,31 +622,37 @@
 <tbody>
 <tr>
 <td style="text-align:center">服务健康检查</td>
+<td style="text-align:center">支持</td>
 <td style="text-align:center">可配支持</td>
 <td style="text-align:center">(弱)长连接，keepalive</td>
 </tr>
 <tr>
 <td style="text-align:center"><code>CAP</code></td>
 <td style="text-align:center"><code>AP</code></td>
+<td style="text-align:center"><code>AP</code></td>
 <td style="text-align:center"><code>CP</code></td>
 </tr>
 <tr>
 <td style="text-align:center">watch支持（客户端观察到服务提供者变化）</td>
+<td style="text-align:center">支持</td>
 <td style="text-align:center">支持 long polling/大部分增量</td>
 <td style="text-align:center">支持</td>
 </tr>
 <tr>
 <td style="text-align:center">自我保护</td>
 <td style="text-align:center">支持</td>
+<td style="text-align:center">支持</td>
 <td style="text-align:center">-</td>
 </tr>
 <tr>
 <td style="text-align:center">客户端缓存</td>
 <td style="text-align:center">支持</td>
+<td style="text-align:center">支持</td>
 <td style="text-align:center">-</td>
 </tr>
 <tr>
 <td style="text-align:center">自身集群的监控</td>
+<td style="text-align:center">-</td>
 <td style="text-align:center">metrics</td>
 <td style="text-align:center">-</td>
 </tr>
@@ -677,7 +685,6 @@
 <li>如果缓存集中在一段时间内失效，发生大量的缓存穿透，所有的查询都落在数据库上，造成了缓存雪崩。</li>
 <li>通过缓存reload机制，预先去更新缓存，再即将发生大并发访问前手动触发加载缓存不同的key，设置不同的过期时间，让缓存失效的时间点尽量均匀。</li>
 </ul>
-<a id="more"></a>
 <h3 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h3><h4 id="Callable和Runnable的区别"><a href="#Callable和Runnable的区别" class="headerlink" title="Callable和Runnable的区别"></a><code>Callable</code>和<code>Runnable</code>的区别</h4><ul>
 <li>创建执行线程的方式：实现 Callable 接口。 相较于实现 Runnable 接口的方式，方法可以有返回值，并且可以抛出异常。</li>
 <li>执行 Callable 方式，需要 FutureTask 实现类的支持，用于接收运算结果。FutureTask是Future接口的实现类，Callable用于产生结果，Future用于获取结果。</li>

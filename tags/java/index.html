@@ -119,7 +119,7 @@
   <meta name="keywords" content="IT互联网、Web、Java开发">
 <meta property="og:type" content="website">
 <meta property="og:title" content="未知世界的秘密">
-<meta property="og:url" content="http://yangzhiwen911.github.io/tags/java/index.html">
+<meta property="og:url" content="http://yangzhiwen911.github.io/tags/Java/index.html">
 <meta property="og:site_name" content="未知世界的秘密">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
@@ -132,7 +132,7 @@
 
 
 
-  <link rel="canonical" href="http://yangzhiwen911.github.io/tags/java/">
+  <link rel="canonical" href="http://yangzhiwen911.github.io/tags/Java/">
 
 
 
@@ -142,7 +142,7 @@
   };
 </script>
 
-  <title>标签: java | 未知世界的秘密</title>
+  <title>标签: Java | 未知世界的秘密</title>
   
 
 
@@ -446,7 +446,7 @@
 
     <div id="posts" class="posts-collapse">
       <div class="collection-title">
-        <h1>java<small>标签</small>
+        <h1>Java<small>标签</small>
         </h1>
       </div>
 
@@ -458,43 +458,17 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2019/02/25/面试核心问题汇总/" itemprop="url">
+            <a class="post-title-link" href="/2019/02/21/JDK8新特性/" itemprop="url">
               
-                <span itemprop="name">面试核心问题汇总（持续更新）</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-02-25T10:53:00+08:00" content="2019-02-25">
-          02-25
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-      
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/12/24/Jackie-Yang/" itemprop="url">
-              
-                <span itemprop="name">Java技术栈梳理分享</span>
+                <span itemprop="name">JAVA 8新特性</span>
               
             </a>
         
       </h2>
 
       <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-12-24T14:02:00+08:00" content="2018-12-24">
-          12-24
+        <time class="post-time" itemprop="dateCreated" datetime="2019-02-21T13:42:00+08:00" content="2019-02-21">
+          02-21
         </time>
       </div>
 
@@ -1407,6 +1381,42 @@ setInterval("createtime()",250);
         ta.value = code;
         ta.textContent = code; //For FireFox
         ta.contentEditable = true;
+        ta.readOnly = false;
+        document.body.appendChild(ta);
+        range.selectNode(ta);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        ta.setSelectionRange(0, code.length);
+        var result = document.execCommand('copy');
+        
+          if (result) $(this).text('复制成功');
+          else $(this).text('复制失败');
+        
+        ta.blur(); //For iOS
+        $(this).blur();
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn');
+        setTimeout(function () {
+          $b.text('复制');
+        }, 300);
+      }).append(e);
+    })
+  </script>
+
+
+  
+  
+
+  
+  
+
+  
+
+
+
+</body>
+</html>
+
         ta.readOnly = false;
         document.body.appendChild(ta);
         range.selectNode(ta);
