@@ -121,11 +121,11 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="Jenkins自动化安装部署-安装配置（一）">
 <meta property="og:url" content="http://yangzhiwen911.github.io/2019/02/10/Jenkins自动化安装部署/index.html">
-<meta property="og:site_name" content="You Jump I See You Jump">
+<meta property="og:site_name" content="未知世界的秘密">
 <meta property="og:description" content="Jenkins概述Jenkins是一个独立的开源软件项目，是基于Java开发的一种持续集成工具，用于监控持续重复的工作，旨在提供一个开放易用的软件平台，使软件的持续集成变成可能。前身是Hudson是一个可扩展的持续集成引擎。可用于自动化各种任务，如构建，测试和部署软件。Jenkins可以通过本机系统包Docker安装，甚至可以通过安装Java Runtime Environment的任何机器独立运">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-22.png">
-<meta property="og:updated_time" content="2019-02-11T04:16:00.695Z">
+<meta property="og:updated_time" content="2019-02-25T12:10:33.863Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jenkins自动化安装部署-安装配置（一）">
 <meta name="twitter:description" content="Jenkins概述Jenkins是一个独立的开源软件项目，是基于Java开发的一种持续集成工具，用于监控持续重复的工作，旨在提供一个开放易用的软件平台，使软件的持续集成变成可能。前身是Hudson是一个可扩展的持续集成引擎。可用于自动化各种任务，如构建，测试和部署软件。Jenkins可以通过本机系统包Docker安装，甚至可以通过安装Java Runtime Environment的任何机器独立运">
@@ -133,7 +133,7 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="You Jump I See You Jump" type="application/atom+xml">
+  <link rel="alternate" href="/atom.xml" title="未知世界的秘密" type="application/atom+xml">
 
 
 
@@ -148,7 +148,7 @@
   };
 </script>
 
-  <title>Jenkins自动化安装部署-安装配置（一） | You Jump I See You Jump</title>
+  <title>Jenkins自动化安装部署-安装配置（一） | 未知世界的秘密</title>
   
 
 
@@ -209,7 +209,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">You Jump I See You Jump</span>
+        <span class="site-title">未知世界的秘密</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -442,7 +442,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="You Jump I See You Jump">
+      <meta itemprop="name" content="未知世界的秘密">
     </span>
 
     
@@ -492,7 +492,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-               2019-02-11
+               2019-02-25
             
           </span>
 		  
@@ -618,41 +618,41 @@
 <h3 id="系统要求"><a href="#系统要求" class="headerlink" title="系统要求"></a>系统要求</h3><table>
 <thead>
 <tr>
-<th>环境</th>
+<th style="text-align:center">环境</th>
 <th style="text-align:center">说明</th>
-<th>配置环境</th>
+<th style="text-align:center">配置环境</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>JDK</td>
+<td style="text-align:center">JDK</td>
 <td style="text-align:center">JDK1.5以上</td>
-<td>JDK1.7</td>
+<td style="text-align:center">JDK1.7</td>
 </tr>
 <tr>
-<td>硬盘</td>
+<td style="text-align:center">硬盘</td>
 <td style="text-align:center">无最低要求、根据实际项目大小适当即可。</td>
-<td>80G</td>
+<td style="text-align:center">80G</td>
 </tr>
 <tr>
-<td>操作系统</td>
+<td style="text-align:center">操作系统</td>
 <td style="text-align:center">Jenkins可以安装到主流的所有操作系统。</td>
-<td>CentOS</td>
+<td style="text-align:center">CentOS</td>
 </tr>
 <tr>
-<td>Java容器</td>
+<td style="text-align:center">Java容器</td>
 <td style="text-align:center">WAR文件可以在支持 Servlet2.4/JSP2.0或更高版本的容器中运行</td>
-<td>独立安装</td>
+<td style="text-align:center">独立安装</td>
 </tr>
 <tr>
-<td>代码库</td>
+<td style="text-align:center">代码库</td>
 <td style="text-align:center">支持SVN或者GIT等同步插件 （示例svn）</td>
-<td>svn</td>
+<td style="text-align:center">svn</td>
 </tr>
 <tr>
-<td>编译打包</td>
+<td style="text-align:center">编译打包</td>
 <td style="text-align:center">支持Maven或ANT来自动构建（示例ant）</td>
-<td>ant</td>
+<td style="text-align:center">ant</td>
 </tr>
 </tbody>
 </table>
@@ -939,7 +939,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">13</span>
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -966,7 +966,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">7</span>
+                      
+                    
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1039,7 +1041,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">30</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1108,7 +1116,7 @@
                   </li>
                 
                   <li class="links-of-blogroll-item">
-                    <a href="https://blog.csdn.net/plei_yue/article/details/78930287" title="https://blog.csdn.net/plei_yue/article/details/78930287" rel="noopener" target="_blank">SpringBoot</a>
+                    <a href="https://blog.csdn.net/plei_yue/article/details/78930287" title="https://blog.csdn.net/plei_yue/article/details/78930287" rel="noopener" target="_blank">SpringBoot[csdn]</a>
                   </li>
                 
                   <li class="links-of-blogroll-item">
@@ -1137,6 +1145,26 @@
                 
                   <li class="links-of-blogroll-item">
                     <a href="http://cmsblogs.com/?p=3819" title="http://cmsblogs.com/?p=3819" rel="noopener" target="_blank">GC优化</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://spring.io/" title="https://spring.io/" rel="noopener" target="_blank">Spring</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://springcloud.cc/" title="https://springcloud.cc/" rel="noopener" target="_blank">SpringCloud</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.ityouknow.com/spring-boot.html" title="http://www.ityouknow.com/spring-boot.html" rel="noopener" target="_blank">纯洁的微笑</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://springboot.fun/" title="http://springboot.fun/" rel="noopener" target="_blank">SpringBoot[中文版]</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://gitee.com/smallc/SpringBlade/tree/2.0-boot" title="https://gitee.com/smallc/SpringBlade/tree/2.0-boot" rel="noopener" target="_blank">SpringBlade</a>
                   </li>
                 
               </ul>
@@ -1203,7 +1231,7 @@
     
       <span class="post-meta-item-text">博客全站共计：</span>
     
-    <span title="post.totalcount">34.7k字</span>
+    <span title="post.totalcount">40.3k字</span>
   
   
  
