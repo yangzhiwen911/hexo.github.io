@@ -2157,7 +2157,7 @@ img:hover {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #06007f;
+  background: #fe7766;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2957,6 +2957,15 @@ embed {
 .posts-expand .post-tags {
   margin-top: 20px;
   text-align: center;
+}
+.posts-expand .post-tags a {
+  display: inline-block;
+  padding: 1px 8px 1px;
+  margin: 0 4px 4px 0;
+  color: #fff;
+  font-size: 12px;
+  background-color: #45b6f7;
+  opacity: 0.85;
 }
 .bdsharebuttonbox .bds_twi {
   background: #21abf4 !important;

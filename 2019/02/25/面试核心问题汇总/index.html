@@ -116,20 +116,20 @@
 
 
 
-  <meta name="description" content="基础扩展如何理解快速失败fail-fast fail-fast机制是java容器（Collection and Map都存在fail-fast机制）中的一种错误机制。在遍历一个容器对象时，当容器结构被修改，很有可能会抛出ConcurrentModificationException的，产生快速失败的。在以下两种情况下会导致快速失败，抛出ConcurrentModificationException">
+  <meta name="description" content="基础知识如何理解对象的创建过程 请考虑一个名为Dog 的类： (1) 类型为Dog 的一个对象首次创建时，或者Dog 类的static 方法／static 字段首次访问时，Java 解释器必须找到Dog.class（在事先设好的类路径里搜索）。 (2) 找到Dog.class 后（它会创建一个Class 对象，这将在后面学到），它的所有static 初始化模块都会运行。因此，static 初始化仅">
 <meta name="keywords" content="java,基础,多线程,工作原理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="面试核心问题汇总（持续更新）">
 <meta property="og:url" content="http://yangzhiwen911.github.io/2019/02/25/面试核心问题汇总/index.html">
 <meta property="og:site_name" content="未知世界的秘密">
-<meta property="og:description" content="基础扩展如何理解快速失败fail-fast fail-fast机制是java容器（Collection and Map都存在fail-fast机制）中的一种错误机制。在遍历一个容器对象时，当容器结构被修改，很有可能会抛出ConcurrentModificationException的，产生快速失败的。在以下两种情况下会导致快速失败，抛出ConcurrentModificationException">
+<meta property="og:description" content="基础知识如何理解对象的创建过程 请考虑一个名为Dog 的类： (1) 类型为Dog 的一个对象首次创建时，或者Dog 类的static 方法／static 字段首次访问时，Java 解释器必须找到Dog.class（在事先设好的类路径里搜索）。 (2) 找到Dog.class 后（它会创建一个Class 对象，这将在后面学到），它的所有static 初始化模块都会运行。因此，static 初始化仅">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-57.png">
 <meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-56.png">
-<meta property="og:updated_time" content="2019-02-25T14:26:50.367Z">
+<meta property="og:updated_time" content="2019-02-28T15:20:36.787Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面试核心问题汇总（持续更新）">
-<meta name="twitter:description" content="基础扩展如何理解快速失败fail-fast fail-fast机制是java容器（Collection and Map都存在fail-fast机制）中的一种错误机制。在遍历一个容器对象时，当容器结构被修改，很有可能会抛出ConcurrentModificationException的，产生快速失败的。在以下两种情况下会导致快速失败，抛出ConcurrentModificationException">
+<meta name="twitter:description" content="基础知识如何理解对象的创建过程 请考虑一个名为Dog 的类： (1) 类型为Dog 的一个对象首次创建时，或者Dog 类的static 方法／static 字段首次访问时，Java 解释器必须找到Dog.class（在事先设好的类路径里搜索）。 (2) 找到Dog.class 后（它会创建一个Class 对象，这将在后面学到），它的所有static 初始化模块都会运行。因此，static 初始化仅">
 <meta name="twitter:image" content="http://yangzhiwen911.github.io/images/pasted-57.png">
 
 
@@ -483,6 +483,17 @@
               
 
               
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+               2019-02-28
             
           </span>
 		  
@@ -494,7 +505,7 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
 				<span class="post-meta-item-text"> 
-				5.6k	字			 
+				7.9k	字			 
 				</span>
 		  
 		  
@@ -598,7 +609,82 @@
       
 
       
-        <h3 id="基础扩展"><a href="#基础扩展" class="headerlink" title="基础扩展"></a>基础扩展</h3><h4 id="如何理解快速失败fail-fast"><a href="#如何理解快速失败fail-fast" class="headerlink" title="如何理解快速失败fail-fast"></a>如何理解快速失败<code>fail-fast</code></h4><ul>
+        <h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><h4 id="如何理解对象的创建过程"><a href="#如何理解对象的创建过程" class="headerlink" title="如何理解对象的创建过程"></a>如何理解对象的创建过程</h4><ul>
+<li>请考虑一个名为Dog 的类：<ul>
+<li>(1) 类型为Dog 的一个对象首次创建时，或者Dog 类的static 方法／static 字段首次访问时，Java 解释器<br>必须找到Dog.class（在事先设好的类路径里搜索）。</li>
+<li>(2) 找到Dog.class 后（它会创建一个Class 对象，这将在后面学到），它的所有static 初始化模块都会运<br>行。因此，static 初始化仅发生一次——在Class 对象首次载入的时候。</li>
+<li>(3) 创建一个new Dog()时，Dog 对象的构建进程首先会在内存堆（Heap）里为一个Dog 对象分配足够多的存<br>储空间。</li>
+<li>(4) 这种存储空间会清为零，将Dog 中的所有基本类型设为它们的默认值（零用于数字，以及boolean 和<br>char 的等价设定）。</li>
+<li>(5) 进行字段定义时发生的所有初始化都会执行。</li>
+<li>(6) 执行构建器。<a id="more"></a> 
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="servlet中-和-有什么区别"><a href="#servlet中-和-有什么区别" class="headerlink" title="servlet中/*和/有什么区别"></a>servlet中<code>/*</code>和<code>/</code>有什么区别</h4><ul>
+<li><code>/*</code>属于路径匹配，并且可以匹配所有request，由于路径匹配的优先级仅次于精确匹配，所以<code>/*</code>会覆盖所有的扩展名匹配，很多404错误均由此引起，所以这是一种特别恶劣的匹配模式，一般只用于filter的url-pattern</li>
+<li><code>/</code>是servlet中特殊的匹配模式，切该模式有且仅有一个实例，优先级最低，不会覆盖其他任何url-pattern，只是会替换servlet容器的内建default servlet ，该模式同样会匹配所有request。</li>
+<li>配置<code>/</code>后，一种可能的现象是myServlet会拦截诸<br><code>http://localhost:8080/appDemo/user/addUser.action、http://localhost:8080/appDemo/user/updateUser</code>的格式的请求，但是并不会拦截<code>http://localhost:8080/appDemo/user/users.jsp、http://localhost:8080/appDemo/index.jsp</code>，这是应为servlet容器有内置的<code>*.jsp</code>匹配器，而扩展名匹配的优先级高于缺省匹配，所以才会有上述现象。</li>
+</ul>
+<h4 id="如何理解Java关键字this"><a href="#如何理解Java关键字this" class="headerlink" title="如何理解Java关键字this"></a>如何理解Java关键字this</h4><ul>
+<li>首先，this关键字必须放在非静态方法里面。</li>
+<li>可以使用this关键字引用成员变量。</li>
+<li>使用this关键字在自身构造方法内部引用其它构造方法。</li>
+<li>使用this关键字代表自身类的对象。</li>
+<li><p>使用this关键字引用成员方法。</p>
+<p><code>this关键字的作用</code><br>this关键字是一个对象的默认引用。作为对象的默认引用，有两种情形：</p>
+<ol>
+<li>在<code>构造器</code>中，引用<code>该构造器执行初始化的</code>对象。</li>
+<li>在<code>方法</code>中，引用<code>调用该方法的</code>对象。</li>
+</ol>
+</li>
+</ul>
+<h4 id="构造方法的作用"><a href="#构造方法的作用" class="headerlink" title="构造方法的作用"></a>构造方法的作用</h4><p>首先每个类都有一个无参数的默认构造函数。这也是为什么有些类即便没有写构造方法也可以通过new来实例化。</p>
+<ul>
+<li>为了初始化成员属性，而不是初始化对象，初始化对象是通过new关键字实现的。</li>
+<li>通过new调用构造方法初始化对象，编译时根据参数签名来检查构造函数。</li>
+<li>创建子类对象会调用父类构造方法但不会创建父类对象，只是调用父类构造方法初始化父类成员属性；</li>
+</ul>
+<p><strong><code>注意事项</code></strong></p>
+<p> <code>继承中的构造方法，有下面这些规则需要遵守</code></p>
+<ul>
+<li>1.子类的构造过程中必须调用其父类的构造方法</li>
+<li>2.子类可以在自己的构造方法中使用super(参数列表)调用父类的构造方法<ul>
+<li>(1).可以使用this(参数列表)调用自己这个类的其他的构造方法<br>调用this的时候也调用了父类的构造方法</li>
+<li>(2).如果调用了super，必须写在子类构造方法的第一行</li>
+<li>(3).this也必须放在第一行,所以this,super在一个构造方法里无法同时出现<br>实际上严格来讲，还是能实现的，用内部类。在内部类里面，可以使用一个this或者super</li>
+</ul>
+</li>
+<li>3.如果子类的构造方法中没有显示地调用父类构造方法，系统默认调用父类那个无参数的构造方法</li>
+<li>4.如果子类构造方法中既没有显示调用父类构造方法，而父类中又没有无参的构造方法，编译会报错。<br>  构造器中一定不要创建自身的实例，否则会造成调用栈溢出错误。</li>
+</ul>
+<p><code>构造器中一定不要创建自身的实例，否则会造成调用栈溢出错误。</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">a</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">  a _a = <span class="keyword">new</span> a();</span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="title">a</span><span class="params">()</span></span></span><br><span class="line"><span class="function">  </span>&#123;</span><br><span class="line">    _a = <span class="keyword">new</span> a();</span><br><span class="line">    a _b = <span class="keyword">new</span> a();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>以上三种情况都会造成栈溢出，会造成一个无穷递归的调用栈。</p>
+<hr>
+<h3 id="基础扩展"><a href="#基础扩展" class="headerlink" title="基础扩展"></a>基础扩展</h3><h4 id="servlet的url-pattern如何匹配的"><a href="#servlet的url-pattern如何匹配的" class="headerlink" title="servlet的url-pattern如何匹配的"></a>servlet的url-pattern如何匹配的</h4><ul>
+<li>servlet容器中的匹配规则既不是简单的通配，也不是正则表达式，而是特定的规则。所以不要用通配符或者正则表达式的匹配规则来看待servlet的url-pattern。</li>
+<li>Servlet 2.5开始，一个servlet可以使用多个url-pattern规则，<servlet-mapping>标签声明了与该servlet相应的匹配规则，每个<url-pattern>标签代表1个匹配规则；</url-pattern></servlet-mapping></li>
+<li>当servlet容器接收到浏览器发起的一个url请求后，容器会用url减去当前应用的上下文路径，以剩余的字符串作为servlet映射，假如url是<a href="http://localhost:8080/appDemo/index.html，其应用上下文是appDemo，容器会将http://localhost:8080/appDemo去掉，用剩下的/index.html部分拿来做servlet的映射匹配。" target="_blank" rel="noopener">http://localhost:8080/appDemo/index.html，其应用上下文是appDemo，容器会将http://localhost:8080/appDemo去掉，用剩下的/index.html部分拿来做servlet的映射匹配。</a></li>
+<li>url-pattern映射匹配过程是有优先顺序的而且当有一个servlet匹配成功以后，就不会去理会剩下的servlet了。</li>
+</ul>
+<p><code>匹配顺序</code></p>
+<ul>
+<li><p>精确匹配</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">servlet-mapping1：</span><br><span class="line">&lt;url-pattern&gt;/user/users.html&lt;/url-pattern&gt;</span><br><span class="line">servlet-mapping2：</span><br><span class="line">&lt;url-pattern&gt;<span class="comment">/*&lt;/url-pattern&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>当一个请求http://localhost:8080/appDemo/user/users.html来的时候，servlet-mapping1匹配到，不再用servlet-mapping2匹配。</code></p>
+</li>
+<li><p>路径匹配，先最长路径匹配，再最短路径匹配</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">servlet-mapping1：</span><br><span class="line">&lt;url-pattern&gt;/user<span class="comment">/*&lt;/url-pattern&gt;</span></span><br><span class="line"><span class="comment">servlet-mapping2：</span></span><br><span class="line"><span class="comment">&lt;url-pattern&gt;/*&lt;/url-pattern&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>当一个请求http://localhost:8080/appDemo/user/users.html来的时候，servlet-mapping1匹配到，不再用servlet-mapping2匹配。</code></p>
+</li>
+<li><p>扩展名匹配</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">servlet-mapping1：</span><br><span class="line">&lt;url-pattern&gt;/user<span class="comment">/*&lt;/url-pattern&gt;</span></span><br><span class="line"><span class="comment">servlet-mapping2：</span></span><br><span class="line"><span class="comment">&lt;url-pattern&gt;*.action&lt;/url-pattern&gt;</span></span><br></pre></td></tr></table></figure>
+<p><code>当一个请求http://localhost:8080/appDemo/user/addUser.action来的时候，servlet-mapping1匹配到，不再用servlet-mapping2匹配。</code></p>
+</li>
+<li>缺省匹配<br><code>以上都找不到servlet，就用默认的servlet，配置为&lt;url-pattern&gt;/&lt;/url-pattern&gt;</code></li>
+</ul>
+<h4 id="如何理解快速失败fail-fast"><a href="#如何理解快速失败fail-fast" class="headerlink" title="如何理解快速失败fail-fast"></a>如何理解快速失败<code>fail-fast</code></h4><ul>
 <li><code>fail-fast</code>机制是java容器（Collection and Map都存在fail-fast机制）中的一种错误机制。在遍历一个容器对象时，当容器结构被修改，很有可能会抛出<code>ConcurrentModificationException</code>的，产生快速失败的。<br><strong><code>在以下两种情况下会导致快速失败，抛出ConcurrentModificationException</code></strong></li>
 <li>环境单线程<ul>
 <li>遍历一个集合过程中，集合结构被修改。注意，listIterator.remove（）方法修改集合结构不会抛出这个异常。</li>
@@ -609,7 +695,6 @@
 </ul>
 </li>
 </ul>
-<a id="more"></a> 
 <h4 id="如何理解CAP理论（AP架构、CP架构）"><a href="#如何理解CAP理论（AP架构、CP架构）" class="headerlink" title="如何理解CAP理论（AP架构、CP架构）"></a>如何理解<code>CAP</code>理论（AP架构、CP架构）</h4><table>
 <thead>
 <tr>
@@ -670,10 +755,7 @@
 <p><code>注： 2018.7，Netflix 公司在 github 上公告 Eureka 2.0 开源工作停止。</code></p>
 </li>
 </ul>
-<ol start="2">
-<li>如何理解CAS无锁机制</li>
-</ol>
-<ul>
+<h4 id="如何理解CAS无锁机制"><a href="#如何理解CAS无锁机制" class="headerlink" title="如何理解CAS无锁机制"></a>如何理解CAS无锁机制</h4><ul>
 <li>CAS，Compare And Swap，即比较并交换。Doug lea大神在同步组件中大量使用CAS技术鬼斧神工地实现了Java多线程的并发操作。整个AQS同步组件、Atomic原子类操作等等都是以CAS实现的，甚至ConcurrentHashMap在1.8的版本中也调整为了CAS+Synchronized。</li>
 </ul>
 <hr>
@@ -685,7 +767,29 @@
 <li>如果缓存集中在一段时间内失效，发生大量的缓存穿透，所有的查询都落在数据库上，造成了缓存雪崩。</li>
 <li>通过缓存reload机制，预先去更新缓存，再即将发生大并发访问前手动触发加载缓存不同的key，设置不同的过期时间，让缓存失效的时间点尽量均匀。</li>
 </ul>
-<h3 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h3><h4 id="Callable和Runnable的区别"><a href="#Callable和Runnable的区别" class="headerlink" title="Callable和Runnable的区别"></a><code>Callable</code>和<code>Runnable</code>的区别</h4><ul>
+<h3 id="多线程"><a href="#多线程" class="headerlink" title="多线程"></a>多线程</h3><h4 id="多线程有几种实现方式"><a href="#多线程有几种实现方式" class="headerlink" title="多线程有几种实现方式"></a>多线程有几种实现方式</h4><ul>
+<li><p>继承Thread类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadDemo</span> <span class="keyword">extends</span> <span class="title">Thread</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">			System.out.println(Thread.currentThread().getName() + <span class="string">" is running ... "</span>); <span class="comment">// 打印当前线程的名字</span></span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				Thread.sleep(<span class="number">1000</span>); <span class="comment">// 休息1000ms</span></span><br><span class="line">			&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		ThreadDemo td = <span class="keyword">new</span> ThreadDemo();</span><br><span class="line">		td.start(); <span class="comment">// 启动线程</span></span><br><span class="line"></span><br><span class="line">		<span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">			System.out.println(Thread.currentThread().getName() + <span class="string">" is running ... "</span>); <span class="comment">// 打印当前线程的名字</span></span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				Thread.sleep(<span class="number">1000</span>); <span class="comment">// 休息1000ms</span></span><br><span class="line">			&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>实现Runnable接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadTarget</span> <span class="keyword">implements</span> <span class="title">Runnable</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">			System.out.println(Thread.currentThread().getName() + <span class="string">" is running .. "</span>);</span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				Thread.sleep(<span class="number">500</span>);</span><br><span class="line">			&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>内部类的方式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DemoThread</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 基于子类的实现</span></span><br><span class="line">		<span class="keyword">new</span> Thread() &#123;</span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">				<span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">					System.out.println(Thread.currentThread().getName() + <span class="string">" is running ... "</span>); <span class="comment">// 打印当前线程的名字</span></span><br><span class="line">					<span class="keyword">try</span> &#123;</span><br><span class="line">						Thread.sleep(<span class="number">1000</span>); <span class="comment">// 休息1000ms</span></span><br><span class="line">					&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">						e.printStackTrace();</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;;</span><br><span class="line">		&#125;.start();</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 基于接口的实现</span></span><br><span class="line">		<span class="keyword">new</span> Thread(<span class="keyword">new</span> Runnable() &#123;</span><br><span class="line">			<span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">				<span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">					System.out.println(Thread.currentThread().getName() + <span class="string">" is running ... "</span>); <span class="comment">// 打印当前线程的名字</span></span><br><span class="line">					<span class="keyword">try</span> &#123;</span><br><span class="line">						Thread.sleep(<span class="number">1000</span>); <span class="comment">// 休息1000ms</span></span><br><span class="line">					&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">						e.printStackTrace();</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;).start();</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 主线程的方法</span></span><br><span class="line">		<span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">			System.out.println(Thread.currentThread().getName() + <span class="string">" is running ... "</span>); <span class="comment">// 打印当前线程的名字</span></span><br><span class="line">			<span class="keyword">try</span> &#123;</span><br><span class="line">				Thread.sleep(<span class="number">1000</span>); <span class="comment">// 休息1000ms</span></span><br><span class="line">			&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">				e.printStackTrace();</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>实现Callable接口<br>现Callable接口,增加了异常和返回值,需要创建一个FutureTask，指定Callable对象，做为线程任务。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CallableTest</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">		Callable&lt;Integer&gt; call = <span class="keyword">new</span> Callable&lt;Integer&gt;() &#123;</span><br><span class="line"></span><br><span class="line">			<span class="meta">@Override</span></span><br><span class="line">			<span class="function"><span class="keyword">public</span> Integer <span class="title">call</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">				System.out.println(<span class="string">"thread start .. "</span>);</span><br><span class="line">				Thread.sleep(<span class="number">2000</span>);</span><br><span class="line">				<span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;;</span><br><span class="line">		</span><br><span class="line">		FutureTask&lt;Integer&gt; task = <span class="keyword">new</span> FutureTask&lt;&gt;(call);</span><br><span class="line">		Thread t =  <span class="keyword">new</span> Thread(task);</span><br><span class="line">		</span><br><span class="line">		t.start();</span><br><span class="line">		System.out.println(<span class="string">"do other thing .. "</span>);</span><br><span class="line">		System.out.println(<span class="string">"拿到线程的执行结果 ： "</span> + task.get());</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><code>Callable中可以通过范型参数来指定线程的返回值类型。通过FutureTask的get方法拿到线程的返回值。</code></p>
+<ul>
+<li><p>线程池的方式</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ThreadPoolDemo</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">		</span><br><span class="line">		<span class="comment">// 创建线程池</span></span><br><span class="line">		ExecutorService threadPool = Executors.newFixedThreadPool(<span class="number">10</span>);</span><br><span class="line">		</span><br><span class="line">		<span class="keyword">while</span>(<span class="keyword">true</span>) &#123;</span><br><span class="line">			threadPool.execute(<span class="keyword">new</span> Runnable() &#123; <span class="comment">// 提交多个线程任务，并执行</span></span><br><span class="line">				</span><br><span class="line">				<span class="meta">@Override</span></span><br><span class="line">				<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">					System.out.println(Thread.currentThread().getName() + <span class="string">" is running .."</span>);</span><br><span class="line">					<span class="keyword">try</span> &#123;</span><br><span class="line">						Thread.sleep(<span class="number">3000</span>);</span><br><span class="line">					&#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">						e.printStackTrace();</span><br><span class="line">					&#125;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>Spring方式</code>：这种方式依赖于Spring3以上版本，我们可以通过Spring的@Async注解非常方便的实现多线程。</p>
+</li>
+</ul>
+<h4 id="Callable和Runnable的区别"><a href="#Callable和Runnable的区别" class="headerlink" title="Callable和Runnable的区别"></a><code>Callable</code>和<code>Runnable</code>的区别</h4><ul>
 <li>创建执行线程的方式：实现 Callable 接口。 相较于实现 Runnable 接口的方式，方法可以有返回值，并且可以抛出异常。</li>
 <li>执行 Callable 方式，需要 FutureTask 实现类的支持，用于接收运算结果。FutureTask是Future接口的实现类，Callable用于产生结果，Future用于获取结果。</li>
 </ul>
@@ -726,6 +830,11 @@
 <li>sleep（）属于Thread，wait（）属于 Class。</li>
 <li>sleep（）仅仅是睡眠，不涉及到锁的释放问题，睡眠时间结束自动恢复到运行状态。 </li>
 <li>wait（）绑定了某个对象的锁，等待该对象的notify（），notifyAll（）来唤醒自己，等待的时间是未知的，甚至出现死锁。<br><code>共同点： 都是要释放cpu的，并且在线程池中会占用位置。</code></li>
+</ul>
+<h4 id="分布式锁有几种实现方式"><a href="#分布式锁有几种实现方式" class="headerlink" title="分布式锁有几种实现方式"></a>分布式锁有几种实现方式</h4><ul>
+<li>数据库乐观锁；</li>
+<li>基于Redis的分布式锁；</li>
+<li>基于ZooKeeper的分布式锁。</li>
 </ul>
 <hr>
 <h3 id="实现原理"><a href="#实现原理" class="headerlink" title="实现原理"></a>实现原理</h3><h4 id="synchronized的实现原理"><a href="#synchronized的实现原理" class="headerlink" title="synchronized的实现原理"></a><code>synchronized</code>的实现原理</h4><ul>
@@ -823,6 +932,8 @@
 <li><p><a href="https://blog.csdn.net/xudan1010/article/details/53435018" target="_blank" rel="noopener">Mybatis实现原理深入解析</a></p>
 </li>
 <li><p><a href="https://www.cnblogs.com/chihirotan/p/5975293.html" target="_blank" rel="noopener">JVM工作原理</a></p>
+</li>
+<li><p><a href="https://blog.csdn.net/king_kgh/article/details/78213576" target="_blank" rel="noopener">java多线程的6种实现方式详解</a></p>
 </li>
 </ul>
 </blockquote>
@@ -984,6 +1095,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/02/28/Spring-MVC执行流程/" rel="prev" title="Spring MVC执行流程">
+                Spring MVC执行流程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -1060,7 +1175,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">14</span>
+                    <span class="site-state-item-count">15</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1089,7 +1204,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">8</span>
+                      
+                    
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1168,7 +1285,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">33</span>
+                      
+                    
+                    <span class="site-state-item-count">34</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1310,7 +1429,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础扩展"><span class="nav-number">1.</span> <span class="nav-text">基础扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#如何理解快速失败fail-fast"><span class="nav-number">1.1.</span> <span class="nav-text">如何理解快速失败fail-fast</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何理解CAP理论（AP架构、CP架构）"><span class="nav-number">1.2.</span> <span class="nav-text">如何理解CAP理论（AP架构、CP架构）</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis"><span class="nav-number">2.</span> <span class="nav-text">Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么Redis是单线程"><span class="nav-number">2.1.</span> <span class="nav-text">为什么Redis是单线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缓存穿透、缓存雪崩、缓存预热"><span class="nav-number">2.2.</span> <span class="nav-text">缓存穿透、缓存雪崩、缓存预热</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程"><span class="nav-number">3.</span> <span class="nav-text">多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Callable和Runnable的区别"><span class="nav-number">3.1.</span> <span class="nav-text">Callable和Runnable的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CyclicBarrier和CountDownLatch的区别"><span class="nav-number">3.2.</span> <span class="nav-text">CyclicBarrier和CountDownLatch的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何在两个线程间共享数据"><span class="nav-number">3.3.</span> <span class="nav-text">如何在两个线程间共享数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是FutureTask"><span class="nav-number">3.4.</span> <span class="nav-text">什么是FutureTask</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#synchronized和ReentrantLock的区别"><span class="nav-number">3.5.</span> <span class="nav-text">synchronized和ReentrantLock的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java中Semaphore是什么"><span class="nav-number">3.6.</span> <span class="nav-text">Java中Semaphore是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如果你提交任务时，线程池队列已满。会时发会生什么"><span class="nav-number">3.7.</span> <span class="nav-text">如果你提交任务时，线程池队列已满。会时发会生什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是阻塞式方法"><span class="nav-number">3.8.</span> <span class="nav-text">什么是阻塞式方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何在Java中创建Immutable对象"><span class="nav-number">3.9.</span> <span class="nav-text">如何在Java中创建Immutable对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java中的fork-join框架是什么"><span class="nav-number">3.10.</span> <span class="nav-text">Java中的fork join框架是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Executors类是什么"><span class="nav-number">3.11.</span> <span class="nav-text">Executors类是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Executor有什么作用"><span class="nav-number">3.12.</span> <span class="nav-text">Executor有什么作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sleep-、wait（）的区别"><span class="nav-number">3.13.</span> <span class="nav-text">sleep() 、wait（）的区别</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现原理"><span class="nav-number">4.</span> <span class="nav-text">实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#synchronized的实现原理"><span class="nav-number">4.1.</span> <span class="nav-text">synchronized的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#volatile的实现原理"><span class="nav-number">4.2.</span> <span class="nav-text">volatile的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AtomicInteger的实现原理"><span class="nav-number">4.3.</span> <span class="nav-text">AtomicInteger的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HashMap的实现原理"><span class="nav-number">4.4.</span> <span class="nav-text">HashMap的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ConcurrentHashMap的实现原理"><span class="nav-number">4.5.</span> <span class="nav-text">ConcurrentHashMap的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Method-invoke-实现原理"><span class="nav-number">4.6.</span> <span class="nav-text">Method.invoke()实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引的实现原理"><span class="nav-number">4.7.</span> <span class="nav-text">索引的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MyBatis的实现原理"><span class="nav-number">4.8.</span> <span class="nav-text">MyBatis的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ArrayLis实现原理"><span class="nav-number">4.9.</span> <span class="nav-text">ArrayLis实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串的工作原理"><span class="nav-number">4.10.</span> <span class="nav-text">字符串的工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM的工作原理"><span class="nav-number">4.11.</span> <span class="nav-text">JVM的工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis工作原理"><span class="nav-number">4.12.</span> <span class="nav-text">Redis工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-Boot-Starter的工作原理"><span class="nav-number">4.13.</span> <span class="nav-text">Spring Boot Starter的工作原理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文献"><span class="nav-number">5.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础知识"><span class="nav-number">1.</span> <span class="nav-text">基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#如何理解对象的创建过程"><span class="nav-number">1.1.</span> <span class="nav-text">如何理解对象的创建过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#servlet中-和-有什么区别"><span class="nav-number">1.2.</span> <span class="nav-text">servlet中/*和/有什么区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何理解Java关键字this"><span class="nav-number">1.3.</span> <span class="nav-text">如何理解Java关键字this</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构造方法的作用"><span class="nav-number">1.4.</span> <span class="nav-text">构造方法的作用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础扩展"><span class="nav-number">2.</span> <span class="nav-text">基础扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#servlet的url-pattern如何匹配的"><span class="nav-number">2.1.</span> <span class="nav-text">servlet的url-pattern如何匹配的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何理解快速失败fail-fast"><span class="nav-number">2.2.</span> <span class="nav-text">如何理解快速失败fail-fast</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何理解CAP理论（AP架构、CP架构）"><span class="nav-number">2.3.</span> <span class="nav-text">如何理解CAP理论（AP架构、CP架构）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何理解CAS无锁机制"><span class="nav-number">2.4.</span> <span class="nav-text">如何理解CAS无锁机制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis"><span class="nav-number">3.</span> <span class="nav-text">Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么Redis是单线程"><span class="nav-number">3.1.</span> <span class="nav-text">为什么Redis是单线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缓存穿透、缓存雪崩、缓存预热"><span class="nav-number">3.2.</span> <span class="nav-text">缓存穿透、缓存雪崩、缓存预热</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程"><span class="nav-number">4.</span> <span class="nav-text">多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#多线程有几种实现方式"><span class="nav-number">4.1.</span> <span class="nav-text">多线程有几种实现方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Callable和Runnable的区别"><span class="nav-number">4.2.</span> <span class="nav-text">Callable和Runnable的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CyclicBarrier和CountDownLatch的区别"><span class="nav-number">4.3.</span> <span class="nav-text">CyclicBarrier和CountDownLatch的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何在两个线程间共享数据"><span class="nav-number">4.4.</span> <span class="nav-text">如何在两个线程间共享数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是FutureTask"><span class="nav-number">4.5.</span> <span class="nav-text">什么是FutureTask</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#synchronized和ReentrantLock的区别"><span class="nav-number">4.6.</span> <span class="nav-text">synchronized和ReentrantLock的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java中Semaphore是什么"><span class="nav-number">4.7.</span> <span class="nav-text">Java中Semaphore是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如果你提交任务时，线程池队列已满。会时发会生什么"><span class="nav-number">4.8.</span> <span class="nav-text">如果你提交任务时，线程池队列已满。会时发会生什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是阻塞式方法"><span class="nav-number">4.9.</span> <span class="nav-text">什么是阻塞式方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何在Java中创建Immutable对象"><span class="nav-number">4.10.</span> <span class="nav-text">如何在Java中创建Immutable对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java中的fork-join框架是什么"><span class="nav-number">4.11.</span> <span class="nav-text">Java中的fork join框架是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Executors类是什么"><span class="nav-number">4.12.</span> <span class="nav-text">Executors类是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Executor有什么作用"><span class="nav-number">4.13.</span> <span class="nav-text">Executor有什么作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sleep-、wait（）的区别"><span class="nav-number">4.14.</span> <span class="nav-text">sleep() 、wait（）的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分布式锁有几种实现方式"><span class="nav-number">4.15.</span> <span class="nav-text">分布式锁有几种实现方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现原理"><span class="nav-number">5.</span> <span class="nav-text">实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#synchronized的实现原理"><span class="nav-number">5.1.</span> <span class="nav-text">synchronized的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#volatile的实现原理"><span class="nav-number">5.2.</span> <span class="nav-text">volatile的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AtomicInteger的实现原理"><span class="nav-number">5.3.</span> <span class="nav-text">AtomicInteger的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HashMap的实现原理"><span class="nav-number">5.4.</span> <span class="nav-text">HashMap的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ConcurrentHashMap的实现原理"><span class="nav-number">5.5.</span> <span class="nav-text">ConcurrentHashMap的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Method-invoke-实现原理"><span class="nav-number">5.6.</span> <span class="nav-text">Method.invoke()实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引的实现原理"><span class="nav-number">5.7.</span> <span class="nav-text">索引的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MyBatis的实现原理"><span class="nav-number">5.8.</span> <span class="nav-text">MyBatis的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ArrayLis实现原理"><span class="nav-number">5.9.</span> <span class="nav-text">ArrayLis实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串的工作原理"><span class="nav-number">5.10.</span> <span class="nav-text">字符串的工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM的工作原理"><span class="nav-number">5.11.</span> <span class="nav-text">JVM的工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis工作原理"><span class="nav-number">5.12.</span> <span class="nav-text">Redis工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-Boot-Starter的工作原理"><span class="nav-number">5.13.</span> <span class="nav-text">Spring Boot Starter的工作原理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文献"><span class="nav-number">6.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
             
 
           </div>
@@ -1352,7 +1471,7 @@
     
       <span class="post-meta-item-text">博客全站共计：</span>
     
-    <span title="post.totalcount">40.3k字</span>
+    <span title="post.totalcount">42.8k字</span>
   
   
  
