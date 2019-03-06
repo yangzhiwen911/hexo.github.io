@@ -116,22 +116,22 @@
 
 
 
-  <meta name="description" content="概述本文主要记录了如何在SpringBoot项目中，如何根据自定义注解、反射、HandlerMapping以及ViewReserve来实现基于自定义注解的SpringMVC流程。由于完整的SpringMVC源码过于重量级，这里稍微简化了一些流程，但是从实现的效果来看基本一致。 构建Maven项目首先在idea中，打开一个新项目，初始化方式选择http://start.spring.io，然后自己可">
+  <meta name="description" content="概述本文主要记录了如何在SpringBoot项目中，如何根据自定义注解、反射、HandlerMapping以及ViewReserve来实现基于自定义注解的SpringMVC流程。由于完整的SpringMVC源码过于重量级，这里稍微简化了一些流程，但是从实现的效果来看基本一致。">
 <meta name="keywords" content="反射,mvc,注解">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringBoot中自定义MVC模块">
 <meta property="og:url" content="http://yangzhiwen911.github.io/2019/03/06/SpringBoot中自定义MVC模块/index.html">
 <meta property="og:site_name" content="未知世界的秘密">
-<meta property="og:description" content="概述本文主要记录了如何在SpringBoot项目中，如何根据自定义注解、反射、HandlerMapping以及ViewReserve来实现基于自定义注解的SpringMVC流程。由于完整的SpringMVC源码过于重量级，这里稍微简化了一些流程，但是从实现的效果来看基本一致。 构建Maven项目首先在idea中，打开一个新项目，初始化方式选择http://start.spring.io，然后自己可">
+<meta property="og:description" content="概述本文主要记录了如何在SpringBoot项目中，如何根据自定义注解、反射、HandlerMapping以及ViewReserve来实现基于自定义注解的SpringMVC流程。由于完整的SpringMVC源码过于重量级，这里稍微简化了一些流程，但是从实现的效果来看基本一致。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-61.png">
 <meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-62.png">
 <meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-63.png">
 <meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-64.png">
-<meta property="og:updated_time" content="2019-03-06T15:26:49.196Z">
+<meta property="og:updated_time" content="2019-03-06T15:33:49.540Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringBoot中自定义MVC模块">
-<meta name="twitter:description" content="概述本文主要记录了如何在SpringBoot项目中，如何根据自定义注解、反射、HandlerMapping以及ViewReserve来实现基于自定义注解的SpringMVC流程。由于完整的SpringMVC源码过于重量级，这里稍微简化了一些流程，但是从实现的效果来看基本一致。 构建Maven项目首先在idea中，打开一个新项目，初始化方式选择http://start.spring.io，然后自己可">
+<meta name="twitter:description" content="概述本文主要记录了如何在SpringBoot项目中，如何根据自定义注解、反射、HandlerMapping以及ViewReserve来实现基于自定义注解的SpringMVC流程。由于完整的SpringMVC源码过于重量级，这里稍微简化了一些流程，但是从实现的效果来看基本一致。">
 <meta name="twitter:image" content="http://yangzhiwen911.github.io/images/pasted-61.png">
 
 
@@ -599,6 +599,7 @@
 
       
         <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>本文主要记录了如何在<code>SpringBoot</code>项目中，如何根据自定义注解、反射、<code>HandlerMapping</code>以及<code>ViewReserve</code>来实现基于自定义注解的SpringMVC流程。由于完整的<code>SpringMVC</code>源码过于重量级，这里稍微简化了一些流程，但是从实现的效果来看基本一致。</p>
+<a id="more"></a>
 <h3 id="构建Maven项目"><a href="#构建Maven项目" class="headerlink" title="构建Maven项目"></a>构建Maven项目</h3><p>首先在idea中，打开一个新项目，初始化方式选择<code>http://start.spring.io</code>，然后自己可以随便选择一些需要的组件。本人配置环境为<code>SpringBoot2.1.3</code> + <code>JDK1.8</code>。</p>
 <p><img src="/images/pasted-61.png" alt="upload successful"></p>
 <h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><ul>
