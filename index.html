@@ -428,6 +428,556 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2019/03/06/SpringBoot中自定义MVC模块/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="志文">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jackie.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="未知世界的秘密">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/06/SpringBoot中自定义MVC模块/" class="post-title-link" itemprop="url">SpringBoot中自定义MVC模块</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+             2019-03-06
+
+            
+              
+
+              
+            
+          </span>
+		  
+		  
+		  
+		  
+		  
+		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+				<span class="post-meta-item-text"> 
+				1.2k	字			 
+				</span>
+		  
+		  
+		
+			
+		  
+		  
+		  
+		  
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/SpringBoot/" itemprop="url" rel="index"><span itemprop="name">SpringBoot</span></a></span>
+
+                
+                
+              
+            </span>
+          
+		  
+		  
+		    
+		  
+		  
+		  
+		  
+		 
+		  
+		  
+			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-user"></i>
+                </span><span class="post-meta-item-text"> 作者
+				 Jakcie.Yang
+				</span>
+		
+		  
+		   
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+		    
+		  
+		  
+		  
+		
+		 
+        <div class="post-tags">
+		 
+          
+            <a href="/tags/反射/" rel="tag"><i class="fa fa-tag"></i> 反射</a>
+          
+            <a href="/tags/mvc/" rel="tag"><i class="fa fa-tag"></i> mvc</a>
+          
+            <a href="/tags/注解/" rel="tag"><i class="fa fa-tag"></i> 注解</a>
+          
+        </div>
+      
+
+        </div>
+		
+					<script type="text/javascript" src="http://tajs.qq.com/stats?sId=66181429" charset="UTF-8"></script>
+				
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>本文主要记录了如何在<code>SpringBoot</code>项目中，如何根据自定义注解、反射、<code>HandlerMapping</code>以及<code>ViewReserve</code>来实现基于自定义注解的SpringMVC流程。由于完整的<code>SpringMVC</code>源码过于重量级，这里稍微简化了一些流程，但是从实现的效果来看基本一致。</p>
+<h3 id="构建Maven项目"><a href="#构建Maven项目" class="headerlink" title="构建Maven项目"></a>构建Maven项目</h3><p>首先在idea中，打开一个新项目，初始化方式选择<code>http://start.spring.io</code>，然后自己可以随便选择一些需要的组件。本人配置环境为<code>SpringBoot2.1.3</code> + <code>JDK1.8</code>。</p>
+<p><img src="/images/pasted-61.png" alt="upload successful"></p>
+<h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h3><ul>
+<li>在pom.xml中添加整合jsp的依赖<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">        &lt;groupId&gt;org.apache.tomcat.embed&lt;/groupId&gt;</span><br><span class="line">        &lt;artifactId&gt;tomcat-embed-jasper&lt;/artifactId&gt;</span><br><span class="line">        &lt;scope&gt;provided&lt;/scope&gt;</span><br><span class="line">        &lt;version&gt;9.0.12&lt;/version&gt;</span><br><span class="line">    &lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>scope之所以为<code>provided</code>，主要是因为spring-boot-maven-plugin插件在打包时会自行添加tomcat-embed-jasper的支持。而我们在Idea中启动项目时并没有打包，所以需要该依赖对项目jsp的支持，为防止其打包冲突，所以设置其scope为provided。</p>
+<ul>
+<li>创建存放JSP文件的目录结构如下：</li>
+</ul>
+<p><img src="/images/pasted-62.png" alt="upload successful"></p>
+<ul>
+<li>添加Development Descriptors和Web Resources  Directories</li>
+</ul>
+<p><img src="/images/pasted-63.png" alt="upload successful"></p>
+<h3 id="具体流程"><a href="#具体流程" class="headerlink" title="具体流程"></a>具体流程</h3><p>首先打开SpringBoot启动文件，去除数据源自动配置，并加入@ServletComponentScan注解。</p>
+<ul>
+<li><p>启动文件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span>(exclude=&#123;DataSourceAutoConfiguration.class&#125;)</span><br><span class="line"><span class="meta">@ServletComponentScan</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FacadeApplication</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(FacadeApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自定义mvc核心类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@WebServlet</span>(name=<span class="string">"ExtDispatcherServlet"</span>,urlPatterns=<span class="string">"/ext/index"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ExtDispatcherServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//业务代码</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>SpringBoot整合Servlet的时候需要使用到2个注解：</p>
+<ul>
+<li><code>@ServletComponentScan</code>：启动器启动时，扫描本目录以及子目录带有的webservlet注解的类。</li>
+<li><code>@WebServlet</code>：标记为servlet，以便启动器扫描。<ul>
+<li>name为当前servlet的名字</li>
+<li>urlPatterns为要拦截请求的地址</li>
+</ul>
+</li>
+</ul>
+<h3 id="核心业务"><a href="#核心业务" class="headerlink" title="核心业务"></a>核心业务</h3><ul>
+<li><p>定义容器</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// springmvc 容器对象 key:bean名字 ,value：bean对象</span></span><br><span class="line"><span class="keyword">private</span> ConcurrentHashMap&lt;String,Object&gt; mvcBean = <span class="keyword">new</span> ConcurrentHashMap&lt;String,Object&gt;();</span><br><span class="line"><span class="comment">// springmvc 容器对象 key:请求地址 ,vlue:类</span></span><br><span class="line"><span class="keyword">private</span> ConcurrentHashMap&lt;String, Object&gt; urlBeans = <span class="keyword">new</span> ConcurrentHashMap&lt;String, Object&gt;();</span><br><span class="line"><span class="comment">// springmvc 容器对象 key:请求地址 ,value:方法名称</span></span><br><span class="line"><span class="keyword">private</span> ConcurrentHashMap&lt;String, String&gt; urlMethods = <span class="keyword">new</span> ConcurrentHashMap&lt;String, String&gt;();</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>初始化</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span></span>&#123;</span><br><span class="line">       <span class="comment">//初始化</span></span><br><span class="line">       System.out.println(<span class="string">"ExtDispatcherServlet  init ..."</span>);</span><br><span class="line">       <span class="comment">//查找指定包下的所有类</span></span><br><span class="line">       List&lt;Class&lt;?&gt;&gt; classes = ClassUtil.getClasses(<span class="string">"com.xianyu.facade.modules.controller"</span>);</span><br><span class="line">       <span class="keyword">try</span> &#123;</span><br><span class="line">           <span class="comment">//查找带指定注解的类</span></span><br><span class="line">           detectingAnnotation(classes);</span><br><span class="line">       &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">           e.printStackTrace();</span><br><span class="line">       &#125; <span class="keyword">catch</span> (InstantiationException e) &#123;</span><br><span class="line">           e.printStackTrace();</span><br><span class="line">       &#125;</span><br><span class="line">       <span class="comment">//handler处理url和对象方法绑定</span></span><br><span class="line">       extHadlerMapping();</span><br><span class="line"></span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查找指定注解的类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">detectingAnnotation</span><span class="params">(List&lt;Class&lt;?&gt;&gt; classes)</span> <span class="keyword">throws</span> IllegalAccessException, InstantiationException </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (Class&lt;?&gt; classInfo: classes)&#123;</span><br><span class="line">        <span class="comment">//获取指定注解</span></span><br><span class="line">        ExtController extController = classInfo.getAnnotation(ExtController.class);</span><br><span class="line">        <span class="keyword">if</span>(extController!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="comment">//类名</span></span><br><span class="line">            String beanName = classInfo.getName();</span><br><span class="line">            <span class="comment">//实例</span></span><br><span class="line">            Object classObject =  classInfo.newInstance();</span><br><span class="line">            mvcBean.put(beanName, classObject);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>HandlerMapping</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">extHadlerMapping</span><span class="params">()</span></span>&#123;</span><br><span class="line">       String baseUrl = <span class="string">""</span>;</span><br><span class="line">       <span class="keyword">for</span> (Map.Entry&lt;String, Object&gt; mvcBean: mvcBean.entrySet())&#123;</span><br><span class="line">           <span class="comment">// 获取bean的对象</span></span><br><span class="line">           Object object = mvcBean.getValue();</span><br><span class="line">           Class&lt;? extends Object&gt; classInfo = object.getClass();</span><br><span class="line">           ExtRequestMapping extRequestMapping = classInfo.getDeclaredAnnotation(ExtRequestMapping.class);</span><br><span class="line">           <span class="comment">//获取controller类上的ExtRequestMapping</span></span><br><span class="line">           <span class="keyword">if</span>(extRequestMapping!=<span class="keyword">null</span>)&#123;</span><br><span class="line">               baseUrl = extRequestMapping.value();</span><br><span class="line">           &#125;</span><br><span class="line">           Method [] methods = classInfo.getMethods();</span><br><span class="line">           <span class="keyword">for</span> (Method annotationMethod: methods)&#123;</span><br><span class="line">               <span class="comment">//获取controller类中方法上的ExtRequestMapping</span></span><br><span class="line">               ExtRequestMapping  subRequestMapping =  annotationMethod.getAnnotation(ExtRequestMapping.class);</span><br><span class="line">               <span class="keyword">if</span>(subRequestMapping != <span class="keyword">null</span>)&#123;</span><br><span class="line">                   String subUrl  = baseUrl + subRequestMapping.value();</span><br><span class="line">                   urlBeans.put(subUrl, object);</span><br><span class="line">                   urlMethods.put(subUrl, annotationMethod.getName());</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重写service方法</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">      String url = req.getRequestURI();</span><br><span class="line">      Object object = urlBeans.get(url);</span><br><span class="line">      <span class="keyword">if</span>(<span class="keyword">null</span> == object)&#123;</span><br><span class="line">          resp.getWriter().println(<span class="string">" 404 , the Url is  not found !"</span>);</span><br><span class="line">          <span class="keyword">return</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      String methodName = urlMethods.get(url);</span><br><span class="line">      <span class="keyword">if</span> (StringUtils.isEmpty(methodName)) &#123;</span><br><span class="line">          resp.getWriter().println(<span class="string">" sorry, the method is not found !"</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      </span><br><span class="line">      String resultPage = <span class="keyword">null</span>;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          resultPage = (String) methodInvoke(object, methodName);</span><br><span class="line">      &#125; <span class="keyword">catch</span> (NoSuchMethodException e) &#123;</span><br><span class="line">          e.printStackTrace();</span><br><span class="line">      &#125; <span class="keyword">catch</span> (InvocationTargetException e) &#123;</span><br><span class="line">          e.printStackTrace();</span><br><span class="line">      &#125; <span class="keyword">catch</span> (IllegalAccessException e) &#123;</span><br><span class="line">          e.printStackTrace();</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      extResourceViewResolver(resultPage, req, resp);</span><br><span class="line">      <span class="comment">//resp.getWriter().println(resultPage);</span></span><br><span class="line">      System.out.println(<span class="string">"request is over......"</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>反射调用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Object <span class="title">methodInvoke</span><span class="params">(Object object, String methodName)</span> <span class="keyword">throws</span> NoSuchMethodException, InvocationTargetException, IllegalAccessException </span>&#123;</span><br><span class="line">      Class&lt;? extends  Object&gt; classInfo  = object.getClass();</span><br><span class="line">      Method  method = classInfo.getDeclaredMethod(methodName, String.class,Integer.class);</span><br><span class="line">      Object result = method.invoke(object,<span class="string">"Jakcie.Yang"</span>,<span class="number">35</span>);</span><br><span class="line">      <span class="keyword">return</span> result;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>视图解析</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">extResourceViewResolver</span><span class="params">(String pageName, HttpServletRequest req, HttpServletResponse res)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        <span class="comment">// 根路径</span></span><br><span class="line">        String prefix = <span class="string">"/WEB-INF/views/"</span>;</span><br><span class="line">        String suffix = <span class="string">".jsp"</span>;</span><br><span class="line">        req.getRequestDispatcher(prefix + pageName + suffix).forward(req, res);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>controller</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ExtController</span></span><br><span class="line"><span class="meta">@ExtRequestMapping</span>(<span class="string">"/ext"</span>)</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IndexController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ExtRequestMapping</span>(<span class="string">"/index"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">(String name,Integer age)</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"hello world index"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"index"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@ExtRequestMapping</span>(<span class="string">"/login"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">login</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"hello world login"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"login"</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ExtController</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;ElementType.TYPE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> ExtController &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>ExtRequestMapping</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>(&#123;ElementType.METHOD,ElementType.TYPE&#125;)</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> ExtRequestMapping &#123;</span><br><span class="line">    <span class="function">String <span class="title">value</span><span class="params">()</span> <span class="keyword">default</span> ""</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>JSP</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page language=&quot;java&quot; contentType=&quot;text/html; charset=UTF-8&quot;</span><br><span class="line">	pageEncoding=&quot;UTF-8&quot;%&gt;</span><br><span class="line">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot; &quot;http://www.w3.org/TR/html4/loose.dtd&quot;&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;SpringBoot&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">	&lt;h1&gt;SpringBoot中可以拦截自定义实现springmvc跳转了&lt;/h1&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>最后访问<code>http://localhost:8000/ext/index</code>后的效果：</p>
+<p><img src="/images/pasted-64.png" alt="upload successful"></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+	
+	 	
+
+    
+
+
+
+    
+
+    <footer class="post-footer">
+     <!-- 
+  
+      
+	  -->
+	  
+	  
+		  
+			
+			
+	 
+
+      
+	  
+	  
+	  
+	   <!--
+	   <div>
+		
+		</div>
+		-->
+		
+     
+
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+ 
+
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2019/03/06/JAVA中getMethod-的问题/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="志文">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jackie.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="未知世界的秘密">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/06/JAVA中getMethod-的问题/" class="post-title-link" itemprop="url">JAVA中getMethod()的问题</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+             2019-03-06
+
+            
+              
+
+              
+            
+          </span>
+		  
+		  
+		  
+		  
+		  
+		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+				<span class="post-meta-item-text"> 
+				201	字			 
+				</span>
+		  
+		  
+		
+			
+		  
+		  
+		  
+		  
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/JAVA/" itemprop="url" rel="index"><span itemprop="name">JAVA</span></a></span>
+
+                
+                
+              
+            </span>
+          
+		  
+		  
+		    
+		  
+		  
+		  
+		  
+		 
+		  
+		  
+			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-user"></i>
+                </span><span class="post-meta-item-text"> 作者
+				 Jakcie.Yang
+				</span>
+		
+		  
+		   
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+		    
+		  
+		  
+		  
+		
+		 
+        <div class="post-tags">
+		 
+          
+            <a href="/tags/Java/" rel="tag"><i class="fa fa-tag"></i> Java</a>
+          
+            <a href="/tags/反射/" rel="tag"><i class="fa fa-tag"></i> 反射</a>
+          
+        </div>
+      
+
+        </div>
+		
+					<script type="text/javascript" src="http://tajs.qq.com/stats?sId=66181429" charset="UTF-8"></script>
+				
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p>对于经常用到Java反射机制来实现业务的时候，会用到<code>class.getMethod()</code>方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Method Class.getMethod(String name, Class&lt;?&gt;... parameterTypes)</span><br></pre></td></tr></table></figure>
+<h4 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h4><p><code>getMethod()</code>方法的作用是获得指定方法名称和类型参数的公开方法。其中<code>...</code>代表可变数组参数，可以直接以数组形式传递或者以多个参数依次传递。如果当前方法为非public方法，需要设置访问权限为<code>true</code>。<br>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/06/JAVA中getMethod-的问题/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </p></div>
+
+    
+
+    
+    
+    
+	
+	 	
+
+    
+
+
+
+    
+
+    <footer class="post-footer">
+     <!-- 
+  
+      
+	  -->
+	  
+	  
+		  
+			
+			
+	 
+
+      
+	  
+	  
+	  
+	   <!--
+	   <div>
+		
+		</div>
+		-->
+		
+     
+
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+ 
+
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2019/02/28/Spring-MVC执行流程/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -479,6 +1029,17 @@
               
 
               
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+               2019-03-01
             
           </span>
 		  
@@ -490,7 +1051,7 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
 				<span class="post-meta-item-text"> 
-				174	字			 
+				1k	字			 
 				</span>
 		  
 		  
@@ -2430,510 +2991,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2019/02/10/Jenkins自动化安装部署/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="志文">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/jackie.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="未知世界的秘密">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/10/Jenkins自动化安装部署/" class="post-title-link" itemprop="url">Jenkins自动化安装部署-安装配置（一）</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-             2019-02-10
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-               2019-02-25
-            
-          </span>
-		  
-		  
-		  
-		  
-		  
-		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-				<span class="post-meta-item-text"> 
-				989	字			 
-				</span>
-		  
-		  
-		
-			
-		  
-		  
-		  
-		  
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Jenkins/" itemprop="url" rel="index"><span itemprop="name">Jenkins</span></a></span>
-
-                
-                
-              
-            </span>
-          
-		  
-		  
-		    
-		  
-		  
-		  
-		  
-		 
-		  
-		  
-			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-user"></i>
-                </span><span class="post-meta-item-text"> 作者
-				 Jakcie.Yang
-				</span>
-		
-		  
-		   
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-		    
-		  
-		  
-		  
-		
-		 
-        <div class="post-tags">
-		 
-          
-            <a href="/tags/jenkins/" rel="tag"><i class="fa fa-tag"></i> jenkins</a>
-          
-            <a href="/tags/服务器/" rel="tag"><i class="fa fa-tag"></i> 服务器</a>
-          
-        </div>
-      
-
-        </div>
-		
-					<script type="text/javascript" src="http://tajs.qq.com/stats?sId=66181429" charset="UTF-8"></script>
-				
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="Jenkins概述"><a href="#Jenkins概述" class="headerlink" title="Jenkins概述"></a>Jenkins概述</h3><p><code>Jenkins</code>是一个独立的开源软件项目，是基于Java开发的一种持续集成工具，用于监控持续重复的工作，旨在提供一个开放易用的软件平台，使软件的持续集成变成可能。前身是Hudson是一个可扩展的持续集成引擎。可用于自动化各种任务，如构建，测试和部署软件。<code>Jenkins</code>可以通过本机系统包Docker安装，甚至可以通过安装Java Runtime Environment的任何机器独立运行。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/02/10/Jenkins自动化安装部署/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-	
-	 	
-
-    
-
-
-
-    
-
-    <footer class="post-footer">
-     <!-- 
-  
-      
-	  -->
-	  
-	  
-		  
-			
-			
-	 
-
-      
-	  
-	  
-	  
-	   <!--
-	   <div>
-		
-		</div>
-		-->
-		
-     
-
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
- 
-
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2019/02/10/Mysql自动安装脚本/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="志文">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/jackie.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="未知世界的秘密">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/02/10/Mysql自动安装脚本/" class="post-title-link" itemprop="url">Mysql自动安装脚本</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-             2019-02-10
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-               2019-02-25
-            
-          </span>
-		  
-		  
-		  
-		  
-		  
-		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-				<span class="post-meta-item-text"> 
-				603	字			 
-				</span>
-		  
-		  
-		
-			
-		  
-		  
-		  
-		  
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Mysql/" itemprop="url" rel="index"><span itemprop="name">Mysql</span></a></span>
-
-                
-                
-              
-            </span>
-          
-		  
-		  
-		    
-		  
-		  
-		  
-		  
-		 
-		  
-		  
-			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-user"></i>
-                </span><span class="post-meta-item-text"> 作者
-				 Jakcie.Yang
-				</span>
-		
-		  
-		   
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-		    
-		  
-		  
-		  
-		
-		 
-        <div class="post-tags">
-		 
-          
-            <a href="/tags/mysql/" rel="tag"><i class="fa fa-tag"></i> mysql</a>
-          
-            <a href="/tags/脚本/" rel="tag"><i class="fa fa-tag"></i> 脚本</a>
-          
-        </div>
-      
-
-        </div>
-		
-					<script type="text/javascript" src="http://tajs.qq.com/stats?sId=66181429" charset="UTF-8"></script>
-				
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="执行过程"><a href="#执行过程" class="headerlink" title="执行过程"></a>执行过程</h3><p><strong>由于频繁安装mysql添加用户配置权限以及编译初始化过程基本一致，所以可以直接编写shell文件来自动执行重复的工作。</strong></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/02/10/Mysql自动安装脚本/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-	
-	 	
-
-    
-
-
-
-    
-
-    <footer class="post-footer">
-     <!-- 
-  
-      
-	  -->
-	  
-	  
-		  
-			
-			
-	 
-
-      
-	  
-	  
-	  
-	   <!--
-	   <div>
-		
-		</div>
-		-->
-		
-     
-
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
- 
-
-  </article>
-
-
-    
   </section>
 
   
@@ -2983,7 +3040,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">15</span>
+                    <span class="site-state-item-count">17</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3014,7 +3071,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">9</span>
+                      
+                    
+                    <span class="site-state-item-count">10</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -3095,7 +3154,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">34</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -3263,7 +3328,7 @@
     
       <span class="post-meta-item-text">博客全站共计：</span>
     
-    <span title="post.totalcount">42.8k字</span>
+    <span title="post.totalcount">45k字</span>
   
   
  
