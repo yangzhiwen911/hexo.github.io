@@ -116,20 +116,20 @@
 
 
 
-  <meta name="description" content="基础知识如何理解对象的创建过程 请考虑一个名为Dog 的类： (1) 类型为Dog 的一个对象首次创建时，或者Dog 类的static 方法／static 字段首次访问时，Java 解释器必须找到Dog.class（在事先设好的类路径里搜索）。 (2) 找到Dog.class 后（它会创建一个Class 对象，这将在后面学到），它的所有static 初始化模块都会运行。因此，static 初始化仅">
+  <meta name="description" content="概述由于个人在开发调试等过程中经常遇到一些莫名其妙的问题，或者面试过程中一些烧脑的问题，在此总结了一下，当做面试技巧，免得自己下次遇到相关问题的的时候不知道如何处理。具体包括一些基础的问题，和一些底层原理等相关知识点，砥砺前行。">
 <meta name="keywords" content="java,基础,多线程,工作原理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="面试核心问题汇总（持续更新）">
 <meta property="og:url" content="http://yangzhiwen911.github.io/2019/02/25/面试核心问题汇总/index.html">
 <meta property="og:site_name" content="未知世界的秘密">
-<meta property="og:description" content="基础知识如何理解对象的创建过程 请考虑一个名为Dog 的类： (1) 类型为Dog 的一个对象首次创建时，或者Dog 类的static 方法／static 字段首次访问时，Java 解释器必须找到Dog.class（在事先设好的类路径里搜索）。 (2) 找到Dog.class 后（它会创建一个Class 对象，这将在后面学到），它的所有static 初始化模块都会运行。因此，static 初始化仅">
+<meta property="og:description" content="概述由于个人在开发调试等过程中经常遇到一些莫名其妙的问题，或者面试过程中一些烧脑的问题，在此总结了一下，当做面试技巧，免得自己下次遇到相关问题的的时候不知道如何处理。具体包括一些基础的问题，和一些底层原理等相关知识点，砥砺前行。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-57.png">
 <meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-56.png">
-<meta property="og:updated_time" content="2019-02-28T15:20:36.787Z">
+<meta property="og:updated_time" content="2019-03-10T13:31:14.919Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面试核心问题汇总（持续更新）">
-<meta name="twitter:description" content="基础知识如何理解对象的创建过程 请考虑一个名为Dog 的类： (1) 类型为Dog 的一个对象首次创建时，或者Dog 类的static 方法／static 字段首次访问时，Java 解释器必须找到Dog.class（在事先设好的类路径里搜索）。 (2) 找到Dog.class 后（它会创建一个Class 对象，这将在后面学到），它的所有static 初始化模块都会运行。因此，static 初始化仅">
+<meta name="twitter:description" content="概述由于个人在开发调试等过程中经常遇到一些莫名其妙的问题，或者面试过程中一些烧脑的问题，在此总结了一下，当做面试技巧，免得自己下次遇到相关问题的的时候不知道如何处理。具体包括一些基础的问题，和一些底层原理等相关知识点，砥砺前行。">
 <meta name="twitter:image" content="http://yangzhiwen911.github.io/images/pasted-57.png">
 
 
@@ -493,7 +493,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-               2019-02-28
+               2019-03-10
             
           </span>
 		  
@@ -505,7 +505,7 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
 				<span class="post-meta-item-text"> 
-				7.9k	字			 
+				8.1k	字			 
 				</span>
 		  
 		  
@@ -609,15 +609,21 @@
       
 
       
-        <h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><h4 id="如何理解对象的创建过程"><a href="#如何理解对象的创建过程" class="headerlink" title="如何理解对象的创建过程"></a>如何理解对象的创建过程</h4><ul>
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>由于个人在开发调试等过程中经常遇到一些莫名其妙的问题，或者面试过程中一些烧脑的问题，在此总结了一下，当做面试技巧，免得自己下次遇到相关问题的的时候不知道如何处理。具体包括一些基础的问题，和一些底层原理等相关知识点，砥砺前行。<br><a id="more"></a> </p>
+<h3 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h3><h4 id="new-String-和toString-有什么区别"><a href="#new-String-和toString-有什么区别" class="headerlink" title="new String()和toString()有什么区别"></a>new String()和toString()有什么区别</h4><ul>
+<li>toString是调用了object对象的类的toString方法，默认返回当前对象(c)的内存地址即<code>hashCode</code>。<code>[class name]@[hashCode]</code>格式，如：<code>[B@312b1dae</code>。</li>
+<li><p>new String(para)是根据para是一个字节数组，使用java虚拟机默认的编码格式，将这个字节数组decode为对应的字符，返回的是真实的值。</p>
+<p><code>该问题发生在使用socket读取客户端的字节流，把bytes.toString()却输出了hashCode值，而用new String(bytes)则正确的打出了值。</code></p>
+</li>
+</ul>
+<h4 id="如何理解对象的创建过程"><a href="#如何理解对象的创建过程" class="headerlink" title="如何理解对象的创建过程"></a>如何理解对象的创建过程</h4><ul>
 <li>请考虑一个名为Dog 的类：<ul>
 <li>(1) 类型为Dog 的一个对象首次创建时，或者Dog 类的static 方法／static 字段首次访问时，Java 解释器<br>必须找到Dog.class（在事先设好的类路径里搜索）。</li>
 <li>(2) 找到Dog.class 后（它会创建一个Class 对象，这将在后面学到），它的所有static 初始化模块都会运<br>行。因此，static 初始化仅发生一次——在Class 对象首次载入的时候。</li>
 <li>(3) 创建一个new Dog()时，Dog 对象的构建进程首先会在内存堆（Heap）里为一个Dog 对象分配足够多的存<br>储空间。</li>
 <li>(4) 这种存储空间会清为零，将Dog 中的所有基本类型设为它们的默认值（零用于数字，以及boolean 和<br>char 的等价设定）。</li>
 <li>(5) 进行字段定义时发生的所有初始化都会执行。</li>
-<li>(6) 执行构建器。<a id="more"></a> 
-</li>
+<li>(6) 执行构建器。</li>
 </ul>
 </li>
 </ul>
@@ -759,7 +765,10 @@
 <li>CAS，Compare And Swap，即比较并交换。Doug lea大神在同步组件中大量使用CAS技术鬼斧神工地实现了Java多线程的并发操作。整个AQS同步组件、Atomic原子类操作等等都是以CAS实现的，甚至ConcurrentHashMap在1.8的版本中也调整为了CAS+Synchronized。</li>
 </ul>
 <hr>
-<h3 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h3><h4 id="为什么Redis是单线程"><a href="#为什么Redis是单线程" class="headerlink" title="为什么Redis是单线程"></a>为什么Redis是单线程</h4><ul>
+<h3 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h3><h4 id="如何理解Redis的底层原理"><a href="#如何理解Redis的底层原理" class="headerlink" title="如何理解Redis的底层原理"></a>如何理解Redis的底层原理</h4><ul>
+<li>Redis采用了RESP通讯协议，底层通过Socket来实现信息的传递和获取。</li>
+</ul>
+<h4 id="为什么Redis是单线程"><a href="#为什么Redis是单线程" class="headerlink" title="为什么Redis是单线程"></a>为什么Redis是单线程</h4><ul>
 <li>官方FAQ表示，因为Redis是基于内存的操作，CPU不是Redis的瓶颈，Redis的瓶颈最有可能是机器内存的大小或者网络带宽。既然单线程容易实现，而且CPU不会成为瓶颈，那就顺理成章地采用单线程的方案了（毕竟采用多线程会有很多麻烦！）。</li>
 </ul>
 <h4 id="缓存穿透、缓存雪崩、缓存预热"><a href="#缓存穿透、缓存雪崩、缓存预热" class="headerlink" title="缓存穿透、缓存雪崩、缓存预热"></a>缓存穿透、缓存雪崩、缓存预热</h4><ul>
@@ -1175,7 +1184,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">20</span>
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1210,7 +1219,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">11</span>
+                      
+                    
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1303,7 +1314,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">40</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">43</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1445,7 +1462,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#基础知识"><span class="nav-number">1.</span> <span class="nav-text">基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#如何理解对象的创建过程"><span class="nav-number">1.1.</span> <span class="nav-text">如何理解对象的创建过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#servlet中-和-有什么区别"><span class="nav-number">1.2.</span> <span class="nav-text">servlet中/*和/有什么区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何理解Java关键字this"><span class="nav-number">1.3.</span> <span class="nav-text">如何理解Java关键字this</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构造方法的作用"><span class="nav-number">1.4.</span> <span class="nav-text">构造方法的作用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础扩展"><span class="nav-number">2.</span> <span class="nav-text">基础扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#servlet的url-pattern如何匹配的"><span class="nav-number">2.1.</span> <span class="nav-text">servlet的url-pattern如何匹配的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何理解快速失败fail-fast"><span class="nav-number">2.2.</span> <span class="nav-text">如何理解快速失败fail-fast</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何理解CAP理论（AP架构、CP架构）"><span class="nav-number">2.3.</span> <span class="nav-text">如何理解CAP理论（AP架构、CP架构）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何理解CAS无锁机制"><span class="nav-number">2.4.</span> <span class="nav-text">如何理解CAS无锁机制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis"><span class="nav-number">3.</span> <span class="nav-text">Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么Redis是单线程"><span class="nav-number">3.1.</span> <span class="nav-text">为什么Redis是单线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缓存穿透、缓存雪崩、缓存预热"><span class="nav-number">3.2.</span> <span class="nav-text">缓存穿透、缓存雪崩、缓存预热</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程"><span class="nav-number">4.</span> <span class="nav-text">多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#多线程有几种实现方式"><span class="nav-number">4.1.</span> <span class="nav-text">多线程有几种实现方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Callable和Runnable的区别"><span class="nav-number">4.2.</span> <span class="nav-text">Callable和Runnable的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CyclicBarrier和CountDownLatch的区别"><span class="nav-number">4.3.</span> <span class="nav-text">CyclicBarrier和CountDownLatch的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何在两个线程间共享数据"><span class="nav-number">4.4.</span> <span class="nav-text">如何在两个线程间共享数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是FutureTask"><span class="nav-number">4.5.</span> <span class="nav-text">什么是FutureTask</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#synchronized和ReentrantLock的区别"><span class="nav-number">4.6.</span> <span class="nav-text">synchronized和ReentrantLock的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java中Semaphore是什么"><span class="nav-number">4.7.</span> <span class="nav-text">Java中Semaphore是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如果你提交任务时，线程池队列已满。会时发会生什么"><span class="nav-number">4.8.</span> <span class="nav-text">如果你提交任务时，线程池队列已满。会时发会生什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是阻塞式方法"><span class="nav-number">4.9.</span> <span class="nav-text">什么是阻塞式方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何在Java中创建Immutable对象"><span class="nav-number">4.10.</span> <span class="nav-text">如何在Java中创建Immutable对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java中的fork-join框架是什么"><span class="nav-number">4.11.</span> <span class="nav-text">Java中的fork join框架是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Executors类是什么"><span class="nav-number">4.12.</span> <span class="nav-text">Executors类是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Executor有什么作用"><span class="nav-number">4.13.</span> <span class="nav-text">Executor有什么作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sleep-、wait（）的区别"><span class="nav-number">4.14.</span> <span class="nav-text">sleep() 、wait（）的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分布式锁有几种实现方式"><span class="nav-number">4.15.</span> <span class="nav-text">分布式锁有几种实现方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现原理"><span class="nav-number">5.</span> <span class="nav-text">实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#synchronized的实现原理"><span class="nav-number">5.1.</span> <span class="nav-text">synchronized的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#volatile的实现原理"><span class="nav-number">5.2.</span> <span class="nav-text">volatile的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AtomicInteger的实现原理"><span class="nav-number">5.3.</span> <span class="nav-text">AtomicInteger的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HashMap的实现原理"><span class="nav-number">5.4.</span> <span class="nav-text">HashMap的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ConcurrentHashMap的实现原理"><span class="nav-number">5.5.</span> <span class="nav-text">ConcurrentHashMap的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Method-invoke-实现原理"><span class="nav-number">5.6.</span> <span class="nav-text">Method.invoke()实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引的实现原理"><span class="nav-number">5.7.</span> <span class="nav-text">索引的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MyBatis的实现原理"><span class="nav-number">5.8.</span> <span class="nav-text">MyBatis的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ArrayLis实现原理"><span class="nav-number">5.9.</span> <span class="nav-text">ArrayLis实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串的工作原理"><span class="nav-number">5.10.</span> <span class="nav-text">字符串的工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM的工作原理"><span class="nav-number">5.11.</span> <span class="nav-text">JVM的工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis工作原理"><span class="nav-number">5.12.</span> <span class="nav-text">Redis工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-Boot-Starter的工作原理"><span class="nav-number">5.13.</span> <span class="nav-text">Spring Boot Starter的工作原理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文献"><span class="nav-number">6.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础知识"><span class="nav-number">2.</span> <span class="nav-text">基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#new-String-和toString-有什么区别"><span class="nav-number">2.1.</span> <span class="nav-text">new String()和toString()有什么区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何理解对象的创建过程"><span class="nav-number">2.2.</span> <span class="nav-text">如何理解对象的创建过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#servlet中-和-有什么区别"><span class="nav-number">2.3.</span> <span class="nav-text">servlet中/*和/有什么区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何理解Java关键字this"><span class="nav-number">2.4.</span> <span class="nav-text">如何理解Java关键字this</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#构造方法的作用"><span class="nav-number">2.5.</span> <span class="nav-text">构造方法的作用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础扩展"><span class="nav-number">3.</span> <span class="nav-text">基础扩展</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#servlet的url-pattern如何匹配的"><span class="nav-number">3.1.</span> <span class="nav-text">servlet的url-pattern如何匹配的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何理解快速失败fail-fast"><span class="nav-number">3.2.</span> <span class="nav-text">如何理解快速失败fail-fast</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何理解CAP理论（AP架构、CP架构）"><span class="nav-number">3.3.</span> <span class="nav-text">如何理解CAP理论（AP架构、CP架构）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何理解CAS无锁机制"><span class="nav-number">3.4.</span> <span class="nav-text">如何理解CAS无锁机制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redis"><span class="nav-number">4.</span> <span class="nav-text">Redis</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#如何理解Redis的底层原理"><span class="nav-number">4.1.</span> <span class="nav-text">如何理解Redis的底层原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#为什么Redis是单线程"><span class="nav-number">4.2.</span> <span class="nav-text">为什么Redis是单线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缓存穿透、缓存雪崩、缓存预热"><span class="nav-number">4.3.</span> <span class="nav-text">缓存穿透、缓存雪崩、缓存预热</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多线程"><span class="nav-number">5.</span> <span class="nav-text">多线程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#多线程有几种实现方式"><span class="nav-number">5.1.</span> <span class="nav-text">多线程有几种实现方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Callable和Runnable的区别"><span class="nav-number">5.2.</span> <span class="nav-text">Callable和Runnable的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CyclicBarrier和CountDownLatch的区别"><span class="nav-number">5.3.</span> <span class="nav-text">CyclicBarrier和CountDownLatch的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何在两个线程间共享数据"><span class="nav-number">5.4.</span> <span class="nav-text">如何在两个线程间共享数据</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是FutureTask"><span class="nav-number">5.5.</span> <span class="nav-text">什么是FutureTask</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#synchronized和ReentrantLock的区别"><span class="nav-number">5.6.</span> <span class="nav-text">synchronized和ReentrantLock的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java中Semaphore是什么"><span class="nav-number">5.7.</span> <span class="nav-text">Java中Semaphore是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如果你提交任务时，线程池队列已满。会时发会生什么"><span class="nav-number">5.8.</span> <span class="nav-text">如果你提交任务时，线程池队列已满。会时发会生什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是阻塞式方法"><span class="nav-number">5.9.</span> <span class="nav-text">什么是阻塞式方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何在Java中创建Immutable对象"><span class="nav-number">5.10.</span> <span class="nav-text">如何在Java中创建Immutable对象</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Java中的fork-join框架是什么"><span class="nav-number">5.11.</span> <span class="nav-text">Java中的fork join框架是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Executors类是什么"><span class="nav-number">5.12.</span> <span class="nav-text">Executors类是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Executor有什么作用"><span class="nav-number">5.13.</span> <span class="nav-text">Executor有什么作用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sleep-、wait（）的区别"><span class="nav-number">5.14.</span> <span class="nav-text">sleep() 、wait（）的区别</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分布式锁有几种实现方式"><span class="nav-number">5.15.</span> <span class="nav-text">分布式锁有几种实现方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实现原理"><span class="nav-number">6.</span> <span class="nav-text">实现原理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#synchronized的实现原理"><span class="nav-number">6.1.</span> <span class="nav-text">synchronized的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#volatile的实现原理"><span class="nav-number">6.2.</span> <span class="nav-text">volatile的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#AtomicInteger的实现原理"><span class="nav-number">6.3.</span> <span class="nav-text">AtomicInteger的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#HashMap的实现原理"><span class="nav-number">6.4.</span> <span class="nav-text">HashMap的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ConcurrentHashMap的实现原理"><span class="nav-number">6.5.</span> <span class="nav-text">ConcurrentHashMap的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Method-invoke-实现原理"><span class="nav-number">6.6.</span> <span class="nav-text">Method.invoke()实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#索引的实现原理"><span class="nav-number">6.7.</span> <span class="nav-text">索引的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#MyBatis的实现原理"><span class="nav-number">6.8.</span> <span class="nav-text">MyBatis的实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ArrayLis实现原理"><span class="nav-number">6.9.</span> <span class="nav-text">ArrayLis实现原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#字符串的工作原理"><span class="nav-number">6.10.</span> <span class="nav-text">字符串的工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#JVM的工作原理"><span class="nav-number">6.11.</span> <span class="nav-text">JVM的工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis工作原理"><span class="nav-number">6.12.</span> <span class="nav-text">Redis工作原理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Spring-Boot-Starter的工作原理"><span class="nav-number">6.13.</span> <span class="nav-text">Spring Boot Starter的工作原理</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文献"><span class="nav-number">7.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
             
 
           </div>
@@ -1487,7 +1504,7 @@
     
       <span class="post-meta-item-text">博客全站共计：</span>
     
-    <span title="post.totalcount">46.4k字</span>
+    <span title="post.totalcount">47.6k字</span>
   
   
  
