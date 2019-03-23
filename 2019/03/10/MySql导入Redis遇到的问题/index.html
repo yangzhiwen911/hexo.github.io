@@ -117,20 +117,20 @@
 
 
 
-  <meta name="description" content="概述众所周知，Redis是基于内存的单线程的缓存应用，Redis的服务端与客户端之间的通信采用了一种名为 RESP(REdis Serialization Protocol)的协议，而RESP底层采用的是TCP的连接方式（Socket），通过TCP进行数据传输，然后根据解析规则解析相应信息，完成交互。那么如果要从MySql中直接导入数据，也是可以做到的，原理则是组装RESP协议格式的数据即可。">
+  <meta name="description" content="概述众所周知，Redis(Remote Dictionary Server)是基于内存的单线程的缓存应用，Redis的服务端与客户端之间的通信采用了一种名为 RESP(REdis Serialization Protocol)的协议，而RESP底层采用的是TCP的连接方式（Socket），通过TCP进行数据传输，然后根据解析规则解析相应信息，完成交互。那么如果要从MySql中直接导入数据，也是可以">
 <meta name="keywords" content="MySql,Redis,RESP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="MySql导入Redis遇到的问题">
 <meta property="og:url" content="http://yangzhiwen911.github.io/2019/03/10/MySql导入Redis遇到的问题/index.html">
 <meta property="og:site_name" content="未知世界的秘密">
-<meta property="og:description" content="概述众所周知，Redis是基于内存的单线程的缓存应用，Redis的服务端与客户端之间的通信采用了一种名为 RESP(REdis Serialization Protocol)的协议，而RESP底层采用的是TCP的连接方式（Socket），通过TCP进行数据传输，然后根据解析规则解析相应信息，完成交互。那么如果要从MySql中直接导入数据，也是可以做到的，原理则是组装RESP协议格式的数据即可。">
+<meta property="og:description" content="概述众所周知，Redis(Remote Dictionary Server)是基于内存的单线程的缓存应用，Redis的服务端与客户端之间的通信采用了一种名为 RESP(REdis Serialization Protocol)的协议，而RESP底层采用的是TCP的连接方式（Socket），通过TCP进行数据传输，然后根据解析规则解析相应信息，完成交互。那么如果要从MySql中直接导入数据，也是可以">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-65.png">
 <meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-66.png">
-<meta property="og:updated_time" content="2019-03-10T13:10:23.082Z">
+<meta property="og:updated_time" content="2019-03-22T03:19:05.576Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MySql导入Redis遇到的问题">
-<meta name="twitter:description" content="概述众所周知，Redis是基于内存的单线程的缓存应用，Redis的服务端与客户端之间的通信采用了一种名为 RESP(REdis Serialization Protocol)的协议，而RESP底层采用的是TCP的连接方式（Socket），通过TCP进行数据传输，然后根据解析规则解析相应信息，完成交互。那么如果要从MySql中直接导入数据，也是可以做到的，原理则是组装RESP协议格式的数据即可。">
+<meta name="twitter:description" content="概述众所周知，Redis(Remote Dictionary Server)是基于内存的单线程的缓存应用，Redis的服务端与客户端之间的通信采用了一种名为 RESP(REdis Serialization Protocol)的协议，而RESP底层采用的是TCP的连接方式（Socket），通过TCP进行数据传输，然后根据解析规则解析相应信息，完成交互。那么如果要从MySql中直接导入数据，也是可以">
 <meta name="twitter:image" content="http://yangzhiwen911.github.io/images/pasted-65.png">
 
 
@@ -484,6 +484,17 @@
               
 
               
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+               2019-03-22
             
           </span>
 		  
@@ -495,7 +506,7 @@
                   <i class="fa fa-file-word-o"></i>
                 </span>
 				<span class="post-meta-item-text"> 
-				938	字			 
+				941	字			 
 				</span>
 		  
 		  
@@ -590,7 +601,7 @@
       
 
       
-        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>众所周知，<code>Redis</code>是基于内存的单线程的缓存应用，<code>Redis</code>的服务端与客户端之间的通信采用了一种名为 <code>RESP(REdis Serialization Protocol)</code>的协议，而<code>RESP</code>底层采用的是TCP的连接方式（Socket），通过TCP进行数据传输，然后根据解析规则解析相应信息，完成交互。那么如果要从<code>MySql</code>中直接导入数据，也是可以做到的，原理则是组装<code>RESP</code>协议格式的数据即可。</p>
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>众所周知，<code>Redis(Remote Dictionary Server)</code>是基于内存的单线程的缓存应用，<code>Redis</code>的服务端与客户端之间的通信采用了一种名为 <code>RESP(REdis Serialization Protocol)</code>的协议，而<code>RESP</code>底层采用的是TCP的连接方式（Socket），通过TCP进行数据传输，然后根据解析规则解析相应信息，完成交互。那么如果要从<code>MySql</code>中直接导入数据，也是可以做到的，原理则是组装<code>RESP</code>协议格式的数据即可。</p>
 <a id="more"></a>
 <ul>
 <li>RESP协议格式<br>首先我们先模拟一个<code>Redis</code>底层的<code>Socket</code>实现，客户端执行如下命令后，看看<code>Server</code>端监听到的数据格式。</li>
@@ -873,7 +884,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">25</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -910,7 +921,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">12</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">14</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1017,7 +1032,19 @@
                     
                       
                     
-                    <span class="site-state-item-count">47</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">53</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1201,7 +1228,7 @@
     
       <span class="post-meta-item-text">博客全站共计：</span>
     
-    <span title="post.totalcount">48.3k字</span>
+    <span title="post.totalcount">52.9k字</span>
   
   
  
