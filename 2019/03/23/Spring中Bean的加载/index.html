@@ -126,7 +126,7 @@
 <meta property="og:description" content="概述Spring通过资源加载器加载相应的XML文件，使用读取器读取资源加载器中的文件到读取器中，在读取过程中，解析相应的xml文件元素，转化为spring定义的数据结BeanDefinition，把相应的BeanDefinition注册到注册表中的RootBeanDefinition。注册表中包含的BeanDefinition的数据结构。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://yangzhiwen911.github.io/images/pasted-69.png">
-<meta property="og:updated_time" content="2019-03-23T08:04:30.428Z">
+<meta property="og:updated_time" content="2019-03-24T07:16:32.660Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Spring中Bean的加载">
 <meta name="twitter:description" content="概述Spring通过资源加载器加载相应的XML文件，使用读取器读取资源加载器中的文件到读取器中，在读取过程中，解析相应的xml文件元素，转化为spring定义的数据结BeanDefinition，把相应的BeanDefinition注册到注册表中的RootBeanDefinition。注册表中包含的BeanDefinition的数据结构。">
@@ -483,6 +483,17 @@
               
 
               
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+               2019-03-24
             
           </span>
 		  
@@ -591,7 +602,7 @@
       
         <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p><code>Spring</code>通过资源加载器加载相应的XML文件，使用读取器读取资源加载器中的文件到读取器中，在读取过程中，解析相应的xml文件元素，转化为<code>spring</code>定义的数据结<code>BeanDefinition</code>，把相应的<code>BeanDefinition</code>注册到注册表中的<code>RootBeanDefinition</code>。注册表中包含的BeanDefinition的数据结构。</p>
 <a id="more"></a>
-<h3 id="技术点"><a href="#技术点" class="headerlink" title="技术点"></a>技术点</h3><p>在<code>Spring</code>中，<code>@Service</code>、<code>@Controller</code>默认都是单例的。用了私有全局变量，若不想影响下次请求，就需要用到原型模式，即<code>@Scope(“prototype”)</code></p>
+<h3 id="技术点"><a href="#技术点" class="headerlink" title="技术点"></a>技术点</h3><p>在<code>Spring</code>中，<code>@Service</code>、<code>@Controller</code>、<code>@Repository</code>、<code>@Component</code>默认都是单例的,可以配合<code>@ComponentScan</code>来加载bean。用了私有全局变量，若不想影响下次请求，就需要用到原型模式，即<code>@Scope(“prototype”)</code></p>
 <h4 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a><em><code>单例模式</code></em></h4><p>单例模式就是Spring的IOC机制只创建该类的一个实例，每次请求，都会用这同一个实例进行处理，因此若存在全局变量，本次请求的值肯定会影响下一次请求时该变量的值。单例模式可能会有线程安全的问题。 </p>
 <h4 id="原型模式"><a href="#原型模式" class="headerlink" title="原型模式"></a><em><code>原型模式</code></em></h4><p>原型模式指的是每次调用时，会重新创建该类的一个实例，比较类似于我们自己自己new的对象实例。原型模式不存在线程安全的问题。</p>
 <h4 id="有状态会话bean"><a href="#有状态会话bean" class="headerlink" title="有状态会话bean"></a><em><code>有状态会话bean</code></em></h4><p>有公用属性，可能被不同的线程改变，每个用户有自己特有的一个实例，在用户的生存期内，bean保持了用户的信息，即“有状态”；一旦用户灭亡（调用结束或实例结束），bean的生命期也告结束。即每个用户最初都会得到一个初始的bean。 </p>
@@ -864,7 +875,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">25</span>
+                    <span class="site-state-item-count">27</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -905,7 +916,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">14</span>
+                      
+                    
+                    <span class="site-state-item-count">15</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1024,7 +1037,13 @@
                     
                       
                     
-                    <span class="site-state-item-count">53</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">56</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1208,7 +1227,7 @@
     
       <span class="post-meta-item-text">博客全站共计：</span>
     
-    <span title="post.totalcount">52.9k字</span>
+    <span title="post.totalcount">55.2k字</span>
   
   
  
