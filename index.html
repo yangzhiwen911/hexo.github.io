@@ -155,6 +155,12 @@
 
 
 
+  <script type="text/javascript">
+  !function(e,t,n,g,i){e[i]=e[i]||function(){(e[i].q=e[i].q||[]).push(arguments)},n=t.createElement("script"),tag=t.getElementsByTagName("script")[0],n.async=1,n.src=('https:'==document.location.protocol?'https://':'http://')+g,tag.parentNode.insertBefore(n,tag)}(window,document,"script","assets.growingio.com/2.1/gio.js","gio");
+    gio('init','a1ed9fdd1be0aae4', {});
+  gio('send');
+  </script>
+
 
 
   <noscript>
@@ -413,6 +419,1420 @@
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2019/04/04/读书笔记-Tomcat容器结构/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="志文">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jackie.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="未知世界的秘密">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/04/读书笔记-Tomcat容器结构/" class="post-title-link" itemprop="url">读书笔记-Tomcat容器结构</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+             2019-04-04
+
+            
+              
+
+              
+            
+          </span>
+		  
+		  
+		  
+		  
+		  
+		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+				<span class="post-meta-item-text"> 
+				2k	字			 
+				</span>
+		  
+		  
+		
+			
+		  
+		  
+		  
+		  
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Tomcat/" itemprop="url" rel="index"><span itemprop="name">Tomcat</span></a></span>
+
+                
+                
+              
+            </span>
+          
+		  
+		  
+		    
+		  
+		  
+		  
+		  
+		 
+		  
+		  
+			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-user"></i>
+                </span><span class="post-meta-item-text"> 作者
+				 Jakcie.Yang
+				</span>
+		
+		  
+		   
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+		    
+		  
+		  
+		  
+		
+		 
+        <div class="post-tags">
+		 
+          
+            <a href="/tags/Server/" rel="tag"><i class="fa fa-tag"></i> Server</a>
+          
+        </div>
+      
+
+        </div>
+		
+				
+				
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>最近看了一本Java并发编程之美，里面对并发编程需要注意的点、常见并发类原理、各种锁之间的区别以及源码解读和实例代码等等讲解的都非常的详细，真正的好书，看到11.2小节<code>Tomcat的NioEndPoint中ConcurrentlinkedQueue的使用</code>的时候，里面对<code>Tomcat</code>容器结构的分析，我觉得非常有必要单独拿出来好好分享一下。刷新了自己对于<code>Tomcat</code>的认识。于是有了下面这个容器结构图。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/04/04/读书笔记-Tomcat容器结构/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+	
+	 	
+
+    
+
+
+
+    
+
+    <footer class="post-footer">
+     <!-- 
+  
+      
+	  -->
+	  
+	  
+		  
+			
+			
+	 
+
+      
+	  
+	  
+	  
+	   <!--
+	   <div>
+		
+		</div>
+		-->
+		
+     
+
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+ 
+
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2019/04/03/Tomcat的三种运行模式/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="志文">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jackie.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="未知世界的秘密">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/03/Tomcat的三种运行模式/" class="post-title-link" itemprop="url">Tomcat的三种运行模式</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+             2019-04-03
+
+            
+              
+
+              
+            
+          </span>
+		  
+		  
+		  
+		  
+		  
+		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+				<span class="post-meta-item-text"> 
+				1.4k	字			 
+				</span>
+		  
+		  
+		
+			
+		  
+		  
+		  
+		  
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Tomcat/" itemprop="url" rel="index"><span itemprop="name">Tomcat</span></a></span>
+
+                
+                
+              
+            </span>
+          
+		  
+		  
+		    
+		  
+		  
+		  
+		  
+		 
+		  
+		  
+			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-user"></i>
+                </span><span class="post-meta-item-text"> 作者
+				 Jakcie.Yang
+				</span>
+		
+		  
+		   
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+		    
+		  
+		  
+		  
+		
+		 
+        <div class="post-tags">
+		 
+          
+            <a href="/tags/nio/" rel="tag"><i class="fa fa-tag"></i> nio</a>
+          
+            <a href="/tags/bio/" rel="tag"><i class="fa fa-tag"></i> bio</a>
+          
+            <a href="/tags/apr/" rel="tag"><i class="fa fa-tag"></i> apr</a>
+          
+        </div>
+      
+
+        </div>
+		
+				
+				
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p><code>Java</code>开发中，应用服务器必不可少，而<code>Tomcat</code>由于轻量级，更是被很多人和企业使用，但是具体的运行模式很少有人了解，下面就简单介绍一下<code>Tomcat</code>中的三种运行模式，<code>bio</code>、<code>nio</code>、<code>apr</code>。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/04/03/Tomcat的三种运行模式/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+	
+	 	
+
+    
+
+
+
+    
+
+    <footer class="post-footer">
+     <!-- 
+  
+      
+	  -->
+	  
+	  
+		  
+			
+			
+	 
+
+      
+	  
+	  
+	  
+	   <!--
+	   <div>
+		
+		</div>
+		-->
+		
+     
+
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+ 
+
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2019/04/03/Java的三种类加载器/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="志文">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jackie.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="未知世界的秘密">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/03/Java的三种类加载器/" class="post-title-link" itemprop="url">Java的三种类加载器</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+             2019-04-03
+
+            
+              
+
+              
+            
+          </span>
+		  
+		  
+		  
+		  
+		  
+		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+				<span class="post-meta-item-text"> 
+				1.1k	字			 
+				</span>
+		  
+		  
+		
+			
+		  
+		  
+		  
+		  
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/JAVA/" itemprop="url" rel="index"><span itemprop="name">JAVA</span></a></span>
+
+                
+                
+              
+            </span>
+          
+		  
+		  
+		    
+		  
+		  
+		  
+		  
+		 
+		  
+		  
+			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-user"></i>
+                </span><span class="post-meta-item-text"> 作者
+				 Jakcie.Yang
+				</span>
+		
+		  
+		   
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+		    
+		  
+		  
+		  
+		
+		 
+        <div class="post-tags">
+		 
+          
+            <a href="/tags/Unsafe/" rel="tag"><i class="fa fa-tag"></i> Unsafe</a>
+          
+            <a href="/tags/类加载器/" rel="tag"><i class="fa fa-tag"></i> 类加载器</a>
+          
+        </div>
+      
+
+        </div>
+		
+				
+				
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>Java中类加载器的不同，那么对应的加载分工也不同，那种类加载器加载了哪些核心类库，这个可以根据加载路径以及父委托机制来说明。总体来说Java中的类加载器分为如下3个：<code>引导类加载器(BootstrapClassLoader)</code>、<code>扩展类加载器(ExtClassLoader)</code>、<code>应用(系统)类加载器(AppClassLoader)</code>，具体介绍如下：</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/04/03/Java的三种类加载器/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+	
+	 	
+
+    
+
+
+
+    
+
+    <footer class="post-footer">
+     <!-- 
+  
+      
+	  -->
+	  
+	  
+		  
+			
+			
+	 
+
+      
+	  
+	  
+	  
+	   <!--
+	   <div>
+		
+		</div>
+		-->
+		
+     
+
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+ 
+
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2019/03/31/反编译经常遇到的Java指令/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="志文">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jackie.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="未知世界的秘密">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/31/反编译经常遇到的Java指令/" class="post-title-link" itemprop="url">反编译遇到的相关指令问题</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+             2019-03-31
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+               2019-04-03
+            
+          </span>
+		  
+		  
+		  
+		  
+		  
+		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+				<span class="post-meta-item-text"> 
+				2.4k	字			 
+				</span>
+		  
+		  
+		
+			
+		  
+		  
+		  
+		  
+
+          
+		  
+		  
+		    
+		  
+		  
+		  
+		  
+		 
+		  
+		  
+			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-user"></i>
+                </span><span class="post-meta-item-text"> 作者
+				 Jakcie.Yang
+				</span>
+		
+		  
+		   
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+		    
+		  
+		  
+		  
+		
+		 
+
+        </div>
+		
+				
+				
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>JVM用线程来执行方法，每个线程都包含一个线程栈，线程栈存放的是栈帧，每个栈帧都有自己的操作数栈和本地变量表。当一个方法被执行时候，首先会在栈顶push一个栈帧，栈帧的创建就需要指定操作数栈和本地变量表的大小。接下来方法的参数会被传入一个方法的本地变量表，本地变量表的访问采用下表索引的方式来访问，第0个位置会传入this(无参时候会调用自身实例，有参数则第1个位置会传入<code>参数类型：如int</code>，第2个位置会传入<code>参数类型：如int</code>，第N个位置…)</p>
+<p>在栈帧完全准备好后，就可以开始执行执行字节码指令了，上述iload_1,i_load_2分别将本地变量表的1，2位置的数据push到操作数栈中，iadd随后会pop两个值用来做加法操作，并将结果push到操作数栈，最后ireturn将栈顶数据返回。</p>
+<p>针对一个简单的i++自增方法，做如下尝试，用javap反编译后，看看jvm是具体按照什么指令来操作对象和工作流程的。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/31/反编译经常遇到的Java指令/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+	
+	 	
+
+    
+
+
+
+    
+
+    <footer class="post-footer">
+     <!-- 
+  
+      
+	  -->
+	  
+	  
+		  
+			
+			
+	 
+
+      
+	  
+	  
+	  
+	   <!--
+	   <div>
+		
+		</div>
+		-->
+		
+     
+
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+ 
+
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2019/03/29/List＜T＞-List＜-＞-List＜Object＞/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="志文">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jackie.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="未知世界的秘密">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/29/List＜T＞-List＜-＞-List＜Object＞/" class="post-title-link" itemprop="url">List＜T＞&List＜?＞&List＜Object＞</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+             2019-03-29
+
+            
+              
+
+              
+            
+          </span>
+		  
+		  
+		  
+		  
+		  
+		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+				<span class="post-meta-item-text"> 
+				585	字			 
+				</span>
+		  
+		  
+		
+			
+		  
+		  
+		  
+		  
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/JAVA/" itemprop="url" rel="index"><span itemprop="name">JAVA</span></a></span>
+
+                
+                
+              
+            </span>
+          
+		  
+		  
+		    
+		  
+		  
+		  
+		  
+		 
+		  
+		  
+			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-user"></i>
+                </span><span class="post-meta-item-text"> 作者
+				 Jakcie.Yang
+				</span>
+		
+		  
+		   
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+		    
+		  
+		  
+		  
+		
+		 
+
+        </div>
+		
+				
+				
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p><code>List＜T＞</code>、<code>List＜?＞</code>、<code>List＜Object＞</code>这三者都可以容纳所有的对象，但使用的顺序应该是首选<code>List＜T＞</code>，次之<code>List＜?＞</code>，最后选择<code>List＜Object＞</code>。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/29/List＜T＞-List＜-＞-List＜Object＞/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+	
+	 	
+
+    
+
+
+
+    
+
+    <footer class="post-footer">
+     <!-- 
+  
+      
+	  -->
+	  
+	  
+		  
+			
+			
+	 
+
+      
+	  
+	  
+	  
+	   <!--
+	   <div>
+		
+		</div>
+		-->
+		
+     
+
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+ 
+
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2019/03/29/Java基础知识点/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="志文">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jackie.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="未知世界的秘密">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/29/Java基础知识点/" class="post-title-link" itemprop="url">Java基础知识点</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+             2019-03-29
+
+            
+              
+
+              
+            
+          </span>
+		  
+		  
+		  
+		  
+		  
+		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+				<span class="post-meta-item-text"> 
+				2.3k	字			 
+				</span>
+		  
+		  
+		
+			
+		  
+		  
+		  
+		  
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/JAVA/" itemprop="url" rel="index"><span itemprop="name">JAVA</span></a></span>
+
+                
+                
+              
+            </span>
+          
+		  
+		  
+		    
+		  
+		  
+		  
+		  
+		 
+		  
+		  
+			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-user"></i>
+                </span><span class="post-meta-item-text"> 作者
+				 Jakcie.Yang
+				</span>
+		
+		  
+		   
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+		    
+		  
+		  
+		  
+		
+		 
+
+        </div>
+		
+				
+				
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>开发中会经常遇到的一些基础知识点，其运行的结果体现了掌握Java基础是多么重要。</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/29/Java基础知识点/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+	
+	 	
+
+    
+
+
+
+    
+
+    <footer class="post-footer">
+     <!-- 
+  
+      
+	  -->
+	  
+	  
+		  
+			
+			
+	 
+
+      
+	  
+	  
+	  
+	   <!--
+	   <div>
+		
+		</div>
+		-->
+		
+     
+
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+ 
+
+  </article>
+
+
     
       
 
@@ -1395,1484 +2815,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2019/03/17/如何理解HashMap/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="志文">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/jackie.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="未知世界的秘密">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/17/如何理解HashMap/" class="post-title-link" itemprop="url">你真的了解HashMap吗</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-             2019-03-17
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-               2019-03-21
-            
-          </span>
-		  
-		  
-		  
-		  
-		  
-		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-				<span class="post-meta-item-text"> 
-				1.7k	字			 
-				</span>
-		  
-		  
-		
-			
-		  
-		  
-		  
-		  
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/集合/" itemprop="url" rel="index"><span itemprop="name">集合</span></a></span>
-
-                
-                
-              
-            </span>
-          
-		  
-		  
-		    
-		  
-		  
-		  
-		  
-		 
-		  
-		  
-			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-user"></i>
-                </span><span class="post-meta-item-text"> 作者
-				 Jakcie.Yang
-				</span>
-		
-		  
-		   
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-		    
-		  
-		  
-		  
-		
-		 
-        <div class="post-tags">
-		 
-          
-            <a href="/tags/HashMap/" rel="tag"><i class="fa fa-tag"></i> HashMap</a>
-          
-        </div>
-      
-
-        </div>
-		
-				
-				
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>如果你对<code>HashMap</code>的了解情况只是建立在线程安全，可以存储键值，可以存储null，那么强烈建议你去看一下<code>HashMap</code>的源码。<br>下面是个人总结了在<code>HashMap</code>中很独特的核心点以及设计点,仅供参考。<br>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/03/17/如何理解HashMap/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-	
-	 	
-
-    
-
-
-
-    
-
-    <footer class="post-footer">
-     <!-- 
-  
-      
-	  -->
-	  
-	  
-		  
-			
-			
-	 
-
-      
-	  
-	  
-	  
-	   <!--
-	   <div>
-		
-		</div>
-		-->
-		
-     
-
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
- 
-
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2019/03/12/字符串拼接的玄机/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="志文">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/jackie.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="未知世界的秘密">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/12/字符串拼接的玄机/" class="post-title-link" itemprop="url">字符串拼接的玄机</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-             2019-03-12
-
-            
-              
-
-              
-            
-          </span>
-		  
-		  
-		  
-		  
-		  
-		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-				<span class="post-meta-item-text"> 
-				699	字			 
-				</span>
-		  
-		  
-		
-			
-		  
-		  
-		  
-		  
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/JAVA/" itemprop="url" rel="index"><span itemprop="name">JAVA</span></a></span>
-
-                
-                
-              
-            </span>
-          
-		  
-		  
-		    
-		  
-		  
-		  
-		  
-		 
-		  
-		  
-			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-user"></i>
-                </span><span class="post-meta-item-text"> 作者
-				 Jakcie.Yang
-				</span>
-		
-		  
-		   
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-		    
-		  
-		  
-		  
-		
-		 
-        <div class="post-tags">
-		 
-          
-            <a href="/tags/StringBuilder/" rel="tag"><i class="fa fa-tag"></i> StringBuilder</a>
-          
-            <a href="/tags/StringBuffer/" rel="tag"><i class="fa fa-tag"></i> StringBuffer</a>
-          
-            <a href="/tags/String/" rel="tag"><i class="fa fa-tag"></i> String</a>
-          
-            <a href="/tags/Contact/" rel="tag"><i class="fa fa-tag"></i> Contact</a>
-          
-        </div>
-      
-
-        </div>
-		
-				
-				
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>在阿里巴巴Java开发手册中，关于字符串拼接有这样一个推荐：</p>
-<p><img src="/images/pasted-67.png" alt="upload successful"></p>
-<p>在实际开发业务中，字符串的拼接应用也是随处可见，但是为什么阿里会做如下的推荐使用方式，下面我们反编译看一下拼接字符串的真正执行过程。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/03/12/字符串拼接的玄机/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-	
-	 	
-
-    
-
-
-
-    
-
-    <footer class="post-footer">
-     <!-- 
-  
-      
-	  -->
-	  
-	  
-		  
-			
-			
-	 
-
-      
-	  
-	  
-	  
-	   <!--
-	   <div>
-		
-		</div>
-		-->
-		
-     
-
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
- 
-
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2019/03/10/MySql导入Redis遇到的问题/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="志文">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/jackie.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="未知世界的秘密">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/10/MySql导入Redis遇到的问题/" class="post-title-link" itemprop="url">MySql导入Redis遇到的问题</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-             2019-03-10
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-               2019-03-22
-            
-          </span>
-		  
-		  
-		  
-		  
-		  
-		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-				<span class="post-meta-item-text"> 
-				941	字			 
-				</span>
-		  
-		  
-		
-			
-		  
-		  
-		  
-		  
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/Redis/" itemprop="url" rel="index"><span itemprop="name">Redis</span></a></span>
-
-                
-                
-              
-            </span>
-          
-		  
-		  
-		    
-		  
-		  
-		  
-		  
-		 
-		  
-		  
-			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-user"></i>
-                </span><span class="post-meta-item-text"> 作者
-				 Jakcie.Yang
-				</span>
-		
-		  
-		   
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-		    
-		  
-		  
-		  
-		
-		 
-        <div class="post-tags">
-		 
-          
-            <a href="/tags/MySql/" rel="tag"><i class="fa fa-tag"></i> MySql</a>
-          
-            <a href="/tags/Redis/" rel="tag"><i class="fa fa-tag"></i> Redis</a>
-          
-            <a href="/tags/RESP/" rel="tag"><i class="fa fa-tag"></i> RESP</a>
-          
-        </div>
-      
-
-        </div>
-		
-				
-				
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>众所周知，<code>Redis(Remote Dictionary Server)</code>是基于内存的单线程的缓存应用，<code>Redis</code>的服务端与客户端之间的通信采用了一种名为 <code>RESP(REdis Serialization Protocol)</code>的协议，而<code>RESP</code>底层采用的是TCP的连接方式（Socket），通过TCP进行数据传输，然后根据解析规则解析相应信息，完成交互。那么如果要从<code>MySql</code>中直接导入数据，也是可以做到的，原理则是组装<code>RESP</code>协议格式的数据即可。</p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/03/10/MySql导入Redis遇到的问题/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-	
-	 	
-
-    
-
-
-
-    
-
-    <footer class="post-footer">
-     <!-- 
-  
-      
-	  -->
-	  
-	  
-		  
-			
-			
-	 
-
-      
-	  
-	  
-	  
-	   <!--
-	   <div>
-		
-		</div>
-		-->
-		
-     
-
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
- 
-
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2019/03/09/CAS详解/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="志文">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/jackie.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="未知世界的秘密">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/09/CAS详解/" class="post-title-link" itemprop="url">CAS详解</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-             2019-03-09
-
-            
-              
-
-              
-            
-          </span>
-		  
-		  
-		  
-		  
-		  
-		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-				<span class="post-meta-item-text"> 
-				677	字			 
-				</span>
-		  
-		  
-		
-			
-		  
-		  
-		  
-		  
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/JAVA/" itemprop="url" rel="index"><span itemprop="name">JAVA</span></a></span>
-
-                
-                
-              
-            </span>
-          
-		  
-		  
-		    
-		  
-		  
-		  
-		  
-		 
-		  
-		  
-			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-user"></i>
-                </span><span class="post-meta-item-text"> 作者
-				 Jakcie.Yang
-				</span>
-		
-		  
-		   
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-		    
-		  
-		  
-		  
-		
-		 
-        <div class="post-tags">
-		 
-          
-            <a href="/tags/CAS/" rel="tag"><i class="fa fa-tag"></i> CAS</a>
-          
-            <a href="/tags/Unsafe/" rel="tag"><i class="fa fa-tag"></i> Unsafe</a>
-          
-        </div>
-      
-
-        </div>
-		
-				
-				
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>提到CAS无锁机制，离不开<code>sun.misc.Unsafe</code>，<code>Unsafe</code>类，提供了JNI某些功能的简单替代，正常来说JAVA是不能直接访问操作系统底层的，而<code>Unsafe</code>类属于硬件级别的原子操作（操作系统的内存读取就是原子操作），进而达到通过本地方法来访问底层。但是<code>Unsafe</code>，字面意思就是不安全的，因为它所分配的内存需要手动释放（不被GC回收）。<br>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/03/09/CAS详解/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </p></div>
-
-    
-
-    
-    
-    
-	
-	 	
-
-    
-
-
-
-    
-
-    <footer class="post-footer">
-     <!-- 
-  
-      
-	  -->
-	  
-	  
-		  
-			
-			
-	 
-
-      
-	  
-	  
-	  
-	   <!--
-	   <div>
-		
-		</div>
-		-->
-		
-     
-
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
- 
-
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2019/03/08/MySQL-InnoDB的事务隔离级别/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="志文">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/jackie.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="未知世界的秘密">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/08/MySQL-InnoDB的事务隔离级别/" class="post-title-link" itemprop="url">有关事务失效的问题</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-             2019-03-08
-
-            
-              
-
-              
-            
-          </span>
-		  
-		  
-		  
-		  
-		  
-		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-				<span class="post-meta-item-text"> 
-				298	字			 
-				</span>
-		  
-		  
-		
-			
-		  
-		  
-		  
-		  
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/JAVA/" itemprop="url" rel="index"><span itemprop="name">JAVA</span></a></span>
-
-                
-                
-              
-            </span>
-          
-		  
-		  
-		    
-		  
-		  
-		  
-		  
-		 
-		  
-		  
-			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-user"></i>
-                </span><span class="post-meta-item-text"> 作者
-				 Jakcie.Yang
-				</span>
-		
-		  
-		   
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-		    
-		  
-		  
-		  
-		
-		 
-        <div class="post-tags">
-		 
-          
-            <a href="/tags/事务/" rel="tag"><i class="fa fa-tag"></i> 事务</a>
-          
-        </div>
-      
-
-        </div>
-		
-				
-				
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <ul>
-<li>为什么@Transactional只能应用到<code>public</code>方法才有效</li>
-</ul>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">AbstractFallbackTransactionAttributeSource</span> <span class="keyword">implements</span> <span class="title">TransactionAttributeSource</span> </span>&#123;</span><br><span class="line"> 	 <span class="function"><span class="keyword">protected</span> TransactionAttribute <span class="title">computeTransactionAttribute</span><span class="params">(Method method, @Nullable Class&lt;?&gt; targetClass)</span> </span>&#123;</span><br><span class="line">        <span class="comment">//检查目标方法的修饰符是不是 public，若不是 public，就不会获取@Transactional 的属性配置信息，最终会造成不会用 TransactionInterceptor 来拦截该目标方法进行事务管理</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.allowPublicMethodsOnly() &amp;&amp; !Modifier.isPublic(method.getModifiers())) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;    </span><br><span class="line">        <span class="comment">//AopUtils.getMostSpecificMethod实际调用的是 ClassUtils.getMostSpecificMethod</span></span><br><span class="line">            Method specificMethod = AopUtils.getMostSpecificMethod(method, targetClass);</span><br><span class="line">            TransactionAttribute txAttr = <span class="keyword">this</span>.findTransactionAttribute(specificMethod);</span><br><span class="line">            <span class="keyword">if</span> (txAttr != <span class="keyword">null</span>) &#123;</span><br><span class="line">                <span class="keyword">return</span> txAttr;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">//获取事务属性信息</span></span><br><span class="line">                txAttr = <span class="keyword">this</span>.findTransactionAttribute(specificMethod.getDeclaringClass());</span><br><span class="line">                <span class="keyword">if</span> (txAttr != <span class="keyword">null</span> &amp;&amp; ClassUtils.isUserLevelMethod(method)) &#123;</span><br><span class="line">                    <span class="keyword">return</span> txAttr;</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> (specificMethod != method) &#123;</span><br><span class="line">                        txAttr = <span class="keyword">this</span>.findTransactionAttribute(method);</span><br><span class="line">                        <span class="keyword">if</span> (txAttr != <span class="keyword">null</span>) &#123;</span><br><span class="line">                            <span class="keyword">return</span> txAttr;</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">                        txAttr = <span class="keyword">this</span>.findTransactionAttribute(method.getDeclaringClass());</span><br><span class="line">                        <span class="keyword">if</span> (txAttr != <span class="keyword">null</span> &amp;&amp; ClassUtils.isUserLevelMethod(method)) &#123;</span><br><span class="line">                            <span class="keyword">return</span> txAttr;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/03/08/MySQL-InnoDB的事务隔离级别/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-	
-	 	
-
-    
-
-
-
-    
-
-    <footer class="post-footer">
-     <!-- 
-  
-      
-	  -->
-	  
-	  
-		  
-			
-			
-	 
-
-      
-	  
-	  
-	  
-	   <!--
-	   <div>
-		
-		</div>
-		-->
-		
-     
-
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
- 
-
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2019/03/08/函数式接口/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="志文">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/jackie.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="未知世界的秘密">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/03/08/函数式接口/" class="post-title-link" itemprop="url">函数式接口</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-             2019-03-08
-
-            
-              
-
-              
-            
-          </span>
-		  
-		  
-		  
-		  
-		  
-		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-				<span class="post-meta-item-text"> 
-				364	字			 
-				</span>
-		  
-		  
-		
-			
-		  
-		  
-		  
-		  
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/注解/" itemprop="url" rel="index"><span itemprop="name">注解</span></a></span>
-
-                
-                
-              
-            </span>
-          
-		  
-		  
-		    
-		  
-		  
-		  
-		  
-		 
-		  
-		  
-			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
-                  <i class="fa fa-user"></i>
-                </span><span class="post-meta-item-text"> 作者
-				 Jakcie.Yang
-				</span>
-		
-		  
-		   
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-		    
-		  
-		  
-		  
-		
-		 
-        <div class="post-tags">
-		 
-          
-            <a href="/tags/JDK8/" rel="tag"><i class="fa fa-tag"></i> JDK8</a>
-          
-        </div>
-      
-
-        </div>
-		
-				
-				
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>JDK8中函数式接口通过注解<code>@FunctionalInterface</code>来表示，目的是能够更好地让编译器进行检查。Java中常用的一些接口Callable、Runnable、Comparator、TransactionCallback等在JDK8中都添加了<code>@FunctionalInterface</code>注解。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.TYPE)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> FunctionalInterface &#123;&#125;</span><br></pre></td></tr></table></figure></p>
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2019/03/08/函数式接口/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-	
-	 	
-
-    
-
-
-
-    
-
-    <footer class="post-footer">
-     <!-- 
-  
-      
-	  -->
-	  
-	  
-		  
-			
-			
-	 
-
-      
-	  
-	  
-	  
-	   <!--
-	   <div>
-		
-		</div>
-		-->
-		
-     
-
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
- 
-
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -2917,7 +2864,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">27</span>
+                    <span class="site-state-item-count">33</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -2960,7 +2907,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">15</span>
+                      
+                    
+                    <span class="site-state-item-count">16</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -3085,7 +3034,15 @@
                     
                       
                     
-                    <span class="site-state-item-count">56</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">60</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -3253,7 +3210,7 @@
     
       <span class="post-meta-item-text">博客全站共计：</span>
     
-    <span title="post.totalcount">55.2k字</span>
+    <span title="post.totalcount">64.9k字</span>
   
   
  
@@ -3280,6 +3237,24 @@ setInterval("createtime()",250);
 
 
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
 
 
 

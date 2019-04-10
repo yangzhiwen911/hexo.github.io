@@ -1,0 +1,2227 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+
+
+
+
+ 
+ 
+ <link href="/lib/font-awesome/css/font-awesome.css?v=4.6.2" rel="stylesheet" type="text/css"> 
+
+
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon.ico?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.ico?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon.ico?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"perspectiveLeftIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="概述JVM用线程来执行方法，每个线程都包含一个线程栈，线程栈存放的是栈帧，每个栈帧都有自己的操作数栈和本地变量表。当一个方法被执行时候，首先会在栈顶push一个栈帧，栈帧的创建就需要指定操作数栈和本地变量表的大小。接下来方法的参数会被传入一个方法的本地变量表，本地变量表的访问采用下表索引的方式来访问，第0个位置会传入this(无参时候会调用自身实例，有参数则第1个位置会传入参数类型：如int，第2">
+<meta name="keywords" content="IT互联网、Web、Java开发">
+<meta property="og:type" content="article">
+<meta property="og:title" content="反编译遇到的相关指令问题">
+<meta property="og:url" content="http://yangzhiwen911.github.io/2019/03/31/反编译经常遇到的Java指令/index.html">
+<meta property="og:site_name" content="未知世界的秘密">
+<meta property="og:description" content="概述JVM用线程来执行方法，每个线程都包含一个线程栈，线程栈存放的是栈帧，每个栈帧都有自己的操作数栈和本地变量表。当一个方法被执行时候，首先会在栈顶push一个栈帧，栈帧的创建就需要指定操作数栈和本地变量表的大小。接下来方法的参数会被传入一个方法的本地变量表，本地变量表的访问采用下表索引的方式来访问，第0个位置会传入this(无参时候会调用自身实例，有参数则第1个位置会传入参数类型：如int，第2">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-04-03T05:02:25.784Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="反编译遇到的相关指令问题">
+<meta name="twitter:description" content="概述JVM用线程来执行方法，每个线程都包含一个线程栈，线程栈存放的是栈帧，每个栈帧都有自己的操作数栈和本地变量表。当一个方法被执行时候，首先会在栈顶push一个栈帧，栈帧的创建就需要指定操作数栈和本地变量表的大小。接下来方法的参数会被传入一个方法的本地变量表，本地变量表的访问采用下表索引的方式来访问，第0个位置会传入this(无参时候会调用自身实例，有参数则第1个位置会传入参数类型：如int，第2">
+
+
+
+  <link rel="alternate" href="/atom.xml" title="未知世界的秘密" type="application/atom+xml">
+
+
+
+
+  <link rel="canonical" href="http://yangzhiwen911.github.io/2019/03/31/反编译经常遇到的Java指令/">
+
+
+
+<script id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>反编译遇到的相关指令问题 | 未知世界的秘密</title>
+  
+
+
+
+
+
+
+
+
+
+
+  <script type="text/javascript">
+  !function(e,t,n,g,i){e[i]=e[i]||function(){(e[i].q=e[i].q||[]).push(arguments)},n=t.createElement("script"),tag=t.getElementsByTagName("script")[0],n.async=1,n.src=('https:'==document.location.protocol?'https://':'http://')+g,tag.parentNode.insertBefore(n,tag)}(window,document,"script","assets.growingio.com/2.1/gio.js","gio");
+    gio('init','a1ed9fdd1be0aae4', {});
+  gio('send');
+  </script>
+
+
+
+  <noscript>
+  <style>
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion .logo-line-before i { left: initial; }
+    .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+	<!--
+	<a href="https://github.com/yangzhiwen911"><img style="position: absolute; top: 0; left: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub"></a>
+    -->
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">未知世界的秘密</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">做一个有梦想的咸鱼</p>
+      
+    
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-sitemap">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/sitemap.xml" rel="section"><i class="menu-item-icon fa fa-fw fa-sitemap"></i> <br>站点地图</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-document">
+
+    
+    
+    
+      
+    
+
+    
+
+    <a href="/doc/" rel="section"><i class="menu-item-icon fa fa-fw fa-book"></i> <br>开发手册</a>
+
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yangzhiwen911.github.io/2019/03/31/反编译经常遇到的Java指令/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="志文">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/jackie.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="未知世界的秘密">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">反编译遇到的相关指令问题
+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+             2019-03-31
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+               2019-04-03
+            
+          </span>
+		  
+		  
+		  
+		  
+		  
+		  &nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+				<span class="post-meta-item-text"> 
+				2.4k	字			 
+				</span>
+		  
+		  
+		
+			
+		  
+		  
+		  
+		  
+
+          
+		  
+		  
+		    
+		  
+		  
+		  
+		  
+		 
+		  
+		  
+			&nbsp; | &nbsp;  <span class="post-meta-item-icon">
+                  <i class="fa fa-user"></i>
+                </span><span class="post-meta-item-text"> 作者
+				 Jakcie.Yang
+				</span>
+		
+		  
+		   
+
+          
+            
+          
+
+          
+          
+
+          
+            <span class="post-meta-divider">|</span>
+            <span class="post-meta-item-icon">
+            <i class="fa fa-eye"></i>
+             阅读次数： 
+            <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+            </span>
+          
+
+          
+
+          
+		    
+		  
+		  
+		  
+		
+		 
+
+        </div>
+		
+				
+				
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h3><p>JVM用线程来执行方法，每个线程都包含一个线程栈，线程栈存放的是栈帧，每个栈帧都有自己的操作数栈和本地变量表。当一个方法被执行时候，首先会在栈顶push一个栈帧，栈帧的创建就需要指定操作数栈和本地变量表的大小。接下来方法的参数会被传入一个方法的本地变量表，本地变量表的访问采用下表索引的方式来访问，第0个位置会传入this(无参时候会调用自身实例，有参数则第1个位置会传入<code>参数类型：如int</code>，第2个位置会传入<code>参数类型：如int</code>，第N个位置…)</p>
+<p>在栈帧完全准备好后，就可以开始执行执行字节码指令了，上述iload_1,i_load_2分别将本地变量表的1，2位置的数据push到操作数栈中，iadd随后会pop两个值用来做加法操作，并将结果push到操作数栈，最后ireturn将栈顶数据返回。</p>
+<p>针对一个简单的i++自增方法，做如下尝试，用javap反编译后，看看jvm是具体按照什么指令来操作对象和工作流程的。</p>
+<a id="more"></a>
+<h3 id="实例应用"><a href="#实例应用" class="headerlink" title="实例应用"></a>实例应用</h3><ul>
+<li><p>源码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span>.date: 2019/3/31</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@comment</span>: &lt;p&gt;&lt;/p&gt;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: Jackie.Yang</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span>:com.xianyu.facade.demo</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestJava</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">volatile</span> <span class="keyword">int</span> n;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        n++;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>反编译<br>javap 常用的参数：<br>-p ：会打印私有的字段和方法，<br>-v ：它会尽可能地打印出所有信息<br>-c ：只查询相关方法对应的字节码</p>
+</li>
+<li><p>javap -v</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br></pre></td><td class="code"><pre><span class="line">D:\Workspaces\fascade\target\classes\com\xianyu\facade\demo&gt;javap -v TestJava</span><br><span class="line">警告: 二进制文件TestJava包含com.xianyu.facade.demo.TestJava</span><br><span class="line">Classfile /D:/Workspaces/fascade/target/classes/com/xianyu/facade/demo/TestJava.class</span><br><span class="line">  Last modified <span class="number">2019</span>-<span class="number">3</span>-<span class="number">31</span>; size <span class="number">398</span> bytes</span><br><span class="line">  MD5 checksum <span class="number">4</span>c1a4e863b058de2dd2a5c9ec019420a</span><br><span class="line">  Compiled from <span class="string">"TestJava.java"</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">com</span>.<span class="title">xianyu</span>.<span class="title">facade</span>.<span class="title">demo</span>.<span class="title">TestJava</span></span></span><br><span class="line">  minor version: 0</span><br><span class="line">  major version: <span class="number">52</span></span><br><span class="line">  flags: ACC_PUBLIC, ACC_SUPER</span><br><span class="line">Constant pool:</span><br><span class="line">   #1 = Methodref          #4.#17         // java/lang/Object."&lt;init&gt;":()V</span><br><span class="line">   #2 = Fieldref           #3.#18         // com/xianyu/facade/demo/TestJava.n:I</span><br><span class="line">   #3 = Class              #19            // com/xianyu/facade/demo/TestJava</span><br><span class="line">   #4 = Class              #20            // java/lang/Object</span><br><span class="line">   #5 = Utf8               n</span><br><span class="line">   #6 = Utf8               I</span><br><span class="line">   #7 = Utf8               &lt;init&gt;</span><br><span class="line">   #8 = Utf8               ()V</span><br><span class="line">   #9 = Utf8               Code</span><br><span class="line">  #10 = Utf8               LineNumberTable</span><br><span class="line">  #11 = Utf8               LocalVariableTable</span><br><span class="line">  #12 = Utf8               this</span><br><span class="line">  #13 = Utf8               Lcom/xianyu/facade/demo/TestJava;</span><br><span class="line">  #14 = Utf8               add</span><br><span class="line">  #15 = Utf8               SourceFile</span><br><span class="line">  #16 = Utf8               TestJava.java</span><br><span class="line">  #17 = NameAndType        #7:#8          // "&lt;init&gt;":()V</span><br><span class="line">  #18 = NameAndType        #5:#6          // n:I</span><br><span class="line">  #19 = Utf8               com/xianyu/facade/demo/TestJava</span><br><span class="line">  #20 = Utf8               java/lang/Object</span><br><span class="line">&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">volatile</span> <span class="keyword">int</span> n;</span><br><span class="line">    descriptor: I</span><br><span class="line">    flags: ACC_PUBLIC, ACC_VOLATILE</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> com.xianyu.facade.demo.TestJava();</span><br><span class="line">    descriptor: ()V</span><br><span class="line">    flags: ACC_PUBLIC</span><br><span class="line">    Code:</span><br><span class="line">      stack=<span class="number">1</span>, locals=<span class="number">1</span>, args_size=<span class="number">1</span></span><br><span class="line">         <span class="number">0</span>: aload_0</span><br><span class="line">         1: invokespecial #1                  // Method java/lang/Object."&lt;init&gt;":()V</span><br><span class="line">         <span class="number">4</span>: <span class="keyword">return</span></span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line <span class="number">9</span>: <span class="number">0</span></span><br><span class="line">      LocalVariableTable:</span><br><span class="line">        Start  Length  Slot  Name   Signature</span><br><span class="line">            <span class="number">0</span>       <span class="number">5</span>     <span class="number">0</span>  <span class="keyword">this</span>   Lcom/xianyu/facade/demo/TestJava;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">()</span></span>;</span><br><span class="line">    descriptor: ()V</span><br><span class="line">    flags: ACC_PUBLIC</span><br><span class="line">    Code:</span><br><span class="line">      stack=<span class="number">3</span>, locals=<span class="number">1</span>, args_size=<span class="number">1</span></span><br><span class="line">         <span class="number">0</span>: aload_0</span><br><span class="line">         <span class="number">1</span>: dup</span><br><span class="line">         2: getfield      #2                  // Field n:I</span><br><span class="line">         <span class="number">5</span>: iconst_1</span><br><span class="line">         <span class="number">6</span>: iadd</span><br><span class="line">         7: putfield      #2                  // Field n:I</span><br><span class="line">        <span class="number">10</span>: <span class="keyword">return</span></span><br><span class="line">      LineNumberTable:</span><br><span class="line">        line <span class="number">14</span>: <span class="number">0</span></span><br><span class="line">        line <span class="number">15</span>: <span class="number">10</span></span><br><span class="line">      LocalVariableTable:</span><br><span class="line">        Start  Length  Slot  Name   Signature</span><br><span class="line">            <span class="number">0</span>      <span class="number">11</span>     <span class="number">0</span>  <span class="keyword">this</span>   Lcom/xianyu/facade/demo/TestJava;</span><br><span class="line">&#125;</span><br><span class="line">SourceFile: <span class="string">"TestJava.java"</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>javap -v</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">D:\Workspaces\fascade\target\classes\com\xianyu\facade\demo&gt;javap -c TestJava</span><br><span class="line">警告: 二进制文件TestJava包含com.xianyu.facade.demo.TestJava</span><br><span class="line">Compiled from <span class="string">"TestJava.java"</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">com</span>.<span class="title">xianyu</span>.<span class="title">facade</span>.<span class="title">demo</span>.<span class="title">TestJava</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">volatile</span> <span class="keyword">int</span> n;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> com.xianyu.facade.demo.TestJava();</span><br><span class="line">    Code:</span><br><span class="line">       <span class="number">0</span>: aload_0</span><br><span class="line">       1: invokespecial #1                  // Method java/lang/Object."&lt;init&gt;":()V</span><br><span class="line">       <span class="number">4</span>: <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">add</span><span class="params">()</span></span>;</span><br><span class="line">    Code:</span><br><span class="line">       <span class="number">0</span>: aload_0</span><br><span class="line">       <span class="number">1</span>: dup</span><br><span class="line">       2: getfield      #2                  // Field n:I</span><br><span class="line">       <span class="number">5</span>: iconst_1</span><br><span class="line">       <span class="number">6</span>: iadd</span><br><span class="line">       7: putfield      #2                  // Field n:I</span><br><span class="line">      <span class="number">10</span>: <span class="keyword">return</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="解析参考"><a href="#解析参考" class="headerlink" title="解析参考"></a>解析参考</h3><ul>
+<li>描述文件(Descriptor)<br>是一个字符串，可以用来描述一个方法的参数和返回类型。格式如下：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//（参数描述符）返回类型</span></span><br><span class="line">(Ljava/lang/Object;[Ljava/lang/Object;)I</span><br><span class="line">(II)I</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>括号中表示参数，括号外表示返回类型。<code>L</code>表示引用类型，<code>I</code>表示int类型，<code>[</code>表示数组。<br>以一个L开头的描述符，就是类描述符，它后紧跟着类的字符串，然后分号“；”结束。<br>比如<code>Ljava/lang/String;</code>就是表示类型String；<br><code>Ljava/lang/String;</code>它是一种对函数返回值和参数的编码。这种编码叫做JNI字段描述符（JavaNative Interface FieldDescriptors)。<br>当一个函数不需要返回参数类型时，就使用”V”来表示。</p>
+<ul>
+<li>JNI符号对照表</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Java 类型</th>
+<th style="text-align:center">JNI符号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Boolean</td>
+<td style="text-align:center">Z</td>
+</tr>
+<tr>
+<td style="text-align:center">Byte</td>
+<td style="text-align:center">B</td>
+</tr>
+<tr>
+<td style="text-align:center">Char</td>
+<td style="text-align:center">C</td>
+</tr>
+<tr>
+<td style="text-align:center">Short</td>
+<td style="text-align:center">S</td>
+</tr>
+<tr>
+<td style="text-align:center">Int</td>
+<td style="text-align:center">I</td>
+</tr>
+<tr>
+<td style="text-align:center">Long</td>
+<td style="text-align:center">J</td>
+</tr>
+<tr>
+<td style="text-align:center">Float</td>
+<td style="text-align:center">F</td>
+</tr>
+<tr>
+<td style="text-align:center">Double</td>
+<td style="text-align:center">D</td>
+</tr>
+<tr>
+<td style="text-align:center">数组</td>
+<td style="text-align:center"><code>[</code></td>
+</tr>
+<tr>
+<td style="text-align:center">Void</td>
+<td style="text-align:center">V</td>
+</tr>
+<tr>
+<td style="text-align:center">objects对象</td>
+<td style="text-align:center">以<code>L</code>开头，以<code>;</code>结尾，中间是用<code>/</code> 隔开的包及类名。</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>访问标志(access_flags)</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">标志名称</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">ACC_PUBLIC</td>
+<td style="text-align:center">是否为public类型</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_FINAL</td>
+<td style="text-align:center">是否被声明为final，只有类可设置</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_SUPER</td>
+<td style="text-align:center">是否允许使用invokespecial字节码指令</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_INTERFACE</td>
+<td style="text-align:center">标志这个是一个接口</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_ABSTRACT</td>
+<td style="text-align:center">是否为abstract类型，对于接口或抽象类来说，此标志值为true，其他值为false</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_SYNTHETIC</td>
+<td style="text-align:center">标志这个类并非由用户产生的</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_ANNOTATION</td>
+<td style="text-align:center">标志这个一个注解</td>
+</tr>
+<tr>
+<td style="text-align:center">ACC_ENUM</td>
+<td style="text-align:center">标志这是一个枚举</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>属性表集合</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性名称</th>
+<th style="text-align:center">使用位置</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Code</td>
+<td style="text-align:center">方法表</td>
+<td style="text-align:center">java代码编译成的字节码指令</td>
+</tr>
+<tr>
+<td style="text-align:center">ConstantValue</td>
+<td style="text-align:center">字段表</td>
+<td style="text-align:center">final关键字定义的常量值</td>
+</tr>
+<tr>
+<td style="text-align:center">Deprecated</td>
+<td style="text-align:center">类、方法表、字段表</td>
+<td style="text-align:center">被表明为deprecated的方法和字段</td>
+</tr>
+<tr>
+<td style="text-align:center">Exceptions</td>
+<td style="text-align:center">方法表</td>
+<td style="text-align:center">方法抛出的异常</td>
+</tr>
+<tr>
+<td style="text-align:center">InnerClasses</td>
+<td style="text-align:center">类文件</td>
+<td style="text-align:center">内部类列表</td>
+</tr>
+<tr>
+<td style="text-align:center">LineNumberTable</td>
+<td style="text-align:center">Code 属性</td>
+<td style="text-align:center">Java源码的行号与字节码指定的对应关系</td>
+</tr>
+<tr>
+<td style="text-align:center">LocalVariableTable</td>
+<td style="text-align:center">Code属性</td>
+<td style="text-align:center">方法的局部变量描述</td>
+</tr>
+<tr>
+<td style="text-align:center">SourceFile</td>
+<td style="text-align:center">类文件</td>
+<td style="text-align:center">源文件名称</td>
+</tr>
+<tr>
+<td style="text-align:center">Synthetic</td>
+<td style="text-align:center">类、方法表、字段表</td>
+<td style="text-align:center">标识方法或字段为编译器自动生成的</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><code>Code</code>节点就是<code>CodeAttribute</code>，里面包含了<code>stack</code>，<code>locals</code>，<code>args_size</code>，以及几条指令。<code>stack</code>表示执行这个方法所需要的栈大小，这个值在编译时已经确定了，<code>locals</code>表示本地变量表的大小，<code>args_size</code>表示方法参数的数量，由于这个方法是个实例方法，所以第一个传进来的参数是实例自身，也就是<code>this</code>，然后才是方法的两个参数，所以参数为1。</p>
+</blockquote>
+<h3 id="附加操作指令"><a href="#附加操作指令" class="headerlink" title="附加操作指令"></a>附加操作指令</h3><ul>
+<li>对象操作指令</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">操作码</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">new</td>
+<td style="text-align:center">创建新的对象实例</td>
+</tr>
+<tr>
+<td style="text-align:center">checkcast</td>
+<td style="text-align:center">类型强转</td>
+</tr>
+<tr>
+<td style="text-align:center">instanceof</td>
+<td style="text-align:center">判断类型</td>
+</tr>
+<tr>
+<td style="text-align:center">getfield</td>
+<td style="text-align:center">获取对象字段的值</td>
+</tr>
+<tr>
+<td style="text-align:center">putfield</td>
+<td style="text-align:center">给对象字段赋值</td>
+</tr>
+<tr>
+<td style="text-align:center">getstatic</td>
+<td style="text-align:center">获取静态字段的值</td>
+</tr>
+<tr>
+<td style="text-align:center">putstatic</td>
+<td style="text-align:center">给静态字段赋值</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>整数运算指令</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">操作码</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">iadd</td>
+<td style="text-align:center">将栈顶两int类型数相加，结果入栈</td>
+</tr>
+<tr>
+<td style="text-align:center">isub</td>
+<td style="text-align:center">将栈顶两int类型数相减，结果入栈</td>
+</tr>
+<tr>
+<td style="text-align:center">imul</td>
+<td style="text-align:center">将栈顶两int类型数相乘，结果入栈</td>
+</tr>
+<tr>
+<td style="text-align:center">idiv</td>
+<td style="text-align:center">将栈顶两int类型数相除，结果入栈</td>
+</tr>
+<tr>
+<td style="text-align:center">irem</td>
+<td style="text-align:center">将栈顶两int类型数取模，结果入栈</td>
+</tr>
+<tr>
+<td style="text-align:center">ineg</td>
+<td style="text-align:center">将栈顶int类型值取负，结果入栈</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>常量入栈指令</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">操作码</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">iconst_0</td>
+<td style="text-align:center">0(int)值入栈</td>
+</tr>
+<tr>
+<td style="text-align:center">iconst_1</td>
+<td style="text-align:center">1(int)值入栈</td>
+</tr>
+<tr>
+<td style="text-align:center"><code>ldc(load constant)</code></td>
+<td style="text-align:center">常量池中的常量值（int, float, string reference, object reference）入栈。</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>通用（无类型）栈操作指令</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">操作码</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">nop</td>
+<td style="text-align:center">空操作</td>
+</tr>
+<tr>
+<td style="text-align:center">pop</td>
+<td style="text-align:center">从栈顶弹出一个字长的数据</td>
+</tr>
+<tr>
+<td style="text-align:center">pop2</td>
+<td style="text-align:center">从栈顶弹出两个字长的数据</td>
+</tr>
+<tr>
+<td style="text-align:center">dup</td>
+<td style="text-align:center">复制栈顶一个字长的数据，将复制后的数据压栈</td>
+</tr>
+<tr>
+<td style="text-align:center">dup_x1</td>
+<td style="text-align:center">复制栈顶一个字长的数据，弹出栈顶两个字长数据，先将复制后的数据压栈，再将弹出的两个字长数据压栈</td>
+</tr>
+<tr>
+<td style="text-align:center">dup2</td>
+<td style="text-align:center">复制栈顶两个字长的数据，将复制后的两个字长的数据压栈</td>
+</tr>
+<tr>
+<td style="text-align:center">dup2_x1</td>
+<td style="text-align:center">复制栈顶两个字长的数据，弹出栈顶三个字长的数据，将复制后的两个字长的数据压栈，再将弹出的三个字长的数据压栈</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><code>dup</code>指令为复制操作数栈顶值，并将其压入栈顶，也就是说此时操作数栈上有连续相同的两个对象地址，也就是说需要从栈顶弹出两个实例对象的引用。其实对于每一个<code>new</code>指令来说一般编译器都会在其下面生成<br>一个<code>dup</code>指令，这是因为实例的初始化方法肯定需要用到一次，然后第二个留给程序员使用，例如给变量赋值，抛出异常等，如果我们不用，那编译器也会生成<code>dup</code>指令，在初始化方法调用完成后再从栈顶<code>pop</code>出来。</p>
+</blockquote>
+<ul>
+<li>将栈顶值保存到局部变量中指令</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">操作码</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">astore_0</td>
+<td style="text-align:center">将栈顶引用类型值保存到局部变量0中</td>
+</tr>
+<tr>
+<td style="text-align:center">astore_1</td>
+<td style="text-align:center">将栈顶引用类型值保存到局部变量1中</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>局部变量值转载到栈中指令</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">操作码</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">aload_0</td>
+<td style="text-align:center">从局部变量0中装载引用类型值入栈</td>
+</tr>
+<tr>
+<td style="text-align:center">aload_1</td>
+<td style="text-align:center">从局部变量1中装载引用类型值入栈</td>
+</tr>
+<tr>
+<td style="text-align:center">iload_0</td>
+<td style="text-align:center">从局部变量0中装载int类型值入栈</td>
+</tr>
+<tr>
+<td style="text-align:center">iload_1</td>
+<td style="text-align:center">从局部变量1中装载int类型值入栈</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><code>aload_0</code>从局部变量表的相应位置装载一个对象引用到操作数栈的栈顶。<br>  <code>aload_0</code>把this装载到了操作数栈中。<br>  与iconst不同的是，iload操作的值是已经定义好存在的值，iconst是定义时的压栈操作。</p>
+</blockquote>
+<ul>
+<li>方法调用指令</li>
+</ul>
+<p>处理方法调用，先将参数“存入”本地数组；要进行方法调用，必须将参数推到栈上，并且紧跟一个指向实例方法的 this 指针。</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">操作码</th>
+<th style="text-align:center">说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">invokevirtual</td>
+<td style="text-align:center">调用使用 virtual 语义的实例方法，比如调用的方法在运行时根据重载分派到不同的实例方法。</td>
+</tr>
+<tr>
+<td style="text-align:center">invokespecial</td>
+<td style="text-align:center">调用一个具体的实例方法（非 virtual 语义）。该指令常用来调用构造器</td>
+</tr>
+<tr>
+<td style="text-align:center">invokestatic</td>
+<td style="text-align:center">调用静态方法</td>
+</tr>
+<tr>
+<td style="text-align:center">invokeinterface</td>
+<td style="text-align:center">调用接口方法</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<blockquote><h3 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h3><ul>
+<li><a href="https://www.cnblogs.com/longjee/p/8675771.html" target="_blank" rel="noopener">Java字节码指令大全</a>  </li>
+</ul>
+</blockquote>
+      
+    </div>
+
+    
+
+    
+    
+    
+	
+	 
+	
+          
+          <div class="social_share">
+            
+               <div>
+                 
+  <div class="bdsharebuttonbox">
+    <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+	<a href="#" class="fa fa-tencent-weibo bds_tqq" data-cmd="tqq" title="分享到腾讯微博"></a>
+    <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享到QQ好友"></a>	
+    <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="分享到微信"></a>
+	<a href="#" class="fa fa-renren bds_renren" data-cmd="renren" title="分享到人人网"></a>
+    <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到Twitter"></a>
+    <a href="#" class="fa fa-facebook bds_fbook" data-cmd="fbook" title="分享到Facebook"></a>
+    
+    <a class="fa fa-share-alt bds_more" data-cmd="count"></a>
+  </div>
+  <script>
+    window._bd_share_config = {
+      "common": {
+        "bdText": "",
+        "bdMini": "2",
+        "bdMiniList": false,
+        "bdPic": ""
+      },
+      "share": {
+        "bdSize": "24",
+        "bdStyle": "2"
+      },
+      "image": {
+        "viewList": ["tsina", "douban", "sqq", "qzone", "weixin", "twi", "fbook"],
+        "viewText": "分享到：",
+        "viewSize": "24"
+      }
+    }
+  </script>
+
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+               </div>
+            
+            
+          </div>
+        
+	 	
+
+    
+
+
+
+    
+
+    <footer class="post-footer">
+     <!-- 
+  
+      
+	  -->
+	  
+	  
+		  
+			
+			
+		  <div>
+			<div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果文章对你有帮助，欢迎点击上方按钮打赏作者!</div>
+  <br>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="志文 微信支付">
+        <p>微信支付</p>
+      </div>
+    
+
+    
+      <div id="alipay" style="display: inline-block">
+        <img id="alipay_qr" src="/images/alipay.png" alt="志文 支付宝">
+        <p>支付宝</p>
+      </div>
+    
+
+    
+
+  </div>
+</div>
+
+		  </div>
+     
+	 
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+        </div>
+      
+      
+	  
+	  
+	  
+	   <!--
+	   <div>
+		
+			<div style="text-align:center;color: #f5871f;font-size:14px;"><br/><br/>-------------&nbsp;&nbsp;本文结束&nbsp;&nbsp;<i class="fa fa-paw"></i>&nbsp;&nbsp;感谢您的阅读&nbsp;&nbsp;-------------<br/><br/></div>
+		
+		</div>
+		-->
+		
+     
+
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/29/List＜T＞-List＜-＞-List＜Object＞/" rel="next" title="List＜T＞&List＜?＞&List＜Object＞">
+                <i class="fa fa-chevron-left"></i> List＜T＞&List＜?＞&List＜Object＞
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/03/Java的三种类加载器/" rel="prev" title="Java的三种类加载器">
+                Java的三种类加载器 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+ 
+
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div id="gitalk-container">
+    </div>
+    
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/jackie.png" alt="志文">
+            
+              <p class="site-author-name" itemprop="name">志文</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">16</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">60</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+            <div class="feed-link motion-element">
+              <a href="/atom.xml" rel="alternate">
+                <i class="fa fa-rss"></i>
+                RSS
+              </a>
+            </div>
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/yangzhiwen911" title="GitHub &rarr; https://github.com/yangzhiwen911" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="mailto:yangzhiwen911@gmail.com" title="E-Mail &rarr; mailto:yangzhiwen911@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.softwhy.com/" title="http://www.softwhy.com/" rel="noopener" target="_blank">蚂蚁部落</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://ziyuan.baidu.com/" title="https://ziyuan.baidu.com/" rel="noopener" target="_blank">百度SEO</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://fontawesome.dashgame.com/" title="http://fontawesome.dashgame.com/" rel="noopener" target="_blank">图标大全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://blog.csdn.net/plei_yue/article/details/78930287" title="https://blog.csdn.net/plei_yue/article/details/78930287" rel="noopener" target="_blank">SpringBoot[csdn]</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://jm.taobao.org/" title="http://jm.taobao.org/" rel="noopener" target="_blank">阿里中间件</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://yq.aliyun.com/articles/" title="https://yq.aliyun.com/articles/" rel="noopener" target="_blank">云栖社区</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://cmsblogs.com/" title="http://cmsblogs.com/" rel="noopener" target="_blank">JAVA技术栈</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.fangzhipeng.com/page4/" title="https://www.fangzhipeng.com/page4/" rel="noopener" target="_blank">源码解析大全</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://yq.aliyun.com/articles/679638?spm=a2c4e.11157919.spm-cont-list.190.160427ae85fT58" title="https://yq.aliyun.com/articles/679638?spm=a2c4e.11157919.spm-cont-list.190.160427ae85fT58" rel="noopener" target="_blank">JAVA知识</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://cmsblogs.com/?p=2611" title="http://cmsblogs.com/?p=2611" rel="noopener" target="_blank">JAVA并发</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://cmsblogs.com/?p=3819" title="http://cmsblogs.com/?p=3819" rel="noopener" target="_blank">GC优化</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://spring.io/" title="https://spring.io/" rel="noopener" target="_blank">Spring</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://springcloud.cc/" title="https://springcloud.cc/" rel="noopener" target="_blank">SpringCloud</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.ityouknow.com/spring-boot.html" title="http://www.ityouknow.com/spring-boot.html" rel="noopener" target="_blank">纯洁的微笑</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://springboot.fun/" title="http://springboot.fun/" rel="noopener" target="_blank">SpringBoot[中文版]</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://gitee.com/smallc/SpringBlade/tree/2.0-boot" title="https://gitee.com/smallc/SpringBlade/tree/2.0-boot" rel="noopener" target="_blank">SpringBlade</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </div>
+
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实例应用"><span class="nav-number">2.</span> <span class="nav-text">实例应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解析参考"><span class="nav-number">3.</span> <span class="nav-text">解析参考</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#附加操作指令"><span class="nav-number">4.</span> <span class="nav-text">附加操作指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考文献"><span class="nav-number">5.</span> <span class="nav-text">参考文献</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        
+<div class="copyright">&copy; 2015 – <span itemprop="copyrightYear">2019 </span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">志文</span>
+
+  
+  
+
+
+  
+  
+
+
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+      <span class="post-meta-item-text">博客全站共计：</span>
+    
+    <span title="post.totalcount">64.9k字</span>
+  
+  
+ 
+
+</div>
+ <span id="timeDate">载入天数...</span><span id="times">载入时分秒...</span>
+<script>
+    var now = new Date(); 
+    function createtime() { 
+        var grt= new Date("12/24/2018 12:49:00");
+        now.setTime(now.getTime()+250); 
+        days = (now - grt ) / 1000 / 60 / 60 / 24; dnum = Math.floor(days); 
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum); hnum = Math.floor(hours); 
+        if(String(hnum).length ==1 ){hnum = "0" + hnum;} minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum); 
+        mnum = Math.floor(minutes); if(String(mnum).length ==1 ){mnum = "0" + mnum;} 
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum); 
+        snum = Math.round(seconds); if(String(snum).length ==1 ){snum = "0" + snum;} 
+        document.getElementById("timeDate").innerHTML = "本博客已安全运行 "+dnum+" 天 "; 
+        document.getElementById("times").innerHTML = hnum + " 小时 " + mnum + " 分 " + snum + " 秒"; 
+    } 
+setInterval("createtime()",250);
+</script>
+
+
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="site-uv" title="总访客量">
+      <i class="fa fa-user"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="site-pv" title="总访问量">
+      <i class="fa fa-eye"></i>
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+    
+
+    
+  </div>
+
+  
+
+<script>
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+
+  <script src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+
+  
+  
+
+  
+  <script src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <script src="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.min.js"></script>
+
+  
+  
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/gitalk@1.4.0/dist/gitalk.css">
+
+  
+  
+  <script src="//cdn.jsdelivr.net/npm/js-md5@0.7.3/src/md5.min.js"></script>
+
+   <script>
+        var gitalk = new Gitalk({
+          clientID: 'fadd19a803bff54d89dc',
+          clientSecret: 'd89851454b0e70116a6d0e3bb0ee25729f347afd',
+          repo: 'yangzhiwen911.github.io',
+          owner: 'yangzhiwen911',
+          admin: ['yangzhiwen911'],
+          id: md5(location.pathname),
+          distractionFreeMode: 'true'
+        })
+        gitalk.render('gitalk-container')
+       </script>
+
+
+  
+
+  <script>
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap');
+      $(e).after($wrap);
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text();
+        }).toArray().join('\n');
+        var ta = document.createElement('textarea');
+        var range = document.createRange(); //For Chrome
+        var sel = window.getSelection(); //For Chrome
+        var yPosition = window.pageYOffset || document.documentElement.scrollTop;
+        ta.style.top = yPosition + 'px'; //Prevent page scroll
+        ta.style.position = 'absolute';
+        ta.style.opacity = '0';
+        ta.value = code;
+        ta.textContent = code; //For FireFox
+        ta.contentEditable = true;
+        ta.readOnly = false;
+        document.body.appendChild(ta);
+        range.selectNode(ta);
+        sel.removeAllRanges();
+        sel.addRange(range);
+        ta.setSelectionRange(0, code.length);
+        var result = document.execCommand('copy');
+        
+          if (result) $(this).text('复制成功');
+          else $(this).text('复制失败');
+        
+        ta.blur(); //For iOS
+        $(this).blur();
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn');
+        setTimeout(function () {
+          $b.text('复制');
+        }, 300);
+      }).append(e);
+    })
+  </script>
+
+
+  
+  
+
+  
+  
+
+  
+
+
+
+</body>
+</html>
